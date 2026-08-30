@@ -1,5 +1,8 @@
+import CodeTabSelection from "@/app/components/landingpage/CodeTabSection";
 export default function ContactForm() {
     return (
-        <h1>Hello world</h1>
+        <div>
+            <CodeTabSelection />
+        </div>
     )
 }
