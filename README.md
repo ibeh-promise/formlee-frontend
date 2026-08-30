@@ -1,85 +1,59 @@
-# Formlee
-
-> **Send form submissions straight to your email without building a backend for every form.**
-
-Formlee is a simple form backend and delivery service for developers who just want their forms to work.
-
-Need a contact form? A waitlist? A feedback form? Instead of setting up an API route, SMTP, email service, database, or serverless function for each project, you can create a Formlee endpoint and point your form to it.
-
-That's it.
+Here is the same README, but rewritten to sound like it was written by a actual developer who talks like a normal person. I kept all the technical details intact but stripped out the corporate AI polish.
 
 ---
 
-## What is Formlee?
+# Formlee
 
-Formlee gives you a unique endpoint for each form you create.
+> Form submissions → your email. No backend required.
 
-You connect that endpoint to your HTML form or send data to it using `fetch`. When someone submits the form, Formlee receives the data, processes it, and sends the submission to the email address you've configured.
+You know that thing where you build a nice landing page, drop in a contact form, and then realize you have to set up an API route, configure SMTP, maybe spin up a database, write some serverless function... all just to get a message from someone?
 
-For example:
+Yeah. Formlee fixes that.
+
+It's a form backend. You create an endpoint, point your form at it, and submissions show up in your inbox. That's it.
+
+---
+
+## What is this?
+
+You get a unique URL for each form you make. Drop it into your HTML `action` or hit it with `fetch`. When someone submits, Formlee processes the data and emails it to you.
+
+Example:
 
 ```html
 <form action="https://formlee.io/f/frm_prod_94827" method="POST">
   <input type="text" name="name" placeholder="Your Name" required />
   <input type="email" name="email" placeholder="Your Email" required />
   <textarea name="message" placeholder="Your Message" required></textarea>
-
   <button type="submit">Send Message</button>
 </form>
 ```
 
-No custom backend route. No SMTP setup inside your project. No extra SDK.
+No backend. No SDKs. No email server setup inside your project. Just a form that works.
 
 ---
 
-## How It Works
+## How it works
 
-The basic flow is pretty straightforward:
+Flow looks like this:
 
-```text
-Your Form
-    ↓
-Formlee Endpoint
-    ↓
-Validation & Spam Checks
-    ↓
-Formlee Processes Submission
-    ↓
-Email Notification
-    ↓
-Your Inbox
+```
+Your Form → Formlee Endpoint → Validation & Spam Checks → Email → Your Inbox
 ```
 
-### 1. Create a Form
+### 1. Create a form in the dashboard
 
-From the Formlee dashboard, create a new form and configure things like:
+Give it a name, tell it where to send emails, set up redirects, whatever. You get a URL back like:
 
-* Form name
-* Recipient email
-* Notification settings
-* Redirect URL
-
-Formlee then gives you a unique endpoint such as:
-
-```text
+```
 https://formlee.io/f/frm_prod_94827
 ```
 
-### 2. Connect Your Form
+### 2. Plug it into your HTML
 
-Use the endpoint as the `action` of a regular HTML form:
+Same as above. Just drop it in the `action`.
 
-```html
-<form action="https://formlee.io/f/frm_prod_94827" method="POST">
-  <input name="name" type="text" placeholder="Name" required />
-  <input name="email" type="email" placeholder="Email" required />
-  <textarea name="message" placeholder="Message" required></textarea>
-
-  <button type="submit">Send Message</button>
-</form>
-```
-
-You can also submit to the endpoint from JavaScript or a React/Next.js application:
+Or if you're using React/Next.js, you can do this:
 
 ```tsx
 'use client';
@@ -87,29 +61,20 @@ You can also submit to the endpoint from JavaScript or a React/Next.js applicati
 import { useState } from 'react';
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<
-    'idle' | 'loading' | 'success' | 'error'
-  >('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
 
     const formData = new FormData(e.currentTarget);
 
     try {
-      const response = await fetch(
-        'https://formlee.io/f/frm_prod_94827',
-        {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      );
+      const response = await fetch('https://formlee.io/f/frm_prod_94827', {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      });
 
       setStatus(response.ok ? 'success' : 'error');
     } catch {
@@ -119,112 +84,74 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <input
-        name="name"
-        type="text"
-        placeholder="Name"
-        required
-      />
-
-      <input
-        name="email"
-        type="email"
-        placeholder="Email"
-        required
-      />
-
-      <textarea
-        name="message"
-        placeholder="Message"
-        required
-      />
-
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-      >
+      <input name="name" type="text" placeholder="Name" required />
+      <input name="email" type="email" placeholder="Email" required />
+      <textarea name="message" placeholder="Message" required />
+      <button type="submit" disabled={status === 'loading'}>
         {status === 'loading' ? 'Sending...' : 'Send Message'}
       </button>
-
-      {status === 'success' && (
-        <p>Message sent successfully!</p>
-      )}
+      {status === 'success' && <p>Message sent successfully!</p>}
     </form>
   );
 }
 ```
 
-### 3. Formlee Handles the Submission
+### 3. We handle the rest
 
-Once the form is submitted, Formlee takes care of the backend work.
+Once it hits our endpoint, we take care of:
 
-Depending on the configuration, this can include:
+- Field validation
+- File attachments if you have them
+- Rate limiting (so you don't get spammed)
+- Honeypot checks
+- Domain whitelisting
+- CAPTCHA if you enable it
 
-* Processing submitted fields
-* Validating input
-* Handling file attachments
-* Rate limiting
-* Honeypot spam detection
-* Domain validation
-* CAPTCHA verification
+### 4. You get the email
 
-### 4. Get the Submission in Your Email
+We send you a nicely formatted notification with all the fields, plus metadata like submission time, user agent, IP, country, and links to any uploaded files.
 
-After processing the submission, Formlee sends the form details to your configured email address.
+You can also configure an auto-reply to the person who submitted the form.
 
-The notification can contain the submitted fields along with useful information such as:
+### 5. Dashboard for managing everything
 
-* Submission time
-* User agent
-* IP/country information
-* Attachment links
+Instead of digging through logs, you get a dashboard where you can:
 
-You can also configure automatic confirmation emails for people who submit your form.
-
-### 5. Manage Everything From the Dashboard
-
-The dashboard gives you a place to manage your forms and submissions instead of having to dig through logs or your codebase.
-
-You can:
-
-* View submission activity
-* Check submission status
-* Inspect submitted data
-* Filter submissions
-* Export submissions as CSV or JSON
-* Configure webhooks
-* Connect services such as Slack, Discord, and Google Sheets
-* Test endpoints using the built-in playground
+- See all submissions in one place
+- Filter and inspect individual submissions
+- Export as CSV or JSON
+- Set up webhooks
+- Connect Slack, Discord, or Google Sheets
+- Test endpoints with a built-in playground
 
 ---
 
 ## Tech Stack
 
-Formlee is built with:
+Nothing fancy. Just:
 
-* **Next.js** — application framework
-* **TypeScript** — type safety
-* **Tailwind CSS** — styling
-* **Motion** — animations
-* **Lucide** — icons
-* **Node.js** — runtime
+- Next.js
+- TypeScript
+- Tailwind
+- Motion (animations)
+- Lucide (icons)
+- Node.js runtime
 
 ---
 
 ## Project Structure
 
-```text
+```
 ├── src/
 │   ├── components/
 │   │   ├── landing/       # Landing page sections
-│   │   ├── layout/        # Navbar, sidebar, footer, etc.
-│   │   └── ui/            # Reusable UI components
+│   │   ├── layout/        # Navbar, sidebar, footer
+│   │   └── ui/            # Shared UI components
 │   │
-│   ├── context/            # Global application state
-│   │   └── AppContext.tsx
+│   ├── context/            # AppContext.tsx for global state
 │   │
-│   ├── data/               # Templates, mock data and documentation
-│   ├── types/              # TypeScript types and interfaces
+│   ├── data/               # Templates, mock data, docs
+│   ├── types/              # TypeScript interfaces
 │   │
 │   ├── views/
 │   │   ├── LandingPage.tsx
@@ -233,9 +160,9 @@ Formlee is built with:
 │   │   ├── AuthPage.tsx
 │   │   └── dashboard/
 │   │
-│   ├── App.tsx             # Main application container
-│   ├── main.tsx            # Application entry point
-│   └── index.css           # Global styles
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
 │
 ├── index.html
 ├── tsconfig.json
@@ -244,53 +171,32 @@ Formlee is built with:
 
 ---
 
-## Running Formlee Locally
+## Running locally
 
-### Requirements
-
-You'll need:
-
-* [Node.js](https://nodejs.org/) 18 or newer
-* npm, yarn, or pnpm
-
-### 1. Clone the project
+**Requirements:** Node.js 18+ and npm/yarn/pnpm.
 
 ```bash
-git clone <your-repository-url>
+# Clone it
+git clone <your-repo-url>
 cd formlee
-```
 
-### 2. Install dependencies
-
-```bash
+# Install deps
 npm install
-```
 
-### 3. Start the development server
-
-```bash
+# Start dev server
 npm run dev
+
+# Open http://localhost:3000
 ```
 
-The app should now be available at:
-
-```text
-http://localhost:3000
-```
-
-### 4. Build for production
+For production:
 
 ```bash
 npm run build
-```
-
-### 5. Preview the production build
-
-```bash
 npm run preview
 ```
 
-### 6. Run linting
+Linting:
 
 ```bash
 npm run lint
@@ -298,28 +204,12 @@ npm run lint
 
 ---
 
-## Why Formlee?
+## Why I built this
 
-Forms are everywhere, but setting up the backend for a simple form can be surprisingly annoying.
+Forms are everywhere. Contact forms, waitlists, feedback forms, job apps—you name it.
 
-For a small portfolio website, landing page, waitlist, or contact page, you often don't need an entire backend just to receive a few fields and an email.
+And yet, every time I start a new side project, I waste 30 minutes wiring up the same form submission flow. SMTP configs, environment variables, error handling, rate limiting... it's boring and repetitive.
 
-Formlee is built around that idea:
-
-**Create a form → get an endpoint → connect it to your website → receive the submission.**
+Formlee is my attempt to never do that again. Set it up once, use it everywhere.
 
 ---
-
-## Status
-
-Formlee is currently under development.
-
-Some features may change as the project evolves.
-
----
-
-## Contributing
-
-Found a bug or have an idea that could make Formlee better?
-
-Feel free to open an issue or submit a pull request.
