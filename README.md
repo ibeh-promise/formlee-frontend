@@ -10,7 +10,7 @@ Formlee simplifies backend form handling for developers and designers. Instead o
 
 ---
 
-## 🛠️ Tech Stack
+## Project Tech Stack
 
 Formlee is built with modern, high-performance web technologies:
 
