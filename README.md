@@ -14,12 +14,14 @@
 
 ## About
 
-**Formlee enables users to build amazing platforms without worrying about the backend. it helps build simple backend contact form and many credentials maybe. Formlee handles the complex part and shows simple easy to implement codes.
+Formlee enables users to build amazing platforms without worrying about the backend. it helps build simple backend contact form and many credentials maybe. Formlee handles the complex part and shows simple easy to implement codes.
 
+---
 ## How it works
-Create an account: For user to manage the formlee dashboard, the user has to have a verified account.
-Create a form: Click **create form** and type in the form name.
-Recieve an endpoint.
+- Create an account: For user to manage the formlee dashboard, the user has to have a verified account.
+- Create a form: Click **create form** and type in the form name.
+- Recieve an endpoint.
+---
 
 ```html
 <!-- Plain HTML Form -->
