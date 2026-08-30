@@ -1,6 +1,4 @@
-Here is the same README, but rewritten to sound like it was written by a actual developer who talks like a normal person. I kept all the technical details intact but stripped out the corporate AI polish.
 
----
 
 # Formlee
 
