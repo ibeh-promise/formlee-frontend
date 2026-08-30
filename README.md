@@ -2,15 +2,17 @@
 
 **Formlee is a form delivery system that allows you to send form inputs directly to your emails with just a few lines of code.**
 
-# Tech Stack
+---
+## Tech Stack
 
-Framework: Nextjs,
-Language: TypeScript,
-Styling: Tailwind CSS,
-icons: Lucide,
-Engine: nodejs
+- Framework: Nextjs,
+- Language: TypeScript,
+- Styling: Tailwind CSS,
+- icons: Lucide,
+- Engine: nodejs
+----
 
-# About
+## About
 
 **Formlee enables users to build amazing platforms without worrying about the backend. it helps build simple backend contact form and many credentials maybe. Formlee handles the complex part and shows simple easy to implement codes.
 
