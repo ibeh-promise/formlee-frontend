@@ -4,7 +4,7 @@
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 Formlee simplifies backend form handling for developers and designers. Instead of configuring dedicated mail servers, SMTP credentials, serverless functions, or custom backend endpoints for contact forms, waitlists, surveys, and feedback widgets, Formlee provides a plug-and-play endpoint. Simply point your HTML form `action` or fetch request to Formlee, and incoming form submissions are processed and delivered directly to your inbox in real time.
 
@@ -23,7 +23,7 @@ Formlee is built with modern, high-performance web technologies:
 
 ---
 
-## 🚀 Project Walkthrough
+## Project Walkthrough
 
 Formlee provides an end-to-end workflow from endpoint generation to inbox delivery:
 
@@ -107,7 +107,7 @@ export default function ContactForm() {
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 ├── src/
@@ -135,7 +135,7 @@ export default function ContactForm() {
 
 ---
 
-## 💻 Local Development Setup
+## Local Development Setup
 
 ### Prerequisites
 - Node.js (v18 or higher recommended)
@@ -177,9 +177,3 @@ export default function ContactForm() {
   ```
 
 ---
-
-## 🔒 Security & Privacy
-
-- **Honeypot Support:** Hidden field traps to catch automated bots without degrading user experience.
-- **Custom CORS Whitelisting:** Restrict endpoint submissions exclusively to your verified website domains.
-- **Data Export & Retention:** Complete control over your submission data with one-click export and deletion options.
