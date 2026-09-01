@@ -19,7 +19,7 @@ export default function Hero(){
         {/* Subtle pill badge */}
         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/80 text-zinc-700 text-xs font-medium mb-6 animate-in fade-in slide-in-from-bottom-2 duration-200">
           <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
-          <span className="font-semibold text-zinc-900">Formlee 2.0</span>
+          <span className="font-semibold text-zinc-900">Formlee</span>
           <span className="text-zinc-400">·</span>
           <span>Zero backend form delivery</span>
         </div>
