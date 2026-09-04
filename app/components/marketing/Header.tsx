@@ -31,7 +31,7 @@ export default function Header() {
             <div className="hidden md:flex items-center space-x-8">
                 <p className={pathname === "/" ? "text-sm font-bold text-zinc-900" : "text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"} ><Link href="/">Product</Link></p>
                 <p className={pathname === "/pricing" ? "text-sm font-bold text-zinc-900" : "text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"} ><Link href="/pricing">Pricing</Link></p>
-                <p className={pathname === "/docs" ? "text-sm font-bold text-zinc-900" : "text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"} ><Link href="/docs">docs</Link></p>
+                <p className={pathname === "/docs" ? "text-sm font-bold text-zinc-900" : "text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"} ><Link href="/docs">Docs</Link></p>
             </div>
             <div className=" justify-around hidden md:flex items-center space-x-4">
                 <p className={pathname === "/login" ? "text-sm font-bold text-zinc-900" : "text-sm font-medium text-zinc-700 hover:text-zinc-900 px-3 py-2 transition-colors cursor-pointer"} >

@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="border-t border-zinc-200/80 bg-[#FAFAFA] text-zinc-600 text-sm mt-auto">
@@ -35,7 +36,7 @@ export default function Footer() {
             <h4 className="font-semibold text-zinc-900 text-xs uppercase tracking-wider mb-3">Product</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
                 <li>Overview</li>
-                <li>Pricing</li>
+                <li><Link href="/pricing">Pricing</Link></li>
                 <li>Live Dashoard</li>
                 <li>Endpoints</li>
             </ul>
