@@ -74,6 +74,19 @@ export default function docs() {
                         ))}   
                     </div>
                 </aside>
+                <div className="flex-1 bg-white rounded-2xl border border-zinc-200/80 p-6 sm:p-10 shadow-xs min-w-0">
+                        {activeDocSection === "quick-start" && (
+                            <div className="space-y-8">
+                                <div>
+                                    <div className="flex items-center space-x-2 text-xs text-zinc-500 font-mono mb-2">
+                                        <span>Getting Started</span>
+                                        <span>/</span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                </div>
             </div>
         </main>
     )
