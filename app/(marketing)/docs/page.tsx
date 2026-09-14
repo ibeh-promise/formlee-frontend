@@ -198,10 +198,9 @@ export default function docs() {
                       <code className="font-mono font-bold text-zinc-900">name ="subject"</code>
                       <p className="text-xs text-zinc-600 mt-1">Hide this field with css. If a spam bot fills it in,Formlee silently discards the spam</p>
                   </div>
-                </div>
-                </div>
-            )
-            }
+
+                   </div>
+
             <h3 className="text-sm font-bold text-zinc-900 mt-6">complete HTML example</h3>
             <CodeBlock
             language="html"
@@ -224,10 +223,29 @@ export default function docs() {
                 <textarea name="message" required></textarea>
 
                 <button type="sumbit">submit</button>
-              </form>`} />
-
+              </form>`}
+               />
           </div>
+            )}
+
+          {activeDocSection === "react" && (
+            <div className="space-y-6">
+              <h1 className="tet-2xl font-bold text-zinc-950">react integration</h1>
+              <p className="text-sm text-zinc-600">
+                connect react forms seamlessly using standard 
+                <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">fetch</code>
+                with JSON response handling without page reloads.
+              </p>
+              <CodeBlock
+              language="typescript"
+              filename="contantFor.tsx"
+              code={`import React, { useState } form 'react';`}
+
+              />
+            </div>
+          )}
+      </div>
       </div>
     </main>
-  );
+  )
 }
