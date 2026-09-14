@@ -187,10 +187,46 @@ export default function docs() {
                         Formlee supports all standard HTML5 input types with automatic parsing, honeypot spam protection, and file uploads.
                     </p>
                     <h3 className="text-sm font-bold text-zinc-900 mt-6"> Special Formlee Form Attributes </h3>
+                  <div className="space-y-3 text-xs sm:text-sm">
+                    <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
+                      <code className="font-mono font-bold text-zinc-900">
+                        name="_next"
+                      </code>
+                      <p className="text-xs text-zinc-600">set a custom email subject line for incoming submission notification.</p>
+                    </div>
+                    <div className="p-3 bg-zinc-50 border order-zinc-200 rounded-lg">
+                      <code className="font-mono font-bold text-zinc-900">name ="subject"</code>
+                      <p className="text-xs text-zinc-600 mt-1">Hide this field with css. If a spam bot fills it in,Formlee silently discards the spam</p>
+                  </div>
+                </div>
                 </div>
             )
-          }
-        </div>
+            }
+            <h3 className="text-sm font-bold text-zinc-900 mt-6">complete HTML example</h3>
+            <CodeBlock
+            language="html"
+            code={`<form action="https://formlee.com/f/form 8x29kd"method="POST">
+              <input type="text" name"gotcha" style="display: none">
+                
+                <!--custom email subject -->
+                <input type="hidden" name=" subject" value="new website inquriy" />
+
+                <!-- custom redirect destination -->
+                <input type="hidden" name=" vaule="https://example.com/thanks />
+
+                <label>Your Name</label>
+                <input type="text" name="name" required />
+
+                <label>Your Email</label>
+                <input type="email" name="email" required />
+
+                <label>Your Message</label>
+                <textarea name="message" required></textarea>
+
+                <button type="sumbit">submit</button>
+              </form>`} />
+
+          </div>
       </div>
     </main>
   );
