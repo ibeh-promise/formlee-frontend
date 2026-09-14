@@ -8,8 +8,8 @@ export default function docs() {
   const [testMessage, setTestMessage] = useState(
     "Testing Formlee API endpoint via Docs sandbox",
   );
-  const [isSendingText, setIsSendingText] = useState(false);
-  const [sandBoxResponse, setSandBoxResponse] = useState<string | null>(null);
+  const [isSendingTest, setIsSendingTest] = useState(false);
+  const [sandboxResult, setSandboxResult] = useState<any>(null);
   const docSections = [
     {
       group: "Getting Started",
@@ -140,11 +140,56 @@ export default function docs() {
               </div>
               <div className="space-14">
                     <h3 className="text-base font-bold text-zinc-900 flex items-center space-x-2">
-                        
+                        <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">3</span>
+                        <span>Try It In The interactive Tester</span>
                     </h3>
+                    <p className="text-xs sm:text-sm text-zinc-600">
+                        Test submitting to your endpoint right now. Watch the response return in real time:
+                    </p>
+                    <div className="p-5 bg-zinc-50 border border-zinc-200 rounded-xl space-y-4">
+                        <form className="space-y-3">
+                            <div>
+                                <label className="block text-xs font-semibold text-zinc-700 mb-1">Email</label>
+                                <input type="email"
+                                    value={testEmail}
+                                    onChange={(e) => setTestEmail(e.target.value)}
+                                    className="w-full text-xs px-3 py-2 bg-white border border-zinc-200 rounded-lg text-zinc-900"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-semibold text-zinc-700 mb-1">Message</label>
+                                <textarea
+                                    value={testMessage}
+                                    onChange={(e) => setTestMessage(e.target.value)}
+                                    className="w-full text-xs px-3 py-2 bg-white border border-zinc-200 rounded-lg text-zinc-900"
+                                />
+                                <button type="submit" onClick={isSendingTest} className="inline-flex items-center space-x-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"></button>
+                            </div>
+                        </form>
+                        {sandboxResult && (
+                            <div className="mt-4 pt-4 border-t border-zinc-200">
+                                <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider block mb-1.5"> Response (HTTP {sandboxResult.status} OK)</span>
+                                <pre className="p-3 bg-[#0c0d0e] text-emerald-400 font-mono text-xs rounded-lg overflow-x-auto">
+                          {JSON.stringify(sandboxResult.data, null, 2)}
+                        </pre>
+                            </div>
+                        )}
+                    </div>
+
               </div>
             </div>
           )}
+          {
+            activeDocSection === "html-forms" && (
+                <div className="space-y-6">
+                    <h1 className="text-2xl font-bold text-zinc-950">Html Forms</h1>
+                    <p className="text-sm text-zinc-600">
+                        Formlee supports all standard HTML5 input types with automatic parsing, honeypot spam protection, and file uploads.
+                    </p>
+                    <h3 className="text-sm font-bold text-zinc-900 mt-6"> Special Formlee Form Attributes </h3>
+                </div>
+            )
+          }
         </div>
       </div>
     </main>
