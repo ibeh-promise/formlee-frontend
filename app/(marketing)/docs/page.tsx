@@ -239,10 +239,113 @@ export default function docs() {
               <CodeBlock
               language="typescript"
               filename="contantFor.tsx"
-              code={`import React, { useState } form 'react';`}
+              code={`import React, { useState } form 'react';
 
+              Export fuction contactFom() {
+                const [isSumbitting, setIsSumitting] = useState(false);
+                const [isSuccess, setIsSuccess]= useState(false);
+                const [errorMessage, setErrorMessage] = usestate('');
+
+                const handleSumit = async (e: React.FormEvent<HTMLFormElement>)
+                e. preventdefault();
+                setIsSubmitting(ture);
+                setErrorMessage('');
+
+                const formData = new FormData(e.currentTarget);
+
+                try {
+                  const response = await fetch(https://formlee.com/f/form 8x29d, {
+                    method: 'POST',
+                    body: formData
+                    headers: {
+                      'Accept: 'application/json'
+                    }
+                  });
+                const data = await response.json();
+
+                if (response.ok) {
+                  setIsSuccess(true);
+                } else {
+                  setErrorMessage(data.error || 'failed to sumbit form');
+                } catch (error) {
+                  setErrorMessage('Network error occurred');
+                } finally {
+                  setIsSumbitting(false);
+                }
+              };
+                  
+              if (isSuccess) {
+              return <div className="p-4 bg-emerald-50 text-emerald-800 rounded-lg>Thank you we received your message</div>;
+              }
+
+              return (
+              <form onSubmit={handleSubmit} className="space-y-4">
+              {errorMessage && <div className="text-rose-600 text-xs">{errorMessage}</div>}
+              <input type="email" name="email" placeholder="Your email" required />
+              <textarea name="Message" placeholder="Your inquiry" required>
+              <button type="submit" disabled={isSumbitting} >
+              {isSumitting ? 'sending...': 'Send Message'}
+              </button>
+              </form>
+              )
+                } `}
+                
               />
             </div>
+          )}
+
+          {activeDocSection === 'next.js' && (
+            <div className="space-y-6">
+              <div>
+                <div className="felx items-center space-x-2 text-xs text-zinc-500 font-mono mb-2">
+                  <span>Frameworks</span>
+                  <span></span>
+                  <span className="text-zinc-900 font-semibold">Next.js App Router</span>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-bold text-zinc-900 flex items-center space-x-2">
+                        <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[10px] font-mono font-semibold">Option 1</span>
+                        <span>Next.js Server Action (Zero Client Js)</span>
+                        </h3>
+                        </div>
+                        <p className="text-xs text-zinc-600">
+                          Use a server action to security submit form data server-side without exposing API keys or endpoint IDs in client network logs.
+                          </p> 
+                          <CodeBlock
+                          language="typescript"
+                          filename="app/actions/submit-form.ts"
+                          code={`use server;
+export async function submitcontactform(prevState: any; formData: Formdata) {
+ const endpoint = process.env.FORMLEE_ENDPOINT_URL // 'https://formlee.com/f/form 8x29kd';
+ 
+ try {
+ const res = await fetch(endpoint,{
+ method: 'POST'
+ body: 'formData'
+ header: {
+ 'Accept': 'application/json',
+
+ });
+ 
+ if (!res.ok) {
+  const errorData = await res.json().catch(() => ({}));
+  return { success: false, message: errorData.error// 'submission failed' };
+ }
+
+ const data = await res.json();
+ return{success: true, message: 'Message delivered successfully', data };
+} catch (error) {
+  return { success: false, Message: 'Network connection error'}
+}
+}`} 
+                          
+           />
+          </div>
+          </div>
+          <div>
+
           )}
       </div>
       </div>
