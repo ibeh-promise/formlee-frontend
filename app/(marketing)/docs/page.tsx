@@ -139,72 +139,98 @@ export default function docs() {
                 />
               </div>
               <div className="space-14">
-                    <h3 className="text-base font-bold text-zinc-900 flex items-center space-x-2">
-                        <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">3</span>
-                        <span>Try It In The interactive Tester</span>
-                    </h3>
-                    <p className="text-xs sm:text-sm text-zinc-600">
-                        Test submitting to your endpoint right now. Watch the response return in real time:
-                    </p>
-                    <div className="p-5 bg-zinc-50 border border-zinc-200 rounded-xl space-y-4">
-                        <form className="space-y-3">
-                            <div>
-                                <label className="block text-xs font-semibold text-zinc-700 mb-1">Email</label>
-                                <input type="email"
-                                    value={testEmail}
-                                    onChange={(e) => setTestEmail(e.target.value)}
-                                    className="w-full text-xs px-3 py-2 bg-white border border-zinc-200 rounded-lg text-zinc-900"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-semibold text-zinc-700 mb-1">Message</label>
-                                <textarea
-                                    value={testMessage}
-                                    onChange={(e) => setTestMessage(e.target.value)}
-                                    className="w-full text-xs px-3 py-2 bg-white border border-zinc-200 rounded-lg text-zinc-900"
-                                />
-                                <button type="submit" onClick={isSendingTest} className="inline-flex items-center space-x-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"></button>
-                            </div>
-                        </form>
-                        {sandboxResult && (
-                            <div className="mt-4 pt-4 border-t border-zinc-200">
-                                <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider block mb-1.5"> Response (HTTP {sandboxResult.status} OK)</span>
-                                <pre className="p-3 bg-[#0c0d0e] text-emerald-400 font-mono text-xs rounded-lg overflow-x-auto">
-                          {JSON.stringify(sandboxResult.data, null, 2)}
-                        </pre>
-                            </div>
-                        )}
+                <h3 className="text-base font-bold text-zinc-900 flex items-center space-x-2">
+                  <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">
+                    3
+                  </span>
+                  <span>Try It In The interactive Tester</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-600">
+                  Test submitting to your endpoint right now. Watch the response
+                  return in real time:
+                </p>
+                <div className="p-5 bg-zinc-50 border border-zinc-200 rounded-xl space-y-4">
+                  <form className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        value={testEmail}
+                        onChange={(e) => setTestEmail(e.target.value)}
+                        className="w-full text-xs px-3 py-2 bg-white border border-zinc-200 rounded-lg text-zinc-900"
+                      />
                     </div>
-
+                    <div>
+                      <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                        Message
+                      </label>
+                      <textarea
+                        value={testMessage}
+                        onChange={(e) => setTestMessage(e.target.value)}
+                        className="w-full text-xs px-3 py-2 bg-white border border-zinc-200 rounded-lg text-zinc-900"
+                      />
+                      <button
+                        type="submit"
+                        onClick={isSendingTest}
+                        className="inline-flex items-center space-x-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                      ></button>
+                    </div>
+                  </form>
+                  {sandboxResult && (
+                    <div className="mt-4 pt-4 border-t border-zinc-200">
+                      <span className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider block mb-1.5">
+                        {" "}
+                        Response (HTTP {sandboxResult.status} OK)
+                      </span>
+                      <pre className="p-3 bg-[#0c0d0e] text-emerald-400 font-mono text-xs rounded-lg overflow-x-auto">
+                        {JSON.stringify(sandboxResult.data, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
-          {
-            activeDocSection === "html-forms" && (
-                <div className="space-y-6">
-                    <h1 className="text-2xl font-bold text-zinc-950">Html Forms</h1>
-                    <p className="text-sm text-zinc-600">
-                        Formlee supports all standard HTML5 input types with automatic parsing, honeypot spam protection, and file uploads.
-                    </p>
-                    <h3 className="text-sm font-bold text-zinc-900 mt-6"> Special Formlee Form Attributes </h3>
-                  <div className="space-y-3 text-xs sm:text-sm">
-                    <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
-                      <code className="font-mono font-bold text-zinc-900">
-                        name="_next"
-                      </code>
-                      <p className="text-xs text-zinc-600">set a custom email subject line for incoming submission notification.</p>
-                    </div>
-                    <div className="p-3 bg-zinc-50 border order-zinc-200 rounded-lg">
-                      <code className="font-mono font-bold text-zinc-900">name ="subject"</code>
-                      <p className="text-xs text-zinc-600 mt-1">Hide this field with css. If a spam bot fills it in,Formlee silently discards the spam</p>
-                  </div>
+          {activeDocSection === "html-forms" && (
+            <div className="space-y-6">
+              <h1 className="text-2xl font-bold text-zinc-950">Html Forms</h1>
+              <p className="text-sm text-zinc-600">
+                Formlee supports all standard HTML5 input types with automatic
+                parsing, honeypot spam protection, and file uploads.
+              </p>
+              <h3 className="text-sm font-bold text-zinc-900 mt-6">
+                {" "}
+                Special Formlee Form Attributes{" "}
+              </h3>
+              <div className="space-y-3 text-xs sm:text-sm">
+                <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
+                  <code className="font-mono font-bold text-zinc-900">
+                    name="_next"
+                  </code>
+                  <p className="text-xs text-zinc-600">
+                    set a custom email subject line for incoming submission
+                    notification.
+                  </p>
+                </div>
+                <div className="p-3 bg-zinc-50 border order-zinc-200 rounded-lg">
+                  <code className="font-mono font-bold text-zinc-900">
+                    name ="subject"
+                  </code>
+                  <p className="text-xs text-zinc-600 mt-1">
+                    Hide this field with css. If a spam bot fills it in,Formlee
+                    silently discards the spam
+                  </p>
+                </div>
+              </div>
 
-                   </div>
-
-            <h3 className="text-sm font-bold text-zinc-900 mt-6">complete HTML example</h3>
-            <CodeBlock
-            language="html"
-            code={`<form action="https://formlee.com/f/form 8x29kd"method="POST">
+              <h3 className="text-sm font-bold text-zinc-900 mt-6">
+                complete HTML example
+              </h3>
+              <CodeBlock
+                language="html"
+                code={`<form action="https://formlee.com/f/form 8x29kd"method="POST">
               <input type="text" name"gotcha" style="display: none">
                 
                 <!--custom email subject -->
@@ -224,22 +250,26 @@ export default function docs() {
 
                 <button type="sumbit">submit</button>
               </form>`}
-               />
-          </div>
-            )}
+              />
+            </div>
+          )}
 
           {activeDocSection === "react" && (
             <div className="space-y-6">
-              <h1 className="tet-2xl font-bold text-zinc-950">react integration</h1>
+              <h1 className="tet-2xl font-bold text-zinc-950">
+                react integration
+              </h1>
               <p className="text-sm text-zinc-600">
-                connect react forms seamlessly using standard 
-                <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">fetch</code>
+                connect react forms seamlessly using standard
+                <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">
+                  fetch
+                </code>
                 with JSON response handling without page reloads.
               </p>
               <CodeBlock
-              language="typescript"
-              filename="contantFor.tsx"
-              code={`import React, { useState } form 'react';
+                language="typescript"
+                filename="contantFor.tsx"
+                code={`import React, { useState } form 'react';
 
               Export fuction contactFom() {
                 const [isSumbitting, setIsSumitting] = useState(false);
@@ -289,34 +319,38 @@ export default function docs() {
               </form>
               )
                 } `}
-                
               />
             </div>
           )}
 
-          {activeDocSection === 'next.js' && (
+          {activeDocSection === "next.js" && (
             <div className="space-y-6">
               <div>
                 <div className="felx items-center space-x-2 text-xs text-zinc-500 font-mono mb-2">
                   <span>Frameworks</span>
-                  <span></span>
-                  <span className="text-zinc-900 font-semibold">Next.js App Router</span>
-                  </div>
+                  <span className="text-zinc-900 font-semibold">
+                    Next.js App Router
+                  </span>
+                </div>
 
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-bold text-zinc-900 flex items-center space-x-2">
-                        <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[10px] font-mono font-semibold">Option 1</span>
-                        <span>Next.js Server Action (Zero Client Js)</span>
-                        </h3>
-                        </div>
-                        <p className="text-xs text-zinc-600">
-                          Use a server action to security submit form data server-side without exposing API keys or endpoint IDs in client network logs.
-                          </p> 
-                          <CodeBlock
-                          language="typescript"
-                          filename="app/actions/submit-form.ts"
-                          code={`use server;
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-zinc-900 flex items-center space-x-2">
+                      <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[10px] font-mono font-semibold">
+                        Option 1
+                      </span>
+                      <span>Next.js Server Action (Zero Client Js)</span>
+                    </h3>
+                  </div>
+                  <p className="text-xs text-zinc-600">
+                    Use a server action to security submit form data server-side
+                    without exposing API keys or endpoint IDs in client network
+                    logs.
+                  </p>
+                  <CodeBlock
+                    language="typescript"
+                    filename="app/actions/submit-form.ts"
+                    code={`use server;
 export async function submitcontactform(prevState: any; formData: Formdata) {
  const endpoint = process.env.FORMLEE_ENDPOINT_URL // 'https://formlee.com/f/form 8x29kd';
  
@@ -339,16 +373,109 @@ export async function submitcontactform(prevState: any; formData: Formdata) {
 } catch (error) {
   return { success: false, Message: 'Network connection error'}
 }
-}`} 
-                          
-           />
-          </div>
-          </div>
-          <div>
-
+}`}
+                  />
+                </div>
+              </div>
+            </div>
           )}
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-zinc-900 flex items-center space-x-2">
+              <span className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800 text-[10px] font-mono font-semibold">
+                Option 2
+              </span>
+              <span>Client Component (App Router)</span>
+            </h3>
+            <p className="text-xs tetx-zinc-600">
+              Interactive Next.js componet with instant loading states and
+              feedback.
+            </p>
+            <CodeBlock
+              language="typescript"
+              filename="app/component/ContactForm.tsx"
+              code={`'use client;
+
+  import { useActionstate } form 'react';
+  import { submitContactForm } form '../actions/submit-form';
+
+  const initialState = { Success: false, message: '' };
+
+  export function contactForm() {
+    const [state, formAction, isPending] = useActionState (submitContactForm, intialState);
+
+    return (
+    <form action={formAction} className="space-y-4 max-w-md">
+      {state.message && (
+        <div className={\`p-3 rounded-lg text-xs font-medium \${state.success ? 'bg-emerald-50 text-emerald-800' : 'bg-rose-50 text-rose-800'}\`}>
+          {state.message}
+        </div>
+      )}
+
+      <div>
+        <label className="block text-xs font-semibold text-zinc-700 mb-1">Name</label>
+        <input name="name" type="text" required className="w-full px-3 py-2 border rounded-lg text-sm" />
       </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-zinc-700 mb-1">Email</label>
+        <input name="email" type="email" required className="w-full px-3 py-2 border rounded-lg text-sm" />
+      </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-zinc-700 mb-1">Message</label>
+        <textarea name="message" rows={3} required className="w-full px-3 py-2 border rounded-lg text-sm" />
+      </div>
+
+      <button
+        type="submit"
+        disabled={isPending}
+        className="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 disabled:opacity-50 text-white text-xs font-semibold rounded-lg"
+      >
+        {isPending ? 'Sending...' : 'Send Message'}
+      </button>
+    </form>
+  );
+        }`}
+            />
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-bold text-zinc-900 felx items-center space-x-2">
+              <span className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800 text-[-10px] font-mono font-semibold">
+                Option 3
+              </span>
+              <span>Next.js API Route Handler (webhook & relay)</span>
+            </h3>
+            <CodeBlock
+              language="typescrit"
+              filename="app/api/submissions/route.ts"
+              code={`
+        import { NextRequest, Nextresponse, } form 'next/server';
+        export async fuction POST(req: NextRequest) {
+          try {
+            const body = await req.json ();
+
+            //proxy to Formlee endpoint
+            const response = await fetch ('https//formlee.com/f/form_8x29kd',{
+              method: 'POST',
+              header: {
+                'Content-type': 'application/json'
+                'Accept': 'application/json'
+              },
+              body: JSON.stringfy(body)
+            });
+
+            const result = await response.json();
+            return NextResponse.json({ error: response.status });
+          } catch (error) {
+            return NextResponse.json({ error: 'Internal Server Error' }, { Status: 500 });
+          }
+        }`}
+            />
+          </div>
+        </div>
       </div>
     </main>
-  )
+  );
 }
