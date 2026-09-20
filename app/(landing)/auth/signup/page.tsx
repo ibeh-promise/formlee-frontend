@@ -4,7 +4,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { ArrowLeft, ArrowRight, Lock, Mail } from "lucide-react";
+import {  ArrowRight, Lock, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -29,13 +29,22 @@ function login() {
           </div>
 
           <div className="space-y-1 text-center">
-            <h4 className="text-2xl font-bold">Welcome back to Formlee</h4>
+            <h4 className="text-2xl font-bold">Create your Formlee account</h4>
             <p className="text-sm text-black/60">
-              Signin to access your forms and submission inbox
+              Start receiving form submission in under a minute
             </p>
           </div>
         </div>
 
+        <div className="w-full space-y-2">
+          <Label htmlFor="email">EMAIL ADDRESS</Label>
+          <InputGroup>
+            <InputGroupInput placeholder="John Doe" type="text" />
+            <InputGroupAddon>
+              <User />
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
         <div className="w-full space-y-2">
           <Label htmlFor="email">EMAIL ADDRESS</Label>
           <InputGroup>
@@ -55,15 +64,15 @@ function login() {
           </InputGroup>
         </div>
         <Button className={"w-full"}>
-          <span>Login In</span> <ArrowRight />
+          <span>Sign up</span> <ArrowRight />
         </Button>
 
         <hr />
 
         <p className="text-sm text-center text-black/60">
-          Don&apos;t have an account?{" "}
-          <Link href={"/auth/signup"} className="text-black">
-            Sign up
+          Already have an account?{" "}
+          <Link href={"/auth/login"} className="text-black">
+            Login
           </Link>
         </p>
       </div>

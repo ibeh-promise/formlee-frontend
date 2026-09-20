@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
 
-import { Check, HelpCircle, ArrowRight } from "lucide-react";
+import { Check } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
@@ -83,31 +85,17 @@ export default function PricingPage() {
           bills.
         </p>
 
-        <div className="my-8 inline-flex items-center p-1 bg-zinc-200/70 rounded-xl border border-zinc-200">
-          <button
-            onClick={() => setBillingCycle("monthly")}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
-              billingCycle === "monthly"
-                ? "bg-white text-zinc-900 shadow-2xs"
-                : "text-zinc-600 hover:text-zinc-900"
-            }`}
-          >
-            Monthly billing
-          </button>
-          <button
-            onClick={() => setBillingCycle("yearly")}
-            className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${
-              billingCycle === "yearly"
-                ? "bg-white text-zinc-900 shadow-2xs"
-                : "text-zinc-600 hover:text-zinc-900"
-            }`}
-          >
-            <span>Yearly billing</span>
-            <span className="text-[10px] bg-emerald-100 text-emerald-800 font-semibold px-1.5 py-0.2 rounded-md">
-              Save 20%
-            </span>
-          </button>
-        </div>
+        <Tabs value={billingCycle} onValueChange={setBillingCycle}>
+          <TabsList className={"my-10"}>
+            <TabsTrigger value={"monthly"}>Monthly</TabsTrigger>
+            <TabsTrigger value={"yearly"}>
+              <span>Yearly billing</span>
+              <span className="text-[10px] bg-emerald-100 text-emerald-800 font-semibold px-1.5 py-0.2 rounded-md">
+                Save 20%
+              </span>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((plan) => {
@@ -171,16 +159,12 @@ export default function PricingPage() {
                   </div>
                 </div>
 
-                <button
+                <Button
                   // onClick={() => handleSelectPlan(plan.planKey)}
-                  className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold transition-all active:scale-98 cursor-pointer ${
-                    plan.popular
-                      ? "bg-zinc-900 hover:bg-zinc-800 text-white shadow-xs"
-                      : "bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border border-zinc-200/80"
-                  }`}
+                  variant={plan.popular ? "default" : "secondary"}
                 >
                   {isCurrent ? "Active Plan" : plan.cta}
-                </button>
+                </Button>
               </div>
             );
           })}
@@ -216,7 +200,7 @@ export default function PricingPage() {
               </h4>
               <p className="text-zinc-600 text-xs sm:text-sm leading-relaxed">
                 Yes! You can upgrade or downgrade your plan at any time. If you
-                upgrade, you'll be charged a prorated amount for the remainder
+                upgrade, you&apos;ll be charged a prorated amount for the remainder
                 of your billing cycle.
               </p>
             </div>

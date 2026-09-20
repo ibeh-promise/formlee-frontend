@@ -2,20 +2,11 @@
 import React, { useState } from "react";
 // import { useApp } from '../context/AppContext';
 import CodeBlock from "@/components/ui/CodeBlock";
-import {
-  BookOpen,
-  Code2,
-  Terminal,
-  Send,
-  CheckCircle2,
-  Layers,
-  Shield,
-  Zap,
-  ArrowRight,
-  Search,
-} from "lucide-react";
+import { Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "cn";
 
-export default function docsPage() {
+export default function DocsPage() {
   // const { forms, simulateFormSubmission, addToast } = null;
   const [activeDocSection, setActiveDocSection] =
     useState<string>("quick-start");
@@ -24,6 +15,7 @@ export default function docsPage() {
     "Testing Formlee API endpoint via Docs sandbox",
   );
   const [isSendingTest, setIsSendingTest] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [sandboxResult, setSandboxResult] = useState<any>(null);
 
   const docSections = [
@@ -99,19 +91,24 @@ export default function docsPage() {
                   <ul className="space-y-1">
                     {group.items.map((item) => (
                       <li key={item.id}>
-                        <button
+                        <Button
+                          variant={
+                            activeDocSection === item.id ? "default" : "ghost"
+                          }
+                          size="sm"
                           onClick={() => {
                             setActiveDocSection(item.id);
                             window.scrollTo({ top: 0, behavior: "smooth" });
                           }}
-                          className={`w-full text-left px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                          className={cn(
+                            "w-full justify-start px-3 py-1.5 h-auto rounded-lg text-xs font-medium",
                             activeDocSection === item.id
-                              ? "bg-zinc-900 text-white font-semibold shadow-2xs"
-                              : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/70"
-                          }`}
+                              ? "bg-zinc-900 text-white font-semibold hover:bg-zinc-900 shadow-2xs"
+                              : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/70",
+                          )}
                         >
                           {item.title}
-                        </button>
+                        </Button>
                       </li>
                     ))}
                   </ul>
@@ -148,8 +145,8 @@ export default function docsPage() {
                     <span>Create a Form Endpoint</span>
                   </h3>
                   <p className="text-xs sm:text-sm text-zinc-600">
-                    From your dashboard, click "+ Create Form". You will receive
-                    a unique endpoint URL:
+                    From your dashboard, click &quot;+ Create Form&quot;. You
+                    will receive a unique endpoint URL:
                   </p>
                   <div className="p-3 bg-zinc-50 rounded-lg border border-zinc-200 font-mono text-xs text-zinc-800 flex items-center justify-between">
                     <span>https://formlee.com/f/form_8x29kd</span>
@@ -167,7 +164,7 @@ export default function docsPage() {
                     <span>Point your form action to Formlee</span>
                   </h3>
                   <p className="text-xs sm:text-sm text-zinc-600">
-                    Set your HTML form's{" "}
+                    Set your HTML form&apos;s{" "}
                     <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">
                       action
                     </code>{" "}
@@ -226,16 +223,12 @@ export default function docsPage() {
                           className="w-full text-xs px-3 py-2 bg-white border border-zinc-200 rounded-lg text-zinc-900"
                         />
                       </div>
-                      <button
-                        type="submit"
-                        disabled={isSendingTest}
-                        className="inline-flex items-center space-x-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
-                      >
+                      <Button type="submit" disabled={isSendingTest}>
                         <Send className="w-3 h-3" />
                         <span>
                           {isSendingTest ? "Dispatching..." : "Send Live Test"}
                         </span>
-                      </button>
+                      </Button>
                     </form>
 
                     {sandboxResult && (
@@ -268,7 +261,7 @@ export default function docsPage() {
                 <div className="space-y-3 text-xs sm:text-sm">
                   <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
                     <code className="font-mono font-bold text-zinc-900">
-                      name="_next"
+                      name=&quot;_next&quot;
                     </code>
                     <p className="text-xs text-zinc-600 mt-1">
                       Specify a custom redirect URL where the user should be
@@ -277,7 +270,7 @@ export default function docsPage() {
                   </div>
                   <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
                     <code className="font-mono font-bold text-zinc-900">
-                      name="_subject"
+                      name=&quot;_subject&quot;
                     </code>
                     <p className="text-xs text-zinc-600 mt-1">
                       Set a custom email subject line for your incoming
@@ -286,7 +279,7 @@ export default function docsPage() {
                   </div>
                   <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
                     <code className="font-mono font-bold text-zinc-900">
-                      name="_gotcha" (Honeypot)
+                      name=&quot;_gotcha&quot; (Honeypot)
                     </code>
                     <p className="text-xs text-zinc-600 mt-1">
                       Hide this field with CSS. If a spam bot fills it in,
