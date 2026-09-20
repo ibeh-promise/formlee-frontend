@@ -1,3 +1,4 @@
+"use client";
 import { Label } from "@/components/ui/label";
 import {
   InputGroup,
@@ -7,11 +8,42 @@ import {
 import { ArrowLeft, ArrowRight, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { SubmitEvent, useState } from "react";
+import { toast } from "sonner";
+import * as api from "@/api";
 
-function login() {
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleLogin = async (e: SubmitEvent) => {
+    e.preventDefault();
+    if (!email || !password) return toast("Fill in all fields");
+    setSubmitting(true);
+
+    const res = await api.auth.authControllerLoginV1({
+      body: { email, password },
+    });
+
+    if (res.error) {
+      toast.error("Unable to submit", {
+        description: res.error.message,
+      });
+    } else {
+      toast.success("Login successful", { description: res.data.message });
+      console.log(res.data);
+    }
+
+    setSubmitting(false);
+  };
+
   return (
     <div className="flex  items-center justify-center py-20 bg-[#FAFAFA]/90">
-      <div className="bg-white p-10 rounded-2xl border shadow space-y-7">
+      <form
+        className="bg-white p-10 rounded-2xl border shadow space-y-7"
+        onSubmit={handleLogin}
+      >
         <div className="flex flex-col items-center gap-y-4">
           <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white shadow-xs group-hover:bg-zinc-800 transition-colors">
             <svg
@@ -39,7 +71,13 @@ function login() {
         <div className="w-full space-y-2">
           <Label htmlFor="email">EMAIL ADDRESS</Label>
           <InputGroup>
-            <InputGroupInput placeholder="name@example.com" type="email" />
+            <InputGroupInput
+              placeholder="name@example.com"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
             <InputGroupAddon>
               <Mail />
             </InputGroupAddon>
@@ -48,13 +86,19 @@ function login() {
         <div className="w-full space-y-2">
           <Label htmlFor="email">PASSWORD</Label>
           <InputGroup>
-            <InputGroupInput placeholder="Enter password" type="password" />
+            <InputGroupInput
+              placeholder="Enter password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <InputGroupAddon>
               <Lock />
             </InputGroupAddon>
           </InputGroup>
         </div>
-        <Button className={"w-full"}>
+        <Button className={"w-full"} type="submit">
           <span>Login In</span> <ArrowRight />
         </Button>
 
@@ -66,9 +110,9 @@ function login() {
             Sign up
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
 
-export default login;
+export default Login;

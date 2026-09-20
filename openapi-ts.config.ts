@@ -6,7 +6,7 @@ export default defineConfig({
   output: "./api",
   plugins: [
     "@hey-api/typescript",
-    { name: "@hey-api/client-fetch", runtimeConfigPath: "./app/hey-api" },
+    { name: "@hey-api/client-fetch", runtimeConfigPath: "./hey-api" },
     { name: "@hey-api/transformers", dates: true, bigInt: true },
     {
       operations: {
