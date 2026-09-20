@@ -1,10 +1,10 @@
 import Image from "next/image";
-import Hero from "@/app/components/landingpage/Hero"
-import ContactForm from "@/app/components/landingpage/ContactForm"
-import HowItWorks from "@/app/components/landingpage/HowItWorks"
-import Features from "@/app/components/landingpage/Features"
-import {DashboardInteractiveSection} from "@/app/components/landingpage/DashboardInteractiveSection"
-import CtaSection from "@/app/components/landingpage/CtaSection"
+import Hero from "@/components/landingpage/Hero";
+import ContactForm from "@/components/landingpage/ContactForm";
+import HowItWorks from "@/components/landingpage/HowItWorks";
+import Features from "@/components/landingpage/Features";
+import { DashboardInteractiveSection } from "@/components/landingpage/DashboardInteractiveSection";
+import CtaSection from "@/components/landingpage/CtaSection";
 
 export default function Home() {
   return (

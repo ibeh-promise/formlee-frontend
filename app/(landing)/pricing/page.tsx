@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 
 import { Check, HelpCircle, ArrowRight } from "lucide-react";
-import { Badge } from "@/app/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(

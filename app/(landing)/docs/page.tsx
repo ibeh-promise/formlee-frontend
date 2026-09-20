@@ -1,7 +1,7 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 // import { useApp } from '../context/AppContext';
-import CodeBlock from '@/app/components/ui/CodeBlock';
+import CodeBlock from "@/components/ui/CodeBlock";
 import {
   BookOpen,
   Code2,
@@ -12,46 +12,48 @@ import {
   Shield,
   Zap,
   ArrowRight,
-  Search
-} from 'lucide-react';
+  Search,
+} from "lucide-react";
 
 export default function docsPage() {
-
   // const { forms, simulateFormSubmission, addToast } = null;
-  const [activeDocSection, setActiveDocSection] = useState<string>('quick-start');
-  const [testEmail, setTestEmail] = useState('developer@test.io');
-  const [testMessage, setTestMessage] = useState('Testing Formlee API endpoint via Docs sandbox');
+  const [activeDocSection, setActiveDocSection] =
+    useState<string>("quick-start");
+  const [testEmail, setTestEmail] = useState("developer@test.io");
+  const [testMessage, setTestMessage] = useState(
+    "Testing Formlee API endpoint via Docs sandbox",
+  );
   const [isSendingTest, setIsSendingTest] = useState(false);
   const [sandboxResult, setSandboxResult] = useState<any>(null);
 
   const docSections = [
     {
-      group: 'Getting Started',
+      group: "Getting Started",
       items: [
-        { id: 'introduction', title: 'Introduction' },
-        { id: 'quick-start', title: 'Quick Start' },
-        { id: 'html-forms', title: 'HTML Forms' },
-        { id: 'react', title: 'React' },
-        { id: 'nextjs', title: 'Next.js' },
+        { id: "introduction", title: "Introduction" },
+        { id: "quick-start", title: "Quick Start" },
+        { id: "html-forms", title: "HTML Forms" },
+        { id: "react", title: "React" },
+        { id: "nextjs", title: "Next.js" },
       ],
     },
     {
-      group: 'Features',
+      group: "Features",
       items: [
-        { id: 'submissions', title: 'Submissions' },
-        { id: 'email-notifications', title: 'Email Notifications' },
-        { id: 'file-uploads', title: 'File Uploads' },
-        { id: 'webhooks', title: 'Webhooks' },
-        { id: 'spam-protection', title: 'Spam Protection' },
+        { id: "submissions", title: "Submissions" },
+        { id: "email-notifications", title: "Email Notifications" },
+        { id: "file-uploads", title: "File Uploads" },
+        { id: "webhooks", title: "Webhooks" },
+        { id: "spam-protection", title: "Spam Protection" },
       ],
     },
     {
-      group: 'API Reference',
+      group: "API Reference",
       items: [
-        { id: 'api-auth', title: 'Authentication' },
-        { id: 'api-endpoints', title: 'Endpoints' },
-        { id: 'api-submissions', title: 'Submissions API' },
-        { id: 'api-webhooks', title: 'Webhooks API' },
+        { id: "api-auth", title: "Authentication" },
+        { id: "api-endpoints", title: "Endpoints" },
+        { id: "api-submissions", title: "Submissions API" },
+        { id: "api-webhooks", title: "Webhooks API" },
       ],
     },
   ];
@@ -85,7 +87,6 @@ export default function docsPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAFAFA] text-zinc-900">
-
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-10">
         <div className="flex flex-col md:flex-row gap-8 items-start">
           <aside className="w-full md:w-60 shrink-0 bg-white md:bg-transparent rounded-xl p-4 md:p-0 border md:border-0 border-zinc-200 sticky top-20">
@@ -101,12 +102,12 @@ export default function docsPage() {
                         <button
                           onClick={() => {
                             setActiveDocSection(item.id);
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            window.scrollTo({ top: 0, behavior: "smooth" });
                           }}
                           className={`w-full text-left px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                             activeDocSection === item.id
-                              ? 'bg-zinc-900 text-white font-semibold shadow-2xs'
-                              : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/70'
+                              ? "bg-zinc-900 text-white font-semibold shadow-2xs"
+                              : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/70"
                           }`}
                         >
                           {item.title}
@@ -120,43 +121,61 @@ export default function docsPage() {
           </aside>
 
           <div className="flex-1 bg-white rounded-2xl border border-zinc-200/80 p-6 sm:p-10 shadow-xs min-w-0">
-            {activeDocSection === 'quick-start' && (
+            {activeDocSection === "quick-start" && (
               <div className="space-y-8">
                 <div>
                   <div className="flex items-center space-x-2 text-xs text-zinc-500 font-mono mb-2">
                     <span>Getting Started</span>
                     <span>/</span>
-                    <span className="text-zinc-900 font-semibold">Quick Start</span>
+                    <span className="text-zinc-900 font-semibold">
+                      Quick Start
+                    </span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
                     Quick Start Guide
                   </h1>
                   <p className="text-sm text-zinc-600 leading-relaxed">
-                    Set up Formlee in under 60 seconds. No npm dependencies or complex configuration required.
+                    Set up Formlee in under 60 seconds. No npm dependencies or
+                    complex configuration required.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <h3 className="text-base font-bold text-zinc-900 flex items-center space-x-2">
-                    <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">1</span>
+                    <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">
+                      1
+                    </span>
                     <span>Create a Form Endpoint</span>
                   </h3>
                   <p className="text-xs sm:text-sm text-zinc-600">
-                    From your dashboard, click "+ Create Form". You will receive a unique endpoint URL:
+                    From your dashboard, click "+ Create Form". You will receive
+                    a unique endpoint URL:
                   </p>
                   <div className="p-3 bg-zinc-50 rounded-lg border border-zinc-200 font-mono text-xs text-zinc-800 flex items-center justify-between">
                     <span>https://formlee.com/f/form_8x29kd</span>
-                    <span className="text-[10px] text-zinc-600 uppercase font-semibold">Your Endpoint</span>
+                    <span className="text-[10px] text-zinc-600 uppercase font-semibold">
+                      Your Endpoint
+                    </span>
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <h3 className="text-base font-bold text-zinc-900 flex items-center space-x-2">
-                    <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">2</span>
+                    <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">
+                      2
+                    </span>
                     <span>Point your form action to Formlee</span>
                   </h3>
                   <p className="text-xs sm:text-sm text-zinc-600">
-                    Set your HTML form's <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">action</code> attribute to your Formlee endpoint and method to <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">POST</code>:
+                    Set your HTML form's{" "}
+                    <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">
+                      action
+                    </code>{" "}
+                    attribute to your Formlee endpoint and method to{" "}
+                    <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">
+                      POST
+                    </code>
+                    :
                   </p>
                   <CodeBlock
                     language="html"
@@ -171,17 +190,22 @@ export default function docsPage() {
 
                 <div className="space-y-4">
                   <h3 className="text-base font-bold text-zinc-900 flex items-center space-x-2">
-                    <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">3</span>
+                    <span className="w-6 h-6 rounded-full bg-zinc-900 text-white text-xs font-bold flex items-center justify-center">
+                      3
+                    </span>
                     <span>Try it in the Interactive Tester</span>
                   </h3>
                   <p className="text-xs sm:text-sm text-zinc-600">
-                    Test submitting to your endpoint right now. Watch the response return in real time:
+                    Test submitting to your endpoint right now. Watch the
+                    response return in real time:
                   </p>
 
                   <div className="p-5 bg-zinc-50 border border-zinc-200 rounded-xl space-y-4">
                     <form onSubmit={handleRunSandbox} className="space-y-3">
                       <div>
-                        <label className="block text-xs font-semibold text-zinc-700 mb-1">Email</label>
+                        <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                          Email
+                        </label>
                         <input
                           type="email"
                           value={testEmail}
@@ -191,7 +215,9 @@ export default function docsPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-zinc-700 mb-1">Message</label>
+                        <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                          Message
+                        </label>
                         <textarea
                           value={testMessage}
                           onChange={(e) => setTestMessage(e.target.value)}
@@ -206,7 +232,9 @@ export default function docsPage() {
                         className="inline-flex items-center space-x-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
                       >
                         <Send className="w-3 h-3" />
-                        <span>{isSendingTest ? 'Dispatching...' : 'Send Live Test'}</span>
+                        <span>
+                          {isSendingTest ? "Dispatching..." : "Send Live Test"}
+                        </span>
                       </button>
                     </form>
 
@@ -226,30 +254,50 @@ export default function docsPage() {
             )}
 
             {/* HTML Forms */}
-            {activeDocSection === 'html-forms' && (
+            {activeDocSection === "html-forms" && (
               <div className="space-y-6">
                 <h1 className="text-2xl font-bold text-zinc-950">HTML Forms</h1>
                 <p className="text-sm text-zinc-600">
-                  Formlee supports all standard HTML5 input types with automatic parsing, honeypot spam protection, and file uploads.
+                  Formlee supports all standard HTML5 input types with automatic
+                  parsing, honeypot spam protection, and file uploads.
                 </p>
 
-                <h3 className="text-sm font-bold text-zinc-900 mt-6">Special Formlee Form Attributes</h3>
+                <h3 className="text-sm font-bold text-zinc-900 mt-6">
+                  Special Formlee Form Attributes
+                </h3>
                 <div className="space-y-3 text-xs sm:text-sm">
                   <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
-                    <code className="font-mono font-bold text-zinc-900">name="_next"</code>
-                    <p className="text-xs text-zinc-600 mt-1">Specify a custom redirect URL where the user should be taken after submitting.</p>
+                    <code className="font-mono font-bold text-zinc-900">
+                      name="_next"
+                    </code>
+                    <p className="text-xs text-zinc-600 mt-1">
+                      Specify a custom redirect URL where the user should be
+                      taken after submitting.
+                    </p>
                   </div>
                   <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
-                    <code className="font-mono font-bold text-zinc-900">name="_subject"</code>
-                    <p className="text-xs text-zinc-600 mt-1">Set a custom email subject line for your incoming submission notifications.</p>
+                    <code className="font-mono font-bold text-zinc-900">
+                      name="_subject"
+                    </code>
+                    <p className="text-xs text-zinc-600 mt-1">
+                      Set a custom email subject line for your incoming
+                      submission notifications.
+                    </p>
                   </div>
                   <div className="p-3 bg-zinc-50 border border-zinc-200 rounded-lg">
-                    <code className="font-mono font-bold text-zinc-900">name="_gotcha" (Honeypot)</code>
-                    <p className="text-xs text-zinc-600 mt-1">Hide this field with CSS. If a spam bot fills it in, Formlee silently discards the spam.</p>
+                    <code className="font-mono font-bold text-zinc-900">
+                      name="_gotcha" (Honeypot)
+                    </code>
+                    <p className="text-xs text-zinc-600 mt-1">
+                      Hide this field with CSS. If a spam bot fills it in,
+                      Formlee silently discards the spam.
+                    </p>
                   </div>
                 </div>
 
-                <h3 className="text-sm font-bold text-zinc-900 mt-6">Complete HTML Example</h3>
+                <h3 className="text-sm font-bold text-zinc-900 mt-6">
+                  Complete HTML Example
+                </h3>
                 <CodeBlock
                   language="html"
                   code={`<form action="https://formlee.com/f/form_8x29kd" method="POST">
@@ -277,11 +325,17 @@ export default function docsPage() {
               </div>
             )}
 
-            {activeDocSection === 'react' && (
+            {activeDocSection === "react" && (
               <div className="space-y-6">
-                <h1 className="text-2xl font-bold text-zinc-950">React Integration</h1>
+                <h1 className="text-2xl font-bold text-zinc-950">
+                  React Integration
+                </h1>
                 <p className="text-sm text-zinc-600">
-                  Connect React forms seamlessly using standard <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">fetch</code> with JSON response handling without page reloads.
+                  Connect React forms seamlessly using standard{" "}
+                  <code className="bg-zinc-100 px-1 py-0.5 rounded text-zinc-800">
+                    fetch
+                  </code>{" "}
+                  with JSON response handling without page reloads.
                 </p>
 
                 <CodeBlock
@@ -343,31 +397,38 @@ export function ContactForm() {
               </div>
             )}
 
-            {activeDocSection === 'nextjs' && (
+            {activeDocSection === "nextjs" && (
               <div className="space-y-6">
                 <div>
                   <div className="flex items-center space-x-2 text-xs text-zinc-500 font-mono mb-2">
                     <span>Frameworks</span>
                     <span>/</span>
-                    <span className="text-zinc-900 font-semibold">Next.js App Router</span>
+                    <span className="text-zinc-900 font-semibold">
+                      Next.js App Router
+                    </span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight">
                     Next.js Integration & Project Blueprint
                   </h1>
                   <p className="text-sm text-zinc-600 mt-2 leading-relaxed">
-                    Formlee works out of the box with Next.js 14 and 15 using Server Actions, Client Components, or Route Handlers.
+                    Formlee works out of the box with Next.js 14 and 15 using
+                    Server Actions, Client Components, or Route Handlers.
                   </p>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-bold text-zinc-900 flex items-center space-x-2">
-                      <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[10px] font-mono font-semibold">Option 1</span>
+                      <span className="px-2 py-0.5 rounded-md bg-zinc-900 text-white text-[10px] font-mono font-semibold">
+                        Option 1
+                      </span>
                       <span>Next.js Server Action (Zero Client JS)</span>
                     </h3>
                   </div>
                   <p className="text-xs text-zinc-600">
-                    Use a Server Action to securely submit form data server-side without exposing API keys or endpoint IDs in client network logs.
+                    Use a Server Action to securely submit form data server-side
+                    without exposing API keys or endpoint IDs in client network
+                    logs.
                   </p>
                   <CodeBlock
                     language="typescript"
@@ -402,11 +463,14 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
                 <div className="space-y-3">
                   <h3 className="text-sm font-bold text-zinc-900 flex items-center space-x-2">
-                    <span className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800 text-[10px] font-mono font-semibold">Option 2</span>
+                    <span className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800 text-[10px] font-mono font-semibold">
+                      Option 2
+                    </span>
                     <span>Client Component (App Router)</span>
                   </h3>
                   <p className="text-xs text-zinc-600">
-                    Interactive Next.js component with instant loading states and feedback.
+                    Interactive Next.js component with instant loading states
+                    and feedback.
                   </p>
                   <CodeBlock
                     language="typescript"
@@ -459,7 +523,9 @@ export function ContactForm() {
 
                 <div className="space-y-3">
                   <h3 className="text-sm font-bold text-zinc-900 flex items-center space-x-2">
-                    <span className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800 text-[10px] font-mono font-semibold">Option 3</span>
+                    <span className="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800 text-[10px] font-mono font-semibold">
+                      Option 3
+                    </span>
                     <span>Next.js API Route Handler (Webhook & Relay)</span>
                   </h3>
                   <CodeBlock
@@ -495,25 +561,53 @@ export async function POST(req: NextRequest) {
                     Exporting Formlee UI directly to Next.js
                   </h3>
                   <p className="text-xs text-zinc-600 leading-relaxed">
-                    This entire project is built with modular React 19 + Tailwind CSS components. To use these pages in your Next.js project:
+                    This entire project is built with modular React 19 +
+                    Tailwind CSS components. To use these pages in your Next.js
+                    project:
                   </p>
                   <ol className="list-decimal list-inside text-xs text-zinc-600 space-y-1.5 font-sans">
-                    <li>Export project via <strong>Settings &rarr; Export to ZIP / GitHub</strong>.</li>
-                    <li>Move components from <code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">src/components</code> into your Next.js <code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">components/</code> folder.</li>
-                    <li>Place views into Next.js App Router directories (<code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">app/page.tsx</code>, <code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">app/dashboard/page.tsx</code>, etc.).</li>
+                    <li>
+                      Export project via{" "}
+                      <strong>Settings &rarr; Export to ZIP / GitHub</strong>.
+                    </li>
+                    <li>
+                      Move components from{" "}
+                      <code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">
+                        src/components
+                      </code>{" "}
+                      into your Next.js{" "}
+                      <code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">
+                        components/
+                      </code>{" "}
+                      folder.
+                    </li>
+                    <li>
+                      Place views into Next.js App Router directories (
+                      <code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">
+                        app/page.tsx
+                      </code>
+                      ,{" "}
+                      <code className="bg-zinc-200/70 px-1 py-0.5 rounded font-mono text-[11px]">
+                        app/dashboard/page.tsx
+                      </code>
+                      , etc.).
+                    </li>
                   </ol>
                 </div>
               </div>
             )}
 
-            {activeDocSection === 'webhooks' && (
+            {activeDocSection === "webhooks" && (
               <div className="space-y-6">
                 <h1 className="text-2xl font-bold text-zinc-950">Webhooks</h1>
                 <p className="text-sm text-zinc-600">
-                  Formlee can automatically forward submission payloads to any HTTP endpoint in real time.
+                  Formlee can automatically forward submission payloads to any
+                  HTTP endpoint in real time.
                 </p>
 
-                <h3 className="text-sm font-bold text-zinc-900">Payload Format</h3>
+                <h3 className="text-sm font-bold text-zinc-900">
+                  Payload Format
+                </h3>
                 <CodeBlock
                   language="json"
                   code={`{
@@ -533,13 +627,25 @@ export async function POST(req: NextRequest) {
               </div>
             )}
 
-            {['introduction', 'submissions', 'email-notifications', 'file-uploads', 'spam-protection', 'api-auth', 'api-endpoints', 'api-submissions', 'api-webhooks'].includes(activeDocSection) && (
+            {[
+              "introduction",
+              "submissions",
+              "email-notifications",
+              "file-uploads",
+              "spam-protection",
+              "api-auth",
+              "api-endpoints",
+              "api-submissions",
+              "api-webhooks",
+            ].includes(activeDocSection) && (
               <div className="space-y-6">
                 <h1 className="text-2xl font-bold text-zinc-950 capitalize">
-                  {activeDocSection.replace('-', ' ')}
+                  {activeDocSection.replace("-", " ")}
                 </h1>
                 <p className="text-sm text-zinc-600 leading-relaxed">
-                  Formlee provides a robust, zero-configuration form processing infrastructure. All submissions are encrypted in transit, spam-checked, and delivered within milliseconds.
+                  Formlee provides a robust, zero-configuration form processing
+                  infrastructure. All submissions are encrypted in transit,
+                  spam-checked, and delivered within milliseconds.
                 </p>
                 <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-xl space-y-2">
                   <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-wider">
@@ -549,7 +655,19 @@ export async function POST(req: NextRequest) {
                     POST https://formlee.com/f/:form_id
                   </pre>
                   <p className="text-xs text-zinc-500">
-                    Accepts either <code className="bg-zinc-200/60 px-1 py-0.5 rounded">application/x-www-form-urlencoded</code>, <code className="bg-zinc-200/60 px-1 py-0.5 rounded">multipart/form-data</code>, or <code className="bg-zinc-200/60 px-1 py-0.5 rounded">application/json</code>.
+                    Accepts either{" "}
+                    <code className="bg-zinc-200/60 px-1 py-0.5 rounded">
+                      application/x-www-form-urlencoded
+                    </code>
+                    ,{" "}
+                    <code className="bg-zinc-200/60 px-1 py-0.5 rounded">
+                      multipart/form-data
+                    </code>
+                    , or{" "}
+                    <code className="bg-zinc-200/60 px-1 py-0.5 rounded">
+                      application/json
+                    </code>
+                    .
                   </p>
                 </div>
               </div>
@@ -557,7 +675,6 @@ export async function POST(req: NextRequest) {
           </div>
         </div>
       </main>
-
     </div>
   );
-};
+}

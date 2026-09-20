@@ -1,16 +1,16 @@
-"use client"
-import { ArrowRight, BookOpen, Sparkles, Terminal, Check } from "lucide-react"
-import CodeBlock from "@/app/components/ui/CodeBlock";
+"use client";
+import { ArrowRight, BookOpen, Sparkles, Terminal, Check } from "lucide-react";
+import CodeBlock from "@/components/ui/CodeBlock";
+import { Button } from "../ui/button";
 
-export default function Hero(){
-
-    const heroCodeSnippet = `<form action="https://formlee.com/f/your-form-id" method="POST">
+export default function Hero() {
+  const heroCodeSnippet = `<form action="https://formlee.com/f/your-form-id" method="POST">
     <input type="email" name="email" placeholder="Your email" required />
     <textarea name="message" placeholder="Your message" required></textarea>
     <button type="submit">Send</button>
   </form>`;
 
-    return (
+  return (
     <section className="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden">
       {/* Subtle grid pattern background */}
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
@@ -31,28 +31,20 @@ export default function Hero(){
 
         {/* Supporting Text */}
         <p className="text-lg sm:text-xl text-zinc-600 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
-          Connect your forms to Formlee and start receiving submissions without building a backend.
+          Connect your forms to Formlee and start receiving submissions without
+          building a backend.
         </p>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-14">
-          <button
-            id="hero-get-started-cta"
-            // onClick={() => navigate('/signup')}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-zinc-900 hover:bg-zinc-800 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-98 cursor-pointer"
-          >
+          <Button>
             <span>Get started</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
-
-          <button
-            id="hero-view-docs-cta"
-            // onClick={() => navigator('/docs')}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white hover:bg-zinc-50 text-zinc-700 hover:text-zinc-900 font-medium text-sm px-6 py-3 rounded-xl border border-zinc-200 shadow-xs transition-all cursor-pointer"
-          >
+          </Button>
+          <Button variant={"secondary"}>
             <BookOpen className="w-4 h-4 text-zinc-500" />
             <span>View documentation</span>
-          </button>
+          </Button>
         </div>
 
         {/* Code Preview snippet directly under hero */}

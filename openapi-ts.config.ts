@@ -3,7 +3,7 @@ import "dotenv/config";
 
 export default defineConfig({
   input: `${process.env.VITE_API_URL}/docs-json`,
-  output: "./app/api",
+  output: "./api",
   plugins: [
     "@hey-api/typescript",
     { name: "@hey-api/client-fetch", runtimeConfigPath: "./app/hey-api" },
