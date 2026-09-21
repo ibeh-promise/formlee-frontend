@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SubmitEvent, useState } from "react";
 import { toast } from "sonner";
-import * as api from "@/api";
+import * as api from "@/lib/api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ function Login() {
       console.log(res.data);
     }
 
-    setSubmitting(false);
+    setSubmitting(false); 
   };
 
   return (
