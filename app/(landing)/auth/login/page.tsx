@@ -5,12 +5,13 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { ArrowLeft, ArrowRight, Lock, Mail } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SubmitEvent, useState } from "react";
 import { toast } from "sonner";
 import * as api from "@/api";
+import { router } from "next/client";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -32,7 +33,9 @@ function Login() {
       });
     } else {
       toast.success("Login successful", { description: res.data.message });
+      localStorage.setItem("authToken", res.data.access_token);
       console.log(res.data);
+      router.push("/dashboard");
     }
 
     setSubmitting(false);
@@ -98,8 +101,9 @@ function Login() {
             </InputGroupAddon>
           </InputGroup>
         </div>
-        <Button className={"w-full"} type="submit">
-          <span>Login In</span> <ArrowRight />
+        <Button className={"w-full"} type="submit" disabled={submitting}>
+          {submitting && <Loader className="animate-spin" />}{" "}
+          <span>Login In</span>
         </Button>
 
         <hr />
