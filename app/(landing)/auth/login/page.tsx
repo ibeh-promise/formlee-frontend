@@ -99,7 +99,7 @@ function Login() {
           </InputGroup>
         </div>
         <Button className={"w-full"} type="submit">
-          <span>Login In</span> <ArrowRight />
+          <Link href={'/dashboard/overview'}><span>Login In</span> </Link><ArrowRight />
         </Button>
 
         <hr />
@@ -111,7 +111,7 @@ function Login() {
           </Link>
         </p>
       </form>
-    </div>
+    </div> 
   );
 }
 
