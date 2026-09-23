@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SubmitEvent, useState } from "react";
 import { toast } from "sonner";
-import * as api from "@/api";
+import * as api from "@/lib/api";
 import { useRouter } from "next/navigation";
 
 function Login() {
@@ -39,7 +39,7 @@ function Login() {
       router.push("/dashboard");
     }
 
-    setSubmitting(false);
+    setSubmitting(false); 
   };
 
   return (
@@ -116,7 +116,7 @@ function Login() {
           </Link>
         </p>
       </form>
-    </div>
+    </div> 
   );
 }
 
