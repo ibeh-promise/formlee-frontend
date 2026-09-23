@@ -1,5 +1,6 @@
-import React from 'react';
-import { ArrowRight, Terminal } from 'lucide-react';
+import React from "react";
+import { ArrowRight, Terminal } from "lucide-react";
+import { Button } from "../ui/button";
 
 export default function CtaSection() {
   return (
@@ -15,28 +16,28 @@ export default function CtaSection() {
         </h2>
 
         <p className="text-zinc-400 text-base max-w-xl mx-auto mb-8 font-normal leading-relaxed">
-          Create your first form endpoint in seconds. Free forever for personal projects with zero credit card required.
+          Create your first form endpoint in seconds. Free forever for personal
+          projects with zero credit card required.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button
+          <Button
             id="bottom-cta-get-started"
             // onClick={() => navigate('/signup')}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white hover:bg-zinc-100 text-zinc-950 font-semibold text-sm px-6 py-3 rounded-xl transition-all active:scale-98 cursor-pointer"
+            variant={"secondary"}
           >
             <span>Create your first form</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </Button>
 
-          <button
+          <Button
             id="bottom-cta-pricing"
             // onClick={() => navigate('/pricing')}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white font-medium text-sm px-6 py-3 rounded-xl border border-zinc-800 transition-all cursor-pointer"
           >
             <span>View pricing plans</span>
-          </button>
+          </Button>
         </div>
       </div>
     </section>
   );
-};
+}

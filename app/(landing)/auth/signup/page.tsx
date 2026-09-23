@@ -5,12 +5,12 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { ArrowRight, Loader, Lock, Mail, User } from "lucide-react";
+import { Loader, Lock, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState, SubmitEvent } from "react";
 import { toast } from "sonner";
-import * as api from "@/api";
+import * as api from "@/lib/api";
 import { useRouter } from "next/navigation";
 
 function Signup() {
