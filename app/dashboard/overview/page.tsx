@@ -48,7 +48,7 @@ export default function OverviewView(){
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-200">
+    <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-light">
@@ -163,7 +163,7 @@ export default function OverviewView(){
                 </div>
             )
         })}
-      </div>
+      </div> 
       </div>
     </div>
   );
