@@ -5,7 +5,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { ArrowLeft, ArrowRight, Loader, Lock, Mail } from "lucide-react";
+import { Loader, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SubmitEvent, useState } from "react";
@@ -28,6 +28,7 @@ function Login() {
       body: { email, password },
     });
 
+    console.log(res);
     if (res.error) {
       toast.error("Unable to submit", {
         description: res.error.message,
@@ -35,11 +36,10 @@ function Login() {
     } else {
       toast.success("Login successful", { description: res.data.message });
       localStorage.setItem("authToken", res.data.access_token);
-      console.log(res.data);
       router.push("/dashboard");
     }
 
-    setSubmitting(false); 
+    setSubmitting(false);
   };
 
   return (
@@ -116,7 +116,7 @@ function Login() {
           </Link>
         </p>
       </form>
-    </div> 
+    </div>
   );
 }
 
