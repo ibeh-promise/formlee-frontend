@@ -26,7 +26,7 @@ export type CreateClientConfig<T extends ClientOptions = ClientOptions2> = (
 export const client: Client = createClient(
   createClientConfig(
     createConfig<ClientOptions2>({
-      baseUrl: "https://formlee-backend.onrender.com",
+      baseUrl: "http://localhost:9203",
     }),
   ),
 );

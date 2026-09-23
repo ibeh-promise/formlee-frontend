@@ -11,13 +11,14 @@ import Link from "next/link";
 import { useState, SubmitEvent } from "react";
 import { toast } from "sonner";
 import * as api from "@/api";
-import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 function Signup() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleSignup = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ function Signup() {
       },
     });
 
+    console.log(res);
     if (res.error) {
       toast.error("Unable to submit", {
         description: res.error.message,
@@ -40,8 +42,8 @@ function Signup() {
     } else {
       toast.success("Signup successful", { description: res.data.message });
       localStorage.setItem("authToken", res.data.access_token);
+
       router.push("/dashboard");
-      console.log(res.data);
     }
 
     setSubmitting(false);
