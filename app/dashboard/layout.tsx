@@ -1,16 +1,19 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Sidebar from "@/components/Sidebar";
+import AuthProvider from "@/contexts/AuthProvider";
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode; 
+  children: React.ReactNode;
 }) {
   return (
-    <>
-      <Header />
-      <main>{children}</main>
-      <Footer />
-    </>
+    <AuthProvider>
+      <main className="overflow-hidden h-screen">
+        <Sidebar />
+        <div className="w-[85%] overflow-auto h-screen"></div>
+      </main>
+    </AuthProvider>
   );
 }

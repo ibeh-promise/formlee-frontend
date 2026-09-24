@@ -26,18 +26,7 @@ export default function Header() {
   const [newFormName, setNewFormName] = useState("");
   const [newFormDescription, setNewFormDescription] = useState("");
 
-  const navItems = [
-    { label: "Overview", href: "/overview", icon: "LayoutDashboard" },
-    {
-      label: "Forms",
-      href: "dashboard/forms",
-      icon: "FileText",
-      badge: "forms.length",
-    },
-    { label: "Submissions", href: "/dashboard/settings", icon: Settings },
-    { label: "Integrations", href: "/dashboard/integrations", icon: Workflow },
-    { label: "Settings", href: "/dashboard/settings", icon: Settings },
-  ];
+ 
 
   const handleCreateSubmit = (e: React.FormEvent) => {
     e.preventDefault();
