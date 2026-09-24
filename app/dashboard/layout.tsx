@@ -13,7 +13,7 @@ export default function DashboardLayout({
       <main className="overflow-hidden h-screen flex">
         <Sidebar />
         <div className="w-[85%] overflow-auto h-screen">
-          <Header />
+          {/* <Header /> @ibeh-promise complete this header pls */}
           {children}
         </div>
       </main>
