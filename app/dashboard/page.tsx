@@ -5,17 +5,11 @@ import {
   FileText,
   Inbox,
   ArrowUpRight,
-  Plus,
-  Copy,
-  Check,
   TrendingUp,
   Clock,
-  Sparkles,
   ShieldCheck,
-  CheckCircle2,
   ExternalLink,
 } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
 
 export default function OverviewView() {
