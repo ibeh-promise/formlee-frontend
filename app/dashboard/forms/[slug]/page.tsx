@@ -87,6 +87,28 @@ function FormDetailsPage() {
         </TabsList>
 
         <TabsContent value={"connect-setup"}>
+          <Tabs className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white">
+            <div className="flex items-center justify-between">
+              <div>
+                <h5 className="font-bold">Connect your code</h5>
+                <p className="text-xs text-black/60">
+                  Select your framework or language to view drop-in code
+                  snippets.
+                </p>
+              </div>
+              <TabsList>
+                <TabsTrigger value={"html"}>HTML</TabsTrigger>
+                <TabsTrigger value={"react"}>React</TabsTrigger>
+                <TabsTrigger value={"nextjs"}>Nextjs</TabsTrigger>
+                <TabsTrigger value={"curl"}>CURL</TabsTrigger>
+              </TabsList>
+            </div>
+          </Tabs>
+        </TabsContent>
+        <TabsContent value={"submission"}>
+          <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between"></div>
+        </TabsContent>
+        <TabsContent value={"setting"}>
           <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between"></div>
         </TabsContent>
       </Tabs>
