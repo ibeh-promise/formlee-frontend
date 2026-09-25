@@ -78,6 +78,7 @@ function FormDetailsPage() {
   const { slug } = useParams();
   const form = forms.find((f) => f.slug === slug)!;
   const router = useRouter();
+  
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
