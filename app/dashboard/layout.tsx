@@ -1,6 +1,5 @@
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/layout/Sidebar";
 import AuthProvider from "@/contexts/AuthProvider";
 
 export default function DashboardLayout({
@@ -10,13 +9,17 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthProvider>
-      <main className="overflow-hidden h-screen flex">
-        <Sidebar />
-        <div className="w-[85%] overflow-auto h-screen bg-[#fafafa]">
-          {/* <Header /> @ibeh-promise complete this header pls */}
-          {children}
-        </div>
-      </main>
+      <div className="flex min-h-screen">
+  <Sidebar />
+
+  <div className="flex-1 min-w-0">
+    <Header />
+
+    <main>
+      {children}
+    </main>
+  </div>
+</div>
     </AuthProvider>
   );
 }

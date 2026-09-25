@@ -55,17 +55,18 @@ export default function OverviewView() {
         </div>
 
         <div className="flex items-center space-x-3">
-          <Button variant={"secondary"}>
-            <Link href={"/dashboard/forms"}>
-              <span>All Forms</span>
+
+          <Button className="space-x-1.5 text-black bg-white hover:bg-zinc-50 border border-zinc-200/90 transition-colors rounded-2xl">
+            <Link href={"/dashboard/froms"}>
+              <span className="text-[12px]">All Forms</span>
             </Link>
           </Button>
-          <Link href={"docs"}>
-            <Button>
-              <span>View Docs</span>
-              <ExternalLink className="w-3.5,h-3.5" />
-            </Button>
-          </Link>
+          <Button className="">
+            <Link href={"docs"}>
+              <span className="text-[12px]">View Docs</span>
+            </Link>
+            <ExternalLink className="w-3.5,h-3.5" />
+          </Button>
         </div>
       </div>
 
