@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   Code2,
   Copy,
+  Download,
   Globe,
   Inbox,
   Send,
@@ -18,6 +19,60 @@ import CodeBlock from "@/components/ui/CodeBlock";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+  FieldTitle,
+} from "@/components/ui/field";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const submissions = [
+  {
+    id: "sub_01J8X9QK3M4N5P6Q7R8S9T0U1V",
+    formId: "frm_a1b2c3d4e5f6",
+    name: "Jane Smith",
+    email: "jane@example.com",
+    message: "Hi! Testing my Formlee endpoint directly from the setup console.",
+    read: true,
+    createdAt: "2026-09-25T09:12:00Z",
+  },
+  {
+    id: "sub_02K9Y0RL4N5O6P7Q8R9S0T1U2W",
+    formId: "frm_a1b2c3d4e5f6",
+    name: "John Doe",
+    email: "john@example.com",
+    message:
+      "Hey, I wanted to ask about your enterprise SLA options and custom webhook support. Do you have documentation I could review?",
+    read: false,
+    createdAt: "2026-08-26T14:30:00Z",
+  },
+  {
+    id: "sub_03L0Z1SM5O6P7Q8R9S0T1U2V3X",
+    formId: "frm_a1b2c3d4e5f6",
+    name: "Michael Chen",
+    email: "michael@example.com",
+    message:
+      "We are migrating 45 client marketing websites to Formlee. Do you offer bulk export or an agency plan with team seats?",
+    read: true,
+    createdAt: "2026-08-26T10:05:00Z",
+  },
+];
+
+const formStatus = [
+  { label: "Active (Receiving Submissions)", value: "active" },
+  { label: "Paused (Temporarily Rejecting)", value: "paused" },
+  { label: "Archived", value: "archive" },
+];
 
 function FormDetailsPage() {
   const { slug } = useParams();
@@ -34,7 +89,7 @@ function FormDetailsPage() {
             <div className="flex items-center gap-3">
               <h3 className="text-xl sm:text-2xl font-semibold text-zinc-950 tracking-light">
                 {form.name}
-              </h3>{" "}
+              </h3>
               <Badge
                 variant={
                   form.status === "active"
@@ -92,7 +147,7 @@ function FormDetailsPage() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value={"connect-setup"}>
+        <TabsContent value={"connect-setup"} className={"space-y-5"}>
           <Tabs className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white">
             <div className="flex items-center justify-between  mb-2">
               <div>
@@ -228,48 +283,139 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
               />
             </TabsContent>
           </Tabs>
+          <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white space-y-3">
+            <div>
+              <h5 className="font-bold">
+                Test submitting to this form right now
+              </h5>
+              <p className="text-xs text-black/60">
+                Submit this sample form to verify your endpoint ans watch it
+                appear immediately in your inbox.
+              </p>
+            </div>
+
+            <form action="" className="md:w-[50%] space-y-3">
+              <div className="flex gap-3 w-full">
+                <div className="space-y-2 w-full">
+                  <Label>Name</Label>
+                  <Input type="text" value="John Doe" />
+                </div>
+                <div className="space-y-2 w-full">
+                  <Label>Email</Label>
+                  <Input type="email" value="test@example.com" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label>Email</Label>
+                <Textarea
+                  value="HCabbagei! Testing my Formlee endpoint directly from the setup console."
+                  className="min-h-20"
+                />
+              </div>
+
+              <Button type="submit">
+                <Send /> Send Test Submission
+              </Button>
+            </form>
+          </div>
         </TabsContent>
         <TabsContent value={"submission"}>
-          <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between"></div>
+          <div className="flex items-center justify-between  mb-2">
+            <div>
+              <p className="text-xs text-black/60">
+                Showing {submissions.length} submissions for this form
+              </p>
+            </div>
+            <Button variant={"secondary"}>
+              <Download /> Export CSV
+            </Button>
+          </div>
+          <div className="border rounded-xl bg-white divide-y">
+            {submissions.map((submission) => (
+              <div
+                className="hover:bg-black/2 transition-all p-5 flex items-center justify-between cursor-pointer"
+                key={submission.id}
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <h5 className="text-sm font-semibold">{submission.name}</h5>
+                    <p className="text-xs text-black/60">{`<${submission.email}>`}</p>
+                  </div>
+                  <p className="text-sm">{submission.message}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <p className="text-xs text-black/60">
+                    {new Date(submission.createdAt).getDate()}/
+                    {new Date(submission.createdAt).getMonth()}/
+                    {new Date(submission.createdAt).getFullYear()}
+                  </p>
+                  <Button variant={"destructive"}>
+                    <Trash2 />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
         </TabsContent>
         <TabsContent value={"setting"}>
-          <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between"></div>
+          <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white space-y-5">
+            <h5 className="font-bold">General Configuration</h5>
+
+            <form action="" className="space-y-4 md:w-[50%]">
+              <div className="space-y-2">
+                <Label>FORM NAME</Label>
+                <Input type="text" placeholder="Form Name" value={form.name} />
+              </div>
+              <div className="space-y-2">
+                <Label>CUSTOM REDIRECT URL (OPTIONAL)</Label>
+                <Input type="url" value={form.redirectLink || ""} />
+                <p className="text-xs text-black/60">
+                  Where users are redirected after standard HTML POST
+                  submissions.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label>TARGET NOTIFICATION EMAIL</Label>
+                <Input type="email" value={form.targetEmail} />
+              </div>
+
+              <FieldLabel>
+                <Field orientation="horizontal">
+                  <Checkbox
+                    id="toggle-checkbox-1"
+                    name="toggle-checkbox-1"
+                    checked={form.emailNotification}
+                  />
+                  <FieldContent>
+                    <FieldTitle>Email Notification</FieldTitle>
+                    <FieldDescription>
+                      Send an instant notification when a submission is received
+                    </FieldDescription>
+                  </FieldContent>
+                </Field>
+              </FieldLabel>
+
+              <div className="space-y-2">
+                <Label>FORM STATUS</Label>
+                <Select items={formStatus} defaultValue={"active"}>
+                  <SelectTrigger className={"w-full"}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formStatus.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button>Save Changes</Button>
+            </form>
+          </div>
         </TabsContent>
       </Tabs>
-
-      <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white space-y-3">
-        <div>
-          <h5 className="font-bold">Test submitting to this form right now</h5>
-          <p className="text-xs text-black/60">
-            Submit this sample form to verify your endpoint ans watch it appear
-            immediately in your inbox.
-          </p>
-        </div>
-
-        <form action="" className="md:w-[50%] space-y-3">
-          <div className="flex gap-3 w-full">
-            <div className="space-y-2 w-full">
-              <Label>Name</Label>
-              <Input type="text" value="John Doe" />
-            </div>
-            <div className="space-y-2 w-full">
-              <Label>Email</Label>
-              <Input type="email" value="test@example.com" />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label>Email</Label>
-            <Textarea
-              value="Hi! Testing my Formlee endpoint directly from the setup console."
-              className="min-h-20"
-            />
-          </div>
-
-          <Button type="submit">
-            <Send /> Send Test Submission
-          </Button>
-        </form>
-      </div>
     </div>
   );
 }
