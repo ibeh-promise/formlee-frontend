@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CodeBlock from "@/components/ui/CodeBlock";
 
 function FormDetailsPage() {
   const { slug } = useParams();
@@ -75,7 +76,7 @@ function FormDetailsPage() {
       </div>
 
       <Tabs>
-        <TabsList>
+        <TabsList variant={"line"}>
           <TabsTrigger value={"connect-setup"}>
             <Code2 /> Connect & Setup
           </TabsTrigger>
@@ -89,7 +90,7 @@ function FormDetailsPage() {
 
         <TabsContent value={"connect-setup"}>
           <Tabs className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between  mb-2">
               <div>
                 <h5 className="font-bold">Connect your code</h5>
                 <p className="text-xs text-black/60">
@@ -104,6 +105,124 @@ function FormDetailsPage() {
                 <TabsTrigger value={"curl"}>CURL</TabsTrigger>
               </TabsList>
             </div>
+            <TabsContent value={"html"}>
+              <CodeBlock
+                language="html"
+                filename="index.html"
+                code={`<!-- 1. Add your Formlee endpoint to your form action -->
+<form action="https://formlee.com/f/${form.slug}" method="POST">
+  <!-- Honeypot for spam bots (optional) -->
+  <input type="text" name="_gotcha" style="display:none" />
+
+  <label for="name">Name</label>
+  <input type="text" id="name" name="name" required />
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required />
+
+  <label for="message">Message</label>
+  <textarea id="message" name="message" rows="4" required></textarea>
+
+  <button type="submit">Send Message</button>
+</form>`}
+              />
+            </TabsContent>
+            <TabsContent value={"react"}>
+              <CodeBlock
+                language="jsx"
+                filename="ContactForm.jsx"
+                code={`import React, { useState } from 'react';
+
+export function ContactForm() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const res = await fetch('https://formlee.com/f/${form.slug}', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (res.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return <p className="text-emerald-600 font-medium">Thank you! Your message was received.</p>;
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input type="email" name="email" placeholder="Your email" required />
+      <textarea name="message" placeholder="Your inquiry..." required />
+      <button type="submit" disabled={status === 'loading'}>
+        {status === 'loading' ? 'Sending...' : 'Send Message'}
+      </button>
+    </form>
+  );
+}`}
+              />
+            </TabsContent>
+            <TabsContent value={"nextjs"}>
+              <CodeBlock
+                language="tsx"
+                filename="app/components/FormleeContact.tsx"
+                code={`// app/components/FormleeContact.tsx
+'use client';
+
+import { useState } from 'react';
+
+export default function FormleeContact() {
+  const [sent, setSent] = useState(false);
+
+  async function handleAction(formData: FormData) {
+    const res = await fetch('https://formlee.com/f/${form.slug}', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) setSent(true);
+  }
+
+  return (
+    <form action={handleAction}>
+      <input type="text" name="name" placeholder="Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <textarea name="message" placeholder="Message" required />
+      <button type="submit">Submit to Formlee</button>
+    </form>
+  );
+}`}
+              />
+            </TabsContent>
+            <TabsContent value={"curl"}>
+              <CodeBlock
+                language="curl"
+                filename="Terminal"
+                code={`# Test submission via cURL
+curl -X POST "https://formlee.com/f/${form.slug}" \
+
+  -H "Accept: application/json" \
+
+  -d "name=Test User" \
+
+  -d "email=tester@domain.com" \
+
+  -d "message=Hello from terminal!"`}
+              />
+            </TabsContent>
           </Tabs>
         </TabsContent>
         <TabsContent value={"submission"}>
@@ -113,6 +232,16 @@ function FormDetailsPage() {
           <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between"></div>
         </TabsContent>
       </Tabs>
+
+      <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between">
+        <div>
+          <h5 className="font-bold">Test submitting to this form right now</h5>
+          <p className="text-xs text-black/60">
+            Submit this sample form to verify your endpoint ans watch it appear
+            immediately in your inbox.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

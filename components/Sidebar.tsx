@@ -34,7 +34,7 @@ export default function Sidebar() {
     { label: "Documentation", href: "/dashboard/integrations", icon: BookOpen },
     {
       label: "Visit Landing Page",
-      href: "/dashboard/settings",
+      href: "/",
       icon: CircleQuestionMark,
     },
   ];
@@ -91,13 +91,15 @@ export default function Sidebar() {
             <h5 className="text-xs text-black/60 mb-3"> RESOURCES</h5>
 
             <div className="space-y-3 flex flex-col">
-              {secondaryNavItems.map((nI, idx) => (
+              {secondaryNavItems.map((navigation, idx) => (
                 <Button
                   key={idx}
                   variant={"ghost"}
                   className={"justify-start text-black/60"}
+                  onClick={() => router.push(navigation.href)}
                 >
-                  <nI.icon /> <span className="text-sm">{nI.label}</span>
+                  <navigation.icon />{" "}
+                  <span className="text-sm">{navigation.label}</span>
                 </Button>
               ))}
             </div>
