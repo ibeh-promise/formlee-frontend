@@ -22,7 +22,7 @@ export default function Sidebar() {
     { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
     {
       label: "Forms",
-      href: "dashboard/forms",
+      href: "/dashboard/forms",
       icon: FileText,
       badge: "forms.length",
     },

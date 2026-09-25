@@ -11,6 +11,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function OverviewView() {
   // const { user, forms, submission, navigate, addToast } = useApp();
@@ -54,17 +55,17 @@ export default function OverviewView() {
         </div>
 
         <div className="flex items-center space-x-3">
-          <button className="inline-flex items-center space-x-1.5 bg-white hover:bg-zinc-50 border border-zinc-200/90 text-zinc-800 text-xs font-semibold px-3.5 py-2 rounded-xl shadows-2xs transition-colors">
-            <Link href={"/dashboard/froms"}>
+          <Button variant={"secondary"}>
+            <Link href={"/dashboard/forms"}>
               <span>All Forms</span>
             </Link>
-          </button>
-          <button className="inline-flex- items-center space-x-1.5 bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-semibold px.3.5 py-2 rounded-xl shadows-xs transition-colors">
-            <Link href={"docs"}>
+          </Button>
+          <Link href={"docs"}>
+            <Button>
               <span>View Docs</span>
-            </Link>
-            <ExternalLink className="w-3.5,h-3.5" />
-          </button>
+              <ExternalLink className="w-3.5,h-3.5" />
+            </Button>
+          </Link>
         </div>
       </div>
 
