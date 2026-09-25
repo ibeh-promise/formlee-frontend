@@ -34,7 +34,8 @@ export default function Sidebar() {
     },
   ];
   return (
-      <div className="w-[15%] border-r h-screen flex flex-col justify-between">
+    <aside className="fixed top-0 left-0 z-50 w-64 h-screen">
+  <div className="bg-white border-r border-zinc-200 h-full flex flex-col justify-between">
         <div className="space-y-3">
           <div className="flex gap-3 items-center border-b p-3">
             <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white shadow-xs group-hover:bg-zinc-800 transition-colors">
@@ -116,5 +117,6 @@ export default function Sidebar() {
           </Button>
         </div>
       </div>
+    </aside>
   );
 }

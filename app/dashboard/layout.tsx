@@ -9,17 +9,15 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthProvider>
-      <div className="flex min-h-screen">
-  <Sidebar />
+      <div className="min-h-screen bg-zinc-50">
+        <Sidebar />
 
-  <div className="flex-1 min-w-0">
-    <Header />
+        <div className="ml-64 min-h-screen">
+          <Header />
 
-    <main>
-      {children}
-    </main>
-  </div>
-</div>
+          <main className="p-6">{children}</main>
+        </div>
+      </div>
     </AuthProvider>
   );
 }
