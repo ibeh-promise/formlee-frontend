@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { forms } from "../page";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,11 +17,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 function FormDetailsPage() {
   const { slug } = useParams();
   const form = forms.find((f) => f.slug === slug)!;
+  const router = useRouter();
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex gap-3 items-center">
-          <Button variant={"secondary"}>
+          <Button variant={"secondary"} onClick={() => router.back()}>
             <ArrowLeft />
           </Button>
           <div>
