@@ -40,7 +40,7 @@ export default function Header() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col md:flex-row text-zinc-900">
-      <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-zinc-200 sticky top-0 z-30">
+      <div className="md:hidden flex items-cird-space, i am trying to  meetup.enter justify-between p-4 bg-white border-b border-zinc-200 sticky top-0 z-30">
         <Link href={"/overview"}>
           <div className="flex items-center space-x-2.5 cursor-pointer">
             <div className="w-7 h-7 rounded-lg bg-zinc-900 flex items-center justify-center text-white">

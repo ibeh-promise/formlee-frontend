@@ -10,9 +10,12 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthProvider>
-      <main className="overflow-hidden h-screen">
+      <main className="overflow-hidden h-screen flex">
         <Sidebar />
-        <div className="w-[85%] overflow-auto h-screen"></div>
+        <div className="w-[85%] overflow-auto h-screen bg-[#fafafa]">
+          {/* <Header /> @ibeh-promise complete this header pls */}
+          {children}
+        </div>
       </main>
     </AuthProvider>
   );
