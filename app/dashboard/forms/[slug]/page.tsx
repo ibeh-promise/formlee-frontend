@@ -8,12 +8,16 @@ import {
   Copy,
   Globe,
   Inbox,
+  Send,
   Settings,
   Trash2,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CodeBlock from "@/components/ui/CodeBlock";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 function FormDetailsPage() {
   const { slug } = useParams();
@@ -233,7 +237,7 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
         </TabsContent>
       </Tabs>
 
-      <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between">
+      <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white space-y-3">
         <div>
           <h5 className="font-bold">Test submitting to this form right now</h5>
           <p className="text-xs text-black/60">
@@ -241,6 +245,30 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
             immediately in your inbox.
           </p>
         </div>
+
+        <form action="" className="md:w-[50%] space-y-3">
+          <div className="flex gap-3 w-full">
+            <div className="space-y-2 w-full">
+              <Label>Name</Label>
+              <Input type="text" value="John Doe" />
+            </div>
+            <div className="space-y-2 w-full">
+              <Label>Email</Label>
+              <Input type="email" value="test@example.com" />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label>Email</Label>
+            <Textarea
+              value="Hi! Testing my Formlee endpoint directly from the setup console."
+              className="min-h-20"
+            />
+          </div>
+
+          <Button type="submit">
+            <Send /> Send Test Submission
+          </Button>
+        </form>
       </div>
     </div>
   );
