@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FileText,
   Inbox,
@@ -9,11 +9,12 @@ import {
   ShieldCheck,
   ExternalLink,
   Copy,
-  Check
+  Check,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/Badge";
+import * as api from "@/lib/api";
 
 export default function OverviewView() {
   const [copiedID, setCopiedID] = useState<string | null>(null);
@@ -31,75 +32,70 @@ export default function OverviewView() {
       status: "active",
     },
     {
-      id: 10,
+      id: 121,
       name: "Beta Access Waitlist",
       endpointId: "https://formlee.com/f/form_5v72pq",
       status: "active",
     },
   ];
 
-  
   const submissions = [
-  {
-    id: 1,
-    sender: {
-      name: "John Doe",
-      email: "john@example.com",
+    {
+      id: 1,
+      sender: {
+        name: "John Doe",
+        email: "john@example.com",
+      },
+      form: "Contact Form",
+      message: "Hey, I wanted to ask about your enterprise SLA options...",
+      submittedAt: "12:29 PM",
+      status: "Delivered",
     },
-    form: "Contact Form",
-    message:
-      "Hey, I wanted to ask about your enterprise SLA options...",
-    submittedAt: "12:29 PM",
-    status: "Delivered",
-  },
-  {
-    id: 2,
-    sender: {
-      name: "Sarah Jenkins",
-      email: "sarah@example.com",
+    {
+      id: 2,
+      sender: {
+        name: "Sarah Jenkins",
+        email: "sarah@example.com",
+      },
+      form: "Newsletter Signup",
+      message: "Subscribed to weekly developer digests.",
+      submittedAt: "12:13 PM",
+      status: "Delivered",
     },
-    form: "Newsletter Signup",
-    message: "Subscribed to weekly developer digests.",
-    submittedAt: "12:13 PM",
-    status: "Delivered",
-  },
-  {
-    id: 3,
-    sender: {
-      name: "Michael Chen",
-      email: "michael@example.com",
+    {
+      id: 3,
+      sender: {
+        name: "Michael Chen",
+        email: "michael@example.com",
+      },
+      form: "Contact Form",
+      message: "We are migrating 45 client marketing websites to Form...",
+      submittedAt: "11:30 AM",
+      status: "Delivered",
     },
-    form: "Contact Form",
-    message:
-      "We are migrating 45 client marketing websites to Form...",
-    submittedAt: "11:30 AM",
-    status: "Delivered",
-  },
-  {
-    id: 4,
-    sender: {
-      name: "Elena Rostova",
-      email: "elena.rostova@techcorp.io",
+    {
+      id: 4,
+      sender: {
+        name: "Elena Rostova",
+        email: "elena.rostova@techcorp.io",
+      },
+      form: "Beta Access Waitlist",
+      message: "Excited for the Next.js App Router direct server actions...",
+      submittedAt: "09:15 AM",
+      status: "Delivered",
     },
-    form: "Beta Access Waitlist",
-    message:
-      "Excited for the Next.js App Router direct server actions...",
-    submittedAt: "09:15 AM",
-    status: "Delivered",
-  },
-  {
-    id: 5,
-    sender: {
-      name: "David Kim",
-      email: "david.kim@startup.co",
+    {
+      id: 5,
+      sender: {
+        name: "David Kim",
+        email: "david.kim@startup.co",
+      },
+      form: "Customer Feedback",
+      message: "The spam filtering caught 100% of our bot traffic durin...",
+      submittedAt: "08:40 PM",
+      status: "Delivered",
     },
-    form: "Customer Feedback",
-    message:
-      "The spam filtering caught 100% of our bot traffic durin...",
-    submittedAt: "08:40 PM",
-    status: "Delivered",
-  },
-];
+  ];
   const recentSubmissions = submissions.slice(0, 5);
 
   const handleCopyEnpoint = (endpointId: string) => {
@@ -109,6 +105,29 @@ export default function OverviewView() {
     // addToast(`Endpoint URL coiped to clipboard!`):
     setTimeout(() => setCopiedID(null), 2000);
   };
+
+  const [stats, setStats] = useState<api.StatsResponseDto | null>(null);
+
+  const [activeForms, setActiveForms] = useState<api.FormResponseDto[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const statsRes = await api.stats.statsControllerGetStatsV1({
+        auth: localStorage.getItem("authToken")!,
+      });
+      console.log(statsRes);
+      setStats(statsRes.data || null);
+
+      const activeFormsRes = await api.form.formControllerFindAllByStatusV1({
+        path: { status: "active" },
+        auth: localStorage.getItem("authToken")!,
+      });
+      console.log(activeFormsRes);
+      setActiveForms(activeFormsRes.data || []);
+    };
+
+    loadData();
+  });
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
@@ -123,18 +142,17 @@ export default function OverviewView() {
         </div>
 
         <div className="flex items-center space-x-3">
-
-          <Button className="space-x-1.5 text-black bg-white hover:bg-zinc-50 border border-zinc-200/90 transition-colors rounded-2xl">
-            <Link href={"/dashboard/froms"}>
+          <Link href={"/dashboard/forms"}>
+            <Button variant={"secondary"}>
               <span className="text-[12px]">All Forms</span>
-            </Link>
-          </Button>
-          <Button className="">
-            <Link href={"docs"}>
+            </Button>
+          </Link>
+          <Link href={"docs"}>
+            <Button>
               <span className="text-[12px]">View Docs</span>
-            </Link>
-            <ExternalLink className="w-3.5,h-3.5" />
-          </Button>
+              <ExternalLink className="w-3.5,h-3.5" />
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -145,7 +163,7 @@ export default function OverviewView() {
             <Inbox className="w-4 h-4 text-zinc-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
-            23
+            {stats?.totalSubmissions}
           </div>
           <span className="text-[11px] text-emerald-600 font-medium mt-1 inline-flex items-center space-x-1">
             <TrendingUp className="w-3 h-3" />
@@ -156,15 +174,15 @@ export default function OverviewView() {
 
         <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadow-xs">
           <div className="flex items-center justify-between text-zinc-500 mb-2">
-            <span className="text-xs font-medium"></span>
+            <span className="text-xs font-medium">Active Forms</span>
             <FileText className="w-4 h-4 text-zinc-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-semibold text-zinc-900 font-mono">
             {/* {activeforms} */}
-            24
+            {stats?.totalActiveForms}
           </div>
           <span className="[11px] text-zinc-500 mt-1 block">
-            12 total endpoints
+            {stats?.totalForms} total endpoints
           </span>
         </div>
 
@@ -174,14 +192,14 @@ export default function OverviewView() {
             <Clock className="w-4 h-4 text-zinc-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
-            12
+            {stats?.usageLimit}
           </div>
           <span className="text-[11px] text-zinc-500 mt-1 block">
             Limit: 34
           </span>
         </div>
 
-        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs">
+        {/* <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs">
           <div className="flex items-center justify-between text-zinc-500 mb-2">
             <span className="text-xs font-medium">Spam Block Rate</span>
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -192,7 +210,7 @@ export default function OverviewView() {
           <span className="text-[11px] text-zinc-500 mt-1 block">
             0 bots leaks reported
           </span>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-white rounded-2xl border-zinc-200/80 p-5 sm:p-6 shadow-xs">
@@ -214,8 +232,8 @@ export default function OverviewView() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {forms.slice(0, 3).map((form) => {
-            const isCopied = copiedID === form.endpointId;
+          {activeForms.slice(0, 3).map((form) => {
+            const isCopied = copiedID === form.slug;
 
             return (
               <div
@@ -224,28 +242,40 @@ export default function OverviewView() {
               >
                 <div className="m-3">
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs font-bold text-zinc-900 truncate">{form.name}</p>
-                    <Badge variant={form.status === 'active' ? 'success' : 'muted'} size="sm">{form.status}</Badge>
+                    <p className="text-xs font-bold text-zinc-900 truncate">
+                      {form.name}
+                    </p>
+                    <Badge
+                      variant={form.status === "active" ? "success" : "muted"}
+                      size="sm"
+                    >
+                      {form.status}
+                    </Badge>
                   </div>
-                    <p className="font-mono text-[11px] text-zinc-500 truncate">{form.endpointId}</p>
-                    <hr className="text-zinc-500 mt-5" />
-                    <div className="flex justify-between items-center">
-                      <Button className="bg-white hover:bg-white inline-flex items-center space-x-1 text-[11px] font-medium text-zinc-600 hover:text-zinc-900m">
-                        
-                        {isCopied ? (
-                          <>
-                        <Check className="w-3 h-3 text-emerald-600" />
-                        <span className="text-emerald-600 font-semibold">Copied</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3 h-3" />
-                        <span>Copy URL</span>
-                      </>
-                    )}
+                  <p className="font-mono text-[11px] text-zinc-500 truncate">
+                    {form.slug}
+                  </p>
+                  <hr className="text-zinc-500 mt-5" />
+                  <div className="flex justify-between items-center">
+                    <Button className="bg-white hover:bg-white inline-flex items-center space-x-1 text-[11px] font-medium text-zinc-600 hover:text-zinc-900m">
+                      {isCopied ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-600" />
+                          <span className="text-emerald-600 font-semibold">
+                            Copied
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>Copy URL</span>
+                        </>
+                      )}
                     </Button>
-                      <Button className="text-zinc bg-white hover:bg-white text-[11px] font-semibold text-zinc-900 hover:underline">Details →</Button>
-                    </div>
+                    <Button className="text-zinc bg-white hover:bg-white text-[11px] font-semibold text-zinc-900 hover:underline">
+                      Details →
+                    </Button>
+                  </div>
                 </div>
               </div>
             );
@@ -256,10 +286,14 @@ export default function OverviewView() {
       <div className="bg-white rounded-2xl border-zinc-200/80 p-5 sm:p-6 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div className="">
-            <h2 className="text-base font-bold text-zinc-950">Recent Submissions</h2>
-            <p className="text-xs text-zinc-500">Live incoming payloads from your active forms.</p>
+            <h2 className="text-base font-bold text-zinc-950">
+              Recent Submissions
+            </h2>
+            <p className="text-xs text-zinc-500">
+              Live incoming payloads from your active forms.
+            </p>
           </div>
-          <Button className="text-zinc bg-zinc-300 hover:bg-white text-[11px] font-semibold text-zinc-900 ">View all Submissions(6)</Button>
+          <Button variant={"secondary"}>View all Submissions(6)</Button>
         </div>
         {recentSubmissions.length === 0 ? (
           <div className="p-10 text-center text-zinc-500 text-xs">
@@ -285,10 +319,16 @@ export default function OverviewView() {
                   >
                     <td className="px-6 py-3.5">
                       <div className="flex items-center space-x-2.5">
-                        <div className={`w-2 h-2 rounded-full ${!sub.status ? 'bg-zinc-900' : 'bg-transparent'}`} />
+                        <div
+                          className={`w-2 h-2 rounded-full ${!sub.status ? "bg-zinc-900" : "bg-transparent"}`}
+                        />
                         <div>
-                          <p className="font-bold text-zinc-900">{sub.sender.name}</p>
-                          <p className="text-[11px] text-zinc-500 font-mono">{sub.sender.email}</p>
+                          <p className="font-bold text-zinc-900">
+                            {sub.sender.name}
+                          </p>
+                          <p className="text-[11px] text-zinc-500 font-mono">
+                            {sub.sender.email}
+                          </p>
                         </div>
                       </div>
                     </td>
@@ -301,7 +341,10 @@ export default function OverviewView() {
                       {sub.message}
                     </td>
                     <td className="px-6 py-3.5 text-zinc-500 font-mono text-[11px]">
-                      {new Date(sub.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      {new Date(sub.submittedAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </td>
                     <td className="px-6 py-3.5 text-right">
                       <Badge variant="success" size="sm">

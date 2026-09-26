@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   InputGroup,
@@ -7,6 +8,7 @@ import {
 import { Plus, Search } from "lucide-react";
 import * as api from "@/lib/api";
 import FormCard from "@/components/FormCard";
+import { useDialogContext } from "@/contexts/DialogProvider";
 
 export const forms: api.FormResponseDto[] = [
   {
@@ -82,6 +84,7 @@ export const forms: api.FormResponseDto[] = [
 ];
 
 function FormsPage() {
+  const { setCreateFormDialogOpen } = useDialogContext();
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -95,7 +98,10 @@ function FormsPage() {
         </div>
 
         <div className="flex items-center space-x-3">
-          <Button className={"w-full"}>
+          <Button
+            className={"w-full"}
+            onClick={() => setCreateFormDialogOpen(true)}
+          >
             <Plus /> Create form
           </Button>
         </div>

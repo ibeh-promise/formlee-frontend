@@ -2,6 +2,7 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import * as api from "@/lib/api";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 interface AuthContext {
   isLoading: boolean;
   isAuthenticated: boolean;
@@ -20,6 +21,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<api.UserResponseDto | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const authenticate = async () => {
@@ -32,6 +34,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (response.error.statusCode === 401) {
           setIsAuthenticated(false);
           setIsLoading(false);
+          router.push("/");
           return;
         } else {
           // navigate to error page
