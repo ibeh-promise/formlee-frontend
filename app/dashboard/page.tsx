@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badges";
 import * as api from "@/lib/api";
 
 export default function OverviewView() {

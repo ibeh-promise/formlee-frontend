@@ -13,7 +13,7 @@ import {
   Settings,
   Trash2,
 } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badges";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CodeBlock from "@/components/ui/CodeBlock";
 import { Label } from "@/components/ui/label";

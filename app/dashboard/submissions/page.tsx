@@ -8,7 +8,7 @@ import {
 import { CheckCircle, Download, Plus, Search, Trash2, X } from "lucide-react";
 import * as api from "@/lib/api";
 import FormCard from "@/components/FormCard";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badges";
 import {
   Select,
   SelectContent,

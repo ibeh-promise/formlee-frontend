@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import * as api from "@/lib/api";
-import { Badge } from "./ui/Badge";
+import { Badge } from "./ui/Badges";
 import { Copy, Dot, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
