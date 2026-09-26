@@ -1,6 +1,6 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import { forms } from "../page";
+import { forms } from "@/app/dashboard/forms/page";
 import { Button } from "@/components/ui/button";
 import {
   ArrowLeft,
@@ -76,7 +76,7 @@ const formStatus = [
 
 function FormDetailsPage() {
   const { slug } = useParams();
-  const form = forms.find((f) => f.slug === slug)!;
+  const form = forms.find((f: any) => f.slug === slug)!;
   const router = useRouter();
   
   return (
