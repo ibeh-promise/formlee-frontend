@@ -65,7 +65,7 @@ export default function CodeBlock({
 
       <div className="p-4 overflow-x-auto selection:bg-zinc-700 selection:text-white leading-relaxed">
         <code>
-          <pre className="">{code}</pre>
+          <pre className="text-wrap">{code}</pre>
         </code>
       </div>
     </div>

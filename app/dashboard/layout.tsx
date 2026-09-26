@@ -1,6 +1,10 @@
+"use client";
+import CreateFormDialog from "@/components/dialogs/CreateFormDialog";
+import LogoutDialog from "@/components/dialogs/LogoutDialog";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import AuthProvider from "@/contexts/AuthProvider";
+import DialogProvider from "@/contexts/DialogProvider";
 
 export default function DashboardLayout({
   children,
@@ -9,15 +13,19 @@ export default function DashboardLayout({
 }) {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-zinc-50">
-        <Sidebar />
+      <DialogProvider>
+        <div className="min-h-screen bg-zinc-50">
+          <Sidebar />
 
-        <div className="ml-64 min-h-screen">
-          <Header />
+          <div className="ml-64 min-h-screen">
+            <Header />
 
-          <main className="p-6">{children}</main>
+            <main className="p-6">{children}</main>
+          </div>
+          <CreateFormDialog />
+          <LogoutDialog />
         </div>
-      </div>
+      </DialogProvider>
     </AuthProvider>
   );
 }

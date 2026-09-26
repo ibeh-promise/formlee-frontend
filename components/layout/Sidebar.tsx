@@ -13,11 +13,14 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useAuthContext } from "@/contexts/AuthProvider";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useDialogContext } from "@/contexts/DialogProvider";
 
 export default function Sidebar() {
   const router = useRouter();
   const { user } = useAuthContext();
+  const { setCreateFormDialogOpen, setLogoutDialogOpen } = useDialogContext();
+  const pathname = usePathname();
 
   const navItems = [
     { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -66,7 +69,10 @@ export default function Sidebar() {
             </div>
           </div>
           <div className="p-3 border-b space-y-4">
-            <Button className={"w-full"}>
+            <Button
+              className={"w-full"}
+              onClick={() => setCreateFormDialogOpen(true)}
+            >
               <Plus /> Create form
             </Button>
 
@@ -77,7 +83,15 @@ export default function Sidebar() {
                 {navItems.map((navigation, idx) => (
                   <Button
                     key={idx}
-                    variant={"ghost"}
+                    variant={
+                      pathname === "/dashboard" &&
+                      navigation.href === "/dashboard"
+                        ? "secondary"
+                        : navigation.href !== "/dashboard" &&
+                            pathname.includes(navigation.href)
+                          ? "secondary"
+                          : "ghost"
+                    }
                     className={"justify-start text-black/60"}
                     onClick={() => router.push(navigation.href)}
                   >
@@ -124,7 +138,7 @@ export default function Sidebar() {
               <p className="text-xs">PRO PLAN</p>
             </div>
           </div>
-          <Button variant={"ghost"}>
+          <Button variant={"ghost"} onClick={() => setLogoutDialogOpen(true)}>
             <LogOut />
           </Button>
         </div>

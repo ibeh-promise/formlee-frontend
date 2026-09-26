@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { forms } from "@/app/dashboard/forms/page";
 import { useState } from "react";
+import CodeBlock from "@/components/ui/CodeBlock";
 
 interface Submission {
   id: string;
@@ -158,7 +159,7 @@ function FormsPage() {
           ))}
         </div>
         {selectedSubmission && (
-          <div className="border rounded-xl bg-white w-full p-5 space-y-4">
+          <div className="border rounded-xl bg-white w-full p-5 space-y-5">
             <div className="flex items-center justify-between border-b pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
@@ -216,7 +217,51 @@ function FormsPage() {
             </div>
 
             <div>
-              <h5>PARSED FORM FIELDS </h5>
+              <h5 className="text-sm font-semibold">PARSED FORM FIELDS </h5>
+
+              <div className="rounded-lg border">
+                <div className="flex items-center justify-between p-2  border-b">
+                  <p className="text-xs font-semibold text-black/60">name</p>
+                  <p className="text-sm">{selectedSubmission.name}</p>
+                </div>
+                <div className="flex items-center justify-between p-2  border-b">
+                  <p className="text-xs font-semibold text-black/60">email</p>
+                  <p className="text-sm">{selectedSubmission.email}</p>
+                </div>
+                <div className="flex items-center justify-between p-2">
+                  <p className="text-xs font-semibold text-black/60">message</p>
+                  <p className="text-sm">{selectedSubmission.message}</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h5 className="text-sm font-semibold">RAW JSON PAYLOAD</h5>
+
+              <CodeBlock
+                language="JSON"
+                code={`{
+  "id": "sub_01",
+  "formId": "form_8x29kd",
+  "formName": "Contact Form",
+  "email": "john@example.com",
+  "senderName": "John Doe",
+  "message": "Hey, I wanted to ask about your enterprise SLA options and custom webhook payloads.",
+  "data": {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "company": "Acme Technologies",
+    "budget": "$5,000 - $10,000",
+    "message": "Hey, I wanted to ask about your enterprise SLA options and custom webhook payloads."
+  },
+  "submittedAt": "2026-08-26T11:29:00Z",
+  "ipAddress": "198.51.100.42",
+  "country": "United States",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "read": true,
+  "spamScore": 0.02,
+  "isSpam": false
+}`}
+              />
             </div>
           </div>
         )}

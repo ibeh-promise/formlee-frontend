@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FileText,
   Inbox,
@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/Badge";
+import * as api from "@/lib/api";
 
 export default function OverviewView() {
   const [copiedID, setCopiedID] = useState<string | null>(null);
@@ -105,6 +106,29 @@ export default function OverviewView() {
     setTimeout(() => setCopiedID(null), 2000);
   };
 
+  const [stats, setStats] = useState<api.StatsResponseDto | null>(null);
+
+  const [activeForms, setActiveForms] = useState<api.FormResponseDto[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const statsRes = await api.stats.statsControllerGetStatsV1({
+        auth: localStorage.getItem("authToken")!,
+      });
+      console.log(statsRes);
+      setStats(statsRes.data || null);
+
+      const activeFormsRes = await api.form.formControllerFindAllByStatusV1({
+        path: { status: "active" },
+        auth: localStorage.getItem("authToken")!,
+      });
+      console.log(activeFormsRes);
+      setActiveForms(activeFormsRes.data || []);
+    };
+
+    loadData();
+  });
+
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -118,17 +142,17 @@ export default function OverviewView() {
         </div>
 
         <div className="flex items-center space-x-3">
-          <Button className="space-x-1.5 text-black bg-white hover:bg-zinc-50 border border-zinc-200/90 transition-colors rounded-2xl">
-            <Link href={"/dashboard/froms"}>
+          <Link href={"/dashboard/forms"}>
+            <Button variant={"secondary"}>
               <span className="text-[12px]">All Forms</span>
-            </Link>
-          </Button>
-          <Button className="">
-            <Link href={"docs"}>
+            </Button>
+          </Link>
+          <Link href={"docs"}>
+            <Button>
               <span className="text-[12px]">View Docs</span>
-            </Link>
-            <ExternalLink className="w-3.5,h-3.5" />
-          </Button>
+              <ExternalLink className="w-3.5,h-3.5" />
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -139,7 +163,7 @@ export default function OverviewView() {
             <Inbox className="w-4 h-4 text-zinc-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
-            23
+            {stats?.totalSubmissions}
           </div>
           <span className="text-[11px] text-emerald-600 font-medium mt-1 inline-flex items-center space-x-1">
             <TrendingUp className="w-3 h-3" />
@@ -150,15 +174,15 @@ export default function OverviewView() {
 
         <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadow-xs">
           <div className="flex items-center justify-between text-zinc-500 mb-2">
-            <span className="text-xs font-medium"></span>
+            <span className="text-xs font-medium">Active Forms</span>
             <FileText className="w-4 h-4 text-zinc-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-semibold text-zinc-900 font-mono">
             {/* {activeforms} */}
-            24
+            {stats?.totalActiveForms}
           </div>
           <span className="[11px] text-zinc-500 mt-1 block">
-            12 total endpoints
+            {stats?.totalForms} total endpoints
           </span>
         </div>
 
@@ -168,14 +192,14 @@ export default function OverviewView() {
             <Clock className="w-4 h-4 text-zinc-400" />
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
-            12
+            {stats?.usageLimit}
           </div>
           <span className="text-[11px] text-zinc-500 mt-1 block">
             Limit: 34
           </span>
         </div>
 
-        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs">
+        {/* <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs">
           <div className="flex items-center justify-between text-zinc-500 mb-2">
             <span className="text-xs font-medium">Spam Block Rate</span>
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -186,7 +210,7 @@ export default function OverviewView() {
           <span className="text-[11px] text-zinc-500 mt-1 block">
             0 bots leaks reported
           </span>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-white rounded-2xl border-zinc-200/80 p-5 sm:p-6 shadow-xs">
@@ -208,8 +232,8 @@ export default function OverviewView() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {forms.slice(0, 3).map((form) => {
-            const isCopied = copiedID === form.endpointId;
+          {activeForms.slice(0, 3).map((form) => {
+            const isCopied = copiedID === form.slug;
 
             return (
               <div
@@ -229,7 +253,7 @@ export default function OverviewView() {
                     </Badge>
                   </div>
                   <p className="font-mono text-[11px] text-zinc-500 truncate">
-                    {form.endpointId}
+                    {form.slug}
                   </p>
                   <hr className="text-zinc-500 mt-5" />
                   <div className="flex justify-between items-center">
