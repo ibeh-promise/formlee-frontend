@@ -62,19 +62,38 @@ const SettingsPage = () => {
 
             </div>
 
-            <div className='w-full mt-3 border-gray-500 bg-white rounded-[15px] h-[300px] flex justify-center items-start'>
+            <div className='w-full mt-3 border-gray-500 bg-white rounded-[15px] h-[350px] flex flex-col justify-start items-center'>
                 <div className='flex w-[94%] gap-2 my-7 border-b-1 border-gray-100'>
                     <div className='bg-purple-50 rounded-md h-[40px] w-[40px] flex justify-center items-center'>
                         <Bell className="h-[20px] w-[20px]"/>
                     </div>
                     <div className='flex flex-col items-start justify-center my-2'>
-                        <h2 className='font-bold text-[16px]'>Email Notification</h2>
+                        <h2 className='font-bold text-[18px]'>Email Notification</h2>
                         <p className='text-gray-500'>Choose what events you receive email updates for.</p>
                     </div>
                 </div>
 
-                <div className='w-full flex flex-col items-start justify-center'>
+                <div className='w-full flex flex-col items-center justify-center gap-4 '>
+                        <div className='w-[94%] py-3 rounded-[10px] px-7 flex justify-between items-center bg-purple-50'>
+                         
+                        <div className='flex flex-col items-start justify-center my-2'>
+                            <h2 className='font-bold text-[15px]'>Instants Submission Alerts</h2>
+                            <p className='text-gray-500'>Receive an immediate notification whenever any form endpoint receives valid data.</p>
+                        </div>
+                           <div className='flex justify-center items-center'>
+                            <input type="checkbox" name="" id="" className='h-[20px] w-[20px] cursor-pointer'/>
+                        </div>
+                        </div>
+                        <div className="w-[94%] py-3 rounded-[10px] px-7 flex justify-between items-center bg-purple-50">
+                                <div className='flex flex-col items-start justify-center my-2'>
+                                    <h2 className='font-bold text-[15px]'>Weekly Digest & Analytics</h2>
+                                    <p className='text-gray-500'>Receive a Monday morning breakdown of submission traffic and conversion metrics.</p>
+                                </div>
 
+                                <div className='flex justify-center items-center'>
+                                    <input type="checkbox" name="" id="" className='h-[20px] w-[20px] cursor-pointer' />
+                                </div>
+                        </div>
                 </div>
             </div>
             
