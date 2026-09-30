@@ -5,18 +5,17 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { Loader, Lock, Mail } from "lucide-react";
+import { Loader, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { SubmitEvent, useState } from "react";
 import { toast } from "sonner";
 import * as api from "@/lib/api";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleSendRecoveryLink = async (e: SubmitEvent) => {
     e.preventDefault();

@@ -6,7 +6,6 @@ import {
   ArrowUpRight,
   TrendingUp,
   Clock,
-  ShieldCheck,
   ExternalLink,
   Copy,
   Check,
