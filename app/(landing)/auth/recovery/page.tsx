@@ -15,17 +15,16 @@ import { useRouter } from "next/navigation";
 
 function Login() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e: SubmitEvent) => {
+  const handleSendRecoveryLink = async (e: SubmitEvent) => {
     e.preventDefault();
-    if (!email || !password) return toast("Fill in all fields");
+    if (!email) return toast("Fill in all fields");
     setSubmitting(true);
 
     const res = await api.auth.authControllerLoginV1({
-      body: { email, password },
+      body: { email, password: "" },
     });
 
     console.log(res);
@@ -46,7 +45,7 @@ function Login() {
     <div className="flex  items-center justify-center py-20 bg-[#FAFAFA]/90">
       <form
         className="bg-white p-10 rounded-2xl border shadow space-y-7"
-        onSubmit={handleLogin}
+        onSubmit={handleSendRecoveryLink}
       >
         <div className="flex flex-col items-center gap-y-4">
           <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white shadow-xs group-hover:bg-zinc-800 transition-colors">
@@ -65,9 +64,9 @@ function Login() {
           </div>
 
           <div className="space-y-1 text-center">
-            <h4 className="text-2xl font-bold">Welcome back to Formlee</h4>
+            <h4 className="text-2xl font-bold">Recovery Your Account</h4>
             <p className="text-sm text-black/60">
-              Signin to access your forms and submission inbox
+              We&apos;ll send a recovery link to your email
             </p>
           </div>
         </div>
@@ -87,39 +86,11 @@ function Login() {
             </InputGroupAddon>
           </InputGroup>
         </div>
-        <div className="w-full space-y-2">
-          <Label htmlFor="email">PASSWORD</Label>
-          <InputGroup>
-            <InputGroupInput
-              placeholder="Enter password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <InputGroupAddon>
-              <Lock />
-            </InputGroupAddon>
-          </InputGroup>
-          <Link href={"/auth/recovery"}>
-            <Button variant={"link"} className={"ml-auto"}>
-              Forgotten Password?
-            </Button>
-          </Link>
-        </div>
+
         <Button className={"w-full"} type="submit" disabled={submitting}>
           {submitting && <Loader className="animate-spin" />}{" "}
-          <span>Login In</span>
+          <span>Send Link</span>
         </Button>
-
-        <hr />
-
-        <p className="text-sm text-center text-black/60">
-          Don&apos;t have an account?{" "}
-          <Link href={"/auth/signup"} className="text-black">
-            Sign up
-          </Link>
-        </p>
       </form>
     </div>
   );
