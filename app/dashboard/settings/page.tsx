@@ -1,7 +1,7 @@
 "use client"
 
 
-import { Bell, User2Icon } from 'lucide-react'
+import { Bell, KeyIcon, User2Icon } from 'lucide-react'
 import React from 'react'
 import {
   InputGroup,
@@ -96,6 +96,19 @@ const SettingsPage = () => {
                         </div>
                 </div>
             </div>
+
+
+            <div className='w-full mt-3 border-gray-500 bg-white rounded-[15px] h-[250px] flex flex-col justify-start '>
+                <div className='flex gap-3 items-center justify-start px-7 mt-7'>
+                    <div className="flex justify-center items-center bg-purple-50 h-[40px] w-[40px] rounded-md">
+                    <KeyIcon className='h-[20px] w-[20px]'/>
+                </div>
+                <div className='flex flex-col justify-center items-start'>
+                    <h2 className='font-bold text-[15px]'>Developer API Key</h2>
+                    <p> Use this secret key to authenticate REST API requests.</p>
+                </div>
+                </div>
+            </div>
             
         
         </div>
@@ -105,19 +118,3 @@ const SettingsPage = () => {
 
 export default SettingsPage
 
-
-    //   <div className="w-full space-y-2">
-    //       <Label htmlFor="email">EMAIL ADDRESS</Label>
-    //       <InputGroup>
-    //         <InputGroupInput
-    //           placeholder="name@example.com"
-    //           type="email"
-    //           value={email}
-    //           onChange={(e) => setEmail(e.target.value)}
-    //           required
-    //         />
-    //         <InputGroupAddon>
-    //           <Mail />
-    //         </InputGroupAddon>
-    //       </InputGroup>
-    //     </div>
