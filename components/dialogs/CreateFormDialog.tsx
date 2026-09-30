@@ -18,7 +18,6 @@ import * as api from "@/lib/api";
 import { toast } from "sonner";
 import { useFormStore } from "@/stores/forms-store";
 import { useRouter } from "next/navigation";
-import { PreviewCard } from "@base-ui/react";
 
 export default function CreateFormDialog() {
   const { createFormDialogOpen, setCreateFormDialogOpen } = useDialogContext();

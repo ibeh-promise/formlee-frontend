@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Hero from "@/components/landingpage/Hero";
 import ContactForm from "@/components/landingpage/ContactForm";
 import HowItWorks from "@/components/landingpage/HowItWorks";
