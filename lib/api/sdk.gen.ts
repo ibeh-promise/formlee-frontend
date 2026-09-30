@@ -3,7 +3,7 @@
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
 import { formControllerCreateV1ResponseTransformer, formControllerFindAllByStatusV1ResponseTransformer, formControllerFindAllV1ResponseTransformer, formControllerFindOneV1ResponseTransformer, formControllerUpdateV1ResponseTransformer, submissionControllerFindAllV1ResponseTransformer, submissionControllerFindOneV1ResponseTransformer, submissionControllerFindRecentV1ResponseTransformer, submissionControllerMarkAsReadV1ResponseTransformer, submissionControllerRemoveV1ResponseTransformer, userControllerGetUserV1ResponseTransformer, userControllerUpdateProfileV1ResponseTransformer } from './transformers.gen';
-import type { AuthControllerChangePasswordV1Data, AuthControllerChangePasswordV1Errors, AuthControllerChangePasswordV1Responses, AuthControllerLoginV1Data, AuthControllerLoginV1Errors, AuthControllerLoginV1Responses, AuthControllerResetPasswordV1Data, AuthControllerResetPasswordV1Errors, AuthControllerResetPasswordV1Responses, AuthControllerSignupV1Data, AuthControllerSignupV1Errors, AuthControllerSignupV1Responses, AuthControllerVerifyResetPasswordLinkV1Data, AuthControllerVerifyResetPasswordLinkV1Errors, AuthControllerVerifyResetPasswordLinkV1Responses, FormControllerCreateV1Data, FormControllerCreateV1Errors, FormControllerCreateV1Responses, FormControllerFindAllByStatusV1Data, FormControllerFindAllByStatusV1Errors, FormControllerFindAllByStatusV1Responses, FormControllerFindAllV1Data, FormControllerFindAllV1Errors, FormControllerFindAllV1Responses, FormControllerFindOneV1Data, FormControllerFindOneV1Errors, FormControllerFindOneV1Responses, FormControllerRemoveV1Data, FormControllerRemoveV1Errors, FormControllerRemoveV1Responses, FormControllerUpdateV1Data, FormControllerUpdateV1Errors, FormControllerUpdateV1Responses, HealthControllerHealthCheckData, HealthControllerHealthCheckErrors, HealthControllerHealthCheckResponses, StatsControllerGetStatsV1Data, StatsControllerGetStatsV1Errors, StatsControllerGetStatsV1Responses, SubmissionControllerCreateV1Data, SubmissionControllerCreateV1Errors, SubmissionControllerCreateV1Responses, SubmissionControllerFindAllV1Data, SubmissionControllerFindAllV1Errors, SubmissionControllerFindAllV1Responses, SubmissionControllerFindOneV1Data, SubmissionControllerFindOneV1Errors, SubmissionControllerFindOneV1Responses, SubmissionControllerFindRecentV1Data, SubmissionControllerFindRecentV1Errors, SubmissionControllerFindRecentV1Responses, SubmissionControllerMarkAsReadV1Data, SubmissionControllerMarkAsReadV1Errors, SubmissionControllerMarkAsReadV1Responses, SubmissionControllerRemoveV1Data, SubmissionControllerRemoveV1Errors, SubmissionControllerRemoveV1Responses, UserControllerDeleteProfileV1Data, UserControllerDeleteProfileV1Errors, UserControllerDeleteProfileV1Responses, UserControllerGetUserV1Data, UserControllerGetUserV1Errors, UserControllerGetUserV1Responses, UserControllerUpdateProfileV1Data, UserControllerUpdateProfileV1Errors, UserControllerUpdateProfileV1Responses } from './types.gen';
+import type { AuthControllerChangePasswordV1Data, AuthControllerChangePasswordV1Errors, AuthControllerChangePasswordV1Responses, AuthControllerLoginV1Data, AuthControllerLoginV1Errors, AuthControllerLoginV1Responses, AuthControllerRequestResetPasswordLinkV1Data, AuthControllerRequestResetPasswordLinkV1Errors, AuthControllerRequestResetPasswordLinkV1Responses, AuthControllerResetPasswordV1Data, AuthControllerResetPasswordV1Errors, AuthControllerResetPasswordV1Responses, AuthControllerSignupV1Data, AuthControllerSignupV1Errors, AuthControllerSignupV1Responses, AuthControllerVerifyResetPasswordLinkV1Data, AuthControllerVerifyResetPasswordLinkV1Errors, AuthControllerVerifyResetPasswordLinkV1Responses, FormControllerCreateV1Data, FormControllerCreateV1Errors, FormControllerCreateV1Responses, FormControllerFindAllByStatusV1Data, FormControllerFindAllByStatusV1Errors, FormControllerFindAllByStatusV1Responses, FormControllerFindAllV1Data, FormControllerFindAllV1Errors, FormControllerFindAllV1Responses, FormControllerFindOneV1Data, FormControllerFindOneV1Errors, FormControllerFindOneV1Responses, FormControllerRemoveV1Data, FormControllerRemoveV1Errors, FormControllerRemoveV1Responses, FormControllerUpdateV1Data, FormControllerUpdateV1Errors, FormControllerUpdateV1Responses, HealthControllerHealthCheckData, HealthControllerHealthCheckErrors, HealthControllerHealthCheckResponses, StatsControllerGetStatsV1Data, StatsControllerGetStatsV1Errors, StatsControllerGetStatsV1Responses, SubmissionControllerCreateV1Data, SubmissionControllerCreateV1Errors, SubmissionControllerCreateV1Responses, SubmissionControllerFindAllV1Data, SubmissionControllerFindAllV1Errors, SubmissionControllerFindAllV1Responses, SubmissionControllerFindOneV1Data, SubmissionControllerFindOneV1Errors, SubmissionControllerFindOneV1Responses, SubmissionControllerFindRecentV1Data, SubmissionControllerFindRecentV1Errors, SubmissionControllerFindRecentV1Responses, SubmissionControllerMarkAsReadV1Data, SubmissionControllerMarkAsReadV1Errors, SubmissionControllerMarkAsReadV1Responses, SubmissionControllerRemoveV1Data, SubmissionControllerRemoveV1Errors, SubmissionControllerRemoveV1Responses, UserControllerDeleteProfileV1Data, UserControllerDeleteProfileV1Errors, UserControllerDeleteProfileV1Responses, UserControllerGetUserV1Data, UserControllerGetUserV1Errors, UserControllerGetUserV1Responses, UserControllerUpdateProfileV1Data, UserControllerUpdateProfileV1Errors, UserControllerUpdateProfileV1Responses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -81,12 +81,12 @@ export class auth {
     }
     
     /**
-     * Reset Password
+     * Request password reset
      *
-     * Reset Password
+     * Request password reset link
      */
-    public static authControllerResetPasswordV1<ThrowOnError extends boolean = false>(options: Options<AuthControllerResetPasswordV1Data, ThrowOnError>): RequestResult<AuthControllerResetPasswordV1Responses, AuthControllerResetPasswordV1Errors, ThrowOnError> {
-        return (options.client ?? client).post<AuthControllerResetPasswordV1Responses, AuthControllerResetPasswordV1Errors, ThrowOnError>({
+    public static authControllerRequestResetPasswordLinkV1<ThrowOnError extends boolean = false>(options: Options<AuthControllerRequestResetPasswordLinkV1Data, ThrowOnError>): RequestResult<AuthControllerRequestResetPasswordLinkV1Responses, AuthControllerRequestResetPasswordLinkV1Errors, ThrowOnError> {
+        return (options.client ?? client).post<AuthControllerRequestResetPasswordLinkV1Responses, AuthControllerRequestResetPasswordLinkV1Errors, ThrowOnError>({
             url: '/api/v1/auth/recover/reset-password-link',
             ...options,
             headers: {
@@ -103,6 +103,22 @@ export class auth {
      */
     public static authControllerVerifyResetPasswordLinkV1<ThrowOnError extends boolean = false>(options: Options<AuthControllerVerifyResetPasswordLinkV1Data, ThrowOnError>): RequestResult<AuthControllerVerifyResetPasswordLinkV1Responses, AuthControllerVerifyResetPasswordLinkV1Errors, ThrowOnError> {
         return (options.client ?? client).get<AuthControllerVerifyResetPasswordLinkV1Responses, AuthControllerVerifyResetPasswordLinkV1Errors, ThrowOnError>({ url: '/api/v1/auth/recover/verify-reset-password-link', ...options });
+    }
+    
+    /**
+     * Reset Password
+     *
+     * Reset Password
+     */
+    public static authControllerResetPasswordV1<ThrowOnError extends boolean = false>(options: Options<AuthControllerResetPasswordV1Data, ThrowOnError>): RequestResult<AuthControllerResetPasswordV1Responses, AuthControllerResetPasswordV1Errors, ThrowOnError> {
+        return (options.client ?? client).post<AuthControllerResetPasswordV1Responses, AuthControllerResetPasswordV1Errors, ThrowOnError>({
+            url: '/api/v1/auth/recover/reset-password',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
     }
 }
 
