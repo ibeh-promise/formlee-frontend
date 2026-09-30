@@ -3,6 +3,13 @@
 
 import { User2Icon } from 'lucide-react'
 import React from 'react'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button';
 
 const SettingsPage = () => {
   return (
@@ -13,7 +20,7 @@ const SettingsPage = () => {
                  <p className='text-[18px] text-gray-500'>Manage your personal profile, notification preferences, and API credentials.</p>
             </div>
 
-            <div className='w-full mt-3 border-1 border-gray-300 bg-white rounded-[15px] h-[300px]'>
+            <div className='w-full mt-3 border-1 border-gray-300 bg-white rounded-[15px] h-[270px]'>
                 <div className='flex w-full px-7 gap-2 my-7'>
                     <div className='bg-purple-50 rounded-md h-[40px] w-[40px] flex justify-center items-center'>
                     <User2Icon className='h-[20px] w-[20px]'/>
@@ -24,20 +31,57 @@ const SettingsPage = () => {
                         <p className='text-gray-500'>Update your account name and primary email.</p>
                     </div>
                 </div>
+                        <form className='flex items-center justify-start mx-7 gap-7'>
+            <div className='w-full space-y-2'>
+            `   <Label htmlFor="fullname" className='font-bold'>FULL NAME</Label>
+                <InputGroup>
+                <InputGroupInput
+                placeholder='enter your name'
+                type='text'
+
+                />
+                </InputGroup>
             </div>
             
-            <form>
-            <div className='flex items-center justify-start gap-3'>
-                <div>
-                    <label htmlFor=""></label>
-                </div>
+            <div className='w-full '>
+            `   <Label htmlFor="email" className='font-bold'>EMAIL ADDRESS</Label>
+                <InputGroup>
+                <InputGroupInput
+                placeholder='enter your email'
+                type='email'
+
+                />
+                </InputGroup>
+            </div>
+  
+            </form>
+            <div className='w-full flex justify-end items-center mx-7 spac-y-2'>
+                <Button>Save Profile</Button>
             </div>
 
-
-            </form>
+            </div>
+            
+        
         </div>
     </>
   )
 }
 
 export default SettingsPage
+
+
+    //   <div className="w-full space-y-2">
+    //       <Label htmlFor="email">EMAIL ADDRESS</Label>
+    //       <InputGroup>
+    //         <InputGroupInput
+    //           placeholder="name@example.com"
+    //           type="email"
+    //           value={email}
+    //           onChange={(e) => setEmail(e.target.value)}
+    //           required
+    //         />
+    //         <InputGroupAddon>
+    //           <Mail />
+    //         </InputGroupAddon>
+    //       </InputGroup>
+    //     </div>
