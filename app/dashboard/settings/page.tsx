@@ -102,7 +102,7 @@ const SettingsPage = () => {
 
 
             <div className='w-full mt-3 border-gray-500 bg-white rounded-[15px] h-[250px] flex flex-col justify-center items-center '>
-                <div className='flex gap-3 w-[94%] items-start justify-start px-7 border-b pb-4 border-gray-200'>
+                <div className='flex gap-3 w-[94%] items-start justify-start border-b pb-4 border-gray-200'>
                     <div className="flex justify-center items-center bg-purple-50 h-[40px] w-[40px] rounded-md">
                     <KeyIcon className='h-[20px] w-[20px]'/>
                 </div>
@@ -129,14 +129,24 @@ const SettingsPage = () => {
                     </div>
             </div>
 
-            <div className='w-full mt-3 border-2 border-red-100 bg-red-50 rounded-[15px] h-[250px] flex flex-col justify-start '>
-                <div className='flex gap-3 items-center justify-start px-7 mt-7'>
+            <div className='w-full mt-3 border-2 border-red-100 bg-red-50 rounded-[15px] h-[200px] flex flex-col justify-start items-center '>
+                <div className='flex gap-3 items-start justify-start w-[94%] mt-7 border-b pb-4 border-red-200'>
                     <div className="flex justify-center items-center bg-red-100 h-[40px] w-[40px] rounded-md">
                         <TriangleAlert className='h-[20px] w-[20px] text-red-400'/>
                     </div>
                     <div className="flex flex-col justify-center items-start">
                         <h2 className="font-bold text-[18px]">Danger Zone</h2>
                         <p className="text-red-500 text-[15px]">Irreversible actions regarding your account and endpoints.</p>
+                    </div>
+
+                </div>
+                <div className="flex w-full justify-start items-center px-7 mt-7">
+                    <div className="w-full flex flex-col items-start justify-center">
+                        <h3 className="font-bold text-[15px]">Delete Account & Clear All Data</h3>
+                        <p className="text-red-500 text-[13px]">Permanently remove your account,active form endpoints,and all historical informations logs</p>
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <Button variant="destructive" className="bg-red-500 text-white">Delete Account</Button>
                     </div>
                 </div>
             </div>
