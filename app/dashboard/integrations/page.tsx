@@ -283,6 +283,27 @@ export default function () {
                   </p> 
                 </div>
               )}
+              {
+                integration === "slack" && (
+                    <div>
+                        <label className="block font-semibold text-zinc-700">
+                            {integration == "slack" ? "slack" : null}
+                        </label>
+                        <input
+                            type="url"
+                            required
+                            value={configUrl}
+                            onChange={(e) => setConfigUrl(e.target.value)}
+                            placeholder="https://api.yourservice.com/v1/webhooks/formlee"
+                            className="w-full px-3 py-2 text-xs bg-zinc-50 border border-zinc-900 rounded-lg text-zinc-900 focus:white"
+                        />
+                        <p className="text-[11px] text-zinc-400 mt-1">
+                            we send a POST request with HMAC sha256 signature in the {" "}
+                            <code className="font-mono">X-formlee-Signature</code>
+                        </p>
+                    </div>
+                ) 
+              }
             </form>
           </Modal>
         )}
