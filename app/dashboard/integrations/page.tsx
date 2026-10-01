@@ -19,6 +19,11 @@ import { Modal } from "@/components/ui/Modal";
 
 
 export default function(){
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [selectedIntegration, setSelectedIntegration] = useState(null)
+    const [integration, setIntegration] = useState("")
+    const [configUrl, setConfigUrl] = useState("")
+
     return (
         <div className="p-5 space-y-6 animate-in fade-in duration-200">
             <div>
@@ -48,6 +53,10 @@ export default function(){
                         Active 
                      </span>
                      <button
+                     onClick={() => {
+                        setIsModalOpen(true)
+                        setIntegration("emailNotification")
+                    }}
                      className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
                      >Configure</button>
                     </div>
@@ -75,6 +84,10 @@ export default function(){
                         Active 
                      </span>
                      <button
+                     onClick={() => {
+                        setIsModalOpen(true)
+                        setIntegration("webhook")
+                     }}
                      className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
                      >Configure</button>
                     </div>
@@ -102,6 +115,10 @@ export default function(){
                         Active 
                      </span>
                      <button
+                     onClick={() => {
+                        setIsModalOpen(true)
+                        setIntegration("Slack")
+                     }}
                      className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
                      >Configure</button>
                     </div>
@@ -129,6 +146,10 @@ export default function(){
                         Active 
                      </span>
                      <button
+                     onClick={() => {
+                        setIsModalOpen(false)
+                        setIntegration("Discord")
+                     }}
                      className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
                      >Configure</button>
                     </div>
@@ -144,7 +165,7 @@ export default function(){
                                 Enabled
                             </Badge>
                         </div>
-
+ 
                         <h3 className="text-base font-bold text-zinc-950 mb-1">Zapier</h3>
                         <p className="text-xs text-zinc-600 leading-relaxed mb-4">
                             Connect Formlee to over 5000+ business applications, CRMS, and spreadsheets
@@ -156,6 +177,10 @@ export default function(){
                         Active 
                      </span>
                      <button
+                     onClick={() => {
+                        setIsModalOpen(false)
+                        setIntegration("Zapier")
+                     }}
                      className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
                      >Configure</button>
                     </div>
@@ -187,6 +212,27 @@ export default function(){
                      >Configure</button>
                     </div>
                 </div>
+
+                {isModalOpen && (
+                    <Modal
+                    title="Configure Mail"
+                    isOpen={!!isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    >
+                        <form className="space-y-4 text-sm">
+                            <div>
+                                <label className="block font-semibold text-zinc-700">{integration == 'emailNotification'? 'Email Notification' : null}</label>
+                                <input 
+                                type="url"
+                                required
+                                value={configUrl}
+                                onChange={(e) => setConfigUrl(e.target.value)}
+                                
+                                />
+                            </div>
+                        </form>
+                    </Modal>
+                )}  
             </div>
         </div> 
     ) 
