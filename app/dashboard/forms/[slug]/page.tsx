@@ -1,12 +1,12 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import { forms } from "../page";
 import { Button } from "@/components/ui/button";
 import {
   ArrowLeft,
   Code2,
   Copy,
   Download,
+  FolderMinus,
   Globe,
   Inbox,
   Send,
@@ -30,11 +30,22 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useFormStore } from "@/stores/forms-store";
+import { useEffect, useState } from "react";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import * as api from "@/lib/api";
+import { toast } from "sonner";
 
 const submissions = [
   {
@@ -76,10 +87,53 @@ const formStatus = [
 
 function FormDetailsPage() {
   const { slug } = useParams();
-  const form = forms.find((f) => f.slug === slug)!;
+  const { forms, addForm } = useFormStore();
+  const [form, setForm] = useState(forms.find((f) => f.slug === slug));
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  
-  return (
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      if (!form) {
+        const res = await api.form.formControllerFindOneV1({
+          path: { idOrSlug: String(slug) },
+          auth: localStorage.getItem("authToken")!,
+        });
+
+        if (res.error) {
+          toast.error("Failed to retrieve form", {
+            description: res.error.message,
+          });
+        } else {
+          addForm(res.data);
+          setForm(res.data);
+        }
+      }
+      setIsLoading(false);
+    };
+    fetchForm();
+  }, [form, slug, addForm]);
+
+  return isLoading ? (
+    <div>
+      <h1>Is Loading</h1>
+    </div>
+  ) : !form ? (
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia>
+          <FolderMinus />
+        </EmptyMedia>
+        <EmptyTitle>Form not found</EmptyTitle>
+        <EmptyDescription>Form might have been deleted</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Button onClick={() => router.push("/dashboard/forms")}>
+          See all Forms
+        </Button>
+      </EmptyContent>
+    </Empty>
+  ) : (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex gap-3 items-center">
