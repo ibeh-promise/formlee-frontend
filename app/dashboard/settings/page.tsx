@@ -11,6 +11,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, TriangleAlert } from "lucide-react";
+import { Copy, RefreshCw } from "lucide-react";
+
 
 const SettingsPage = () => {
   return (
@@ -99,8 +101,8 @@ const SettingsPage = () => {
             </div>
 
 
-            <div className='w-full mt-3 border-gray-500 bg-white rounded-[15px] h-[250px] flex flex-col justify-start '>
-                <div className='flex gap-3 items-center justify-start px-7 mt-7'>
+            <div className='w-full mt-3 border-gray-500 bg-white rounded-[15px] h-[250px] flex flex-col justify-center items-center '>
+                <div className='flex gap-3 w-[94%] items-start justify-start px-7 border-b pb-4 border-gray-200'>
                     <div className="flex justify-center items-center bg-purple-50 h-[40px] w-[40px] rounded-md">
                     <KeyIcon className='h-[20px] w-[20px]'/>
                 </div>
@@ -109,15 +111,22 @@ const SettingsPage = () => {
                     <p className='text-gray-500 text-[15px]'> Use this secret key to authenticate REST API requests.</p>
                 </div>
                 </div>
-                 <div className="flex justify-center items-center w-full px-7 mt-12">
-                    <div tabIndex={0} className='flex justify-start items-center w-[500px] py-2 px-3 rounded-[9px] focus:border-black focus-outline-none border-2 bg-gray-100'>
+                 <div className="flex justify-between items-center w-full px-7 mt-5">
+                    <div tabIndex={0} className='flex justify-start items-center w-[700px] py-2 px-3 rounded-[9px] focus:border-black focus-outline-none border-2 bg-gray-100'>
                         <p className="text-gray-500">fl_live_u9sb1r0ktdf909n9</p>
                     </div>
-                    <div>
-                        
+                    <div className="flex items-center justify-center gap-2">
+                        <Button variant={"secondary"} className="h-12">
+                            <Copy /> Copy Key
+                        </Button>
+                         <Button className="bg-white border border-gray-300 text-black hover:bg-gray-100 h-12">
+                            <RefreshCw /> Rotate
+                        </Button>
                     </div>
-                    <div></div>
                 </div>
+                    <div className="w-full flex justify-start items-center px-7 mt-3">
+                        <p className="text-gray-500 text-[12px]">Keep this key confidential. Never expose it in client-side public bundles.</p>
+                    </div>
             </div>
 
             <div className='w-full mt-3 border-2 border-red-100 bg-red-50 rounded-[15px] h-[250px] flex flex-col justify-start '>
