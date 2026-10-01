@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
 import { Button } from '@/components/ui/button';
+import { AlertTriangle, TriangleAlert } from "lucide-react";
 
 const SettingsPage = () => {
   return (
@@ -104,9 +105,30 @@ const SettingsPage = () => {
                     <KeyIcon className='h-[20px] w-[20px]'/>
                 </div>
                 <div className='flex flex-col justify-center items-start'>
-                    <h2 className='font-bold text-[15px]'>Developer API Key</h2>
-                    <p> Use this secret key to authenticate REST API requests.</p>
+                    <h2 className='font-bold text-[18px]'>Developer API Key</h2>
+                    <p className='text-gray-500 text-[15px]'> Use this secret key to authenticate REST API requests.</p>
                 </div>
+                </div>
+                 <div className="flex justify-center items-center w-full px-7 mt-12">
+                    <div tabIndex={0} className='flex justify-start items-center w-[500px] py-2 px-3 rounded-[9px] focus:border-black focus-outline-none border-2 bg-gray-100'>
+                        <p className="text-gray-500">fl_live_u9sb1r0ktdf909n9</p>
+                    </div>
+                    <div>
+                        
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <div className='w-full mt-3 border-2 border-red-100 bg-red-50 rounded-[15px] h-[250px] flex flex-col justify-start '>
+                <div className='flex gap-3 items-center justify-start px-7 mt-7'>
+                    <div className="flex justify-center items-center bg-red-100 h-[40px] w-[40px] rounded-md">
+                        <TriangleAlert className='h-[20px] w-[20px] text-red-400'/>
+                    </div>
+                    <div className="flex flex-col justify-center items-start">
+                        <h2 className="font-bold text-[18px]">Danger Zone</h2>
+                        <p className="text-red-500 text-[15px]">Irreversible actions regarding your account and endpoints.</p>
+                    </div>
                 </div>
             </div>
             
