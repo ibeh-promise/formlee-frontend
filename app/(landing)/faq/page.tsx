@@ -1,4 +1,5 @@
-import { CircleAlert } from 'lucide-react'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
+import { CircleAlert, Search } from 'lucide-react'
 import React from 'react'
 
 const FaqPage = () => {
@@ -6,7 +7,7 @@ const FaqPage = () => {
     <section className='relative pt-12 pb-20 sm:pt-20 sm:pb-20 overflow-hidden'>
       <div className='absolute inset-0 -z-10 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]'/>
 
-     <div className='max-w-4xl mx-auto px-4 sm-px-6 text-center'>
+     <div className='max-w-4xl mx-auto px-4 sm-px-6 text-center flex justify-center flex-col items-center'>
          <div className='inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200/80 text-zinc-700 text-xs font-medium mb-6 animate-in fade-in slide-in-from-bottom-2 duration-200'>
           <span>
             <CircleAlert className='h-4 w-4'/>
@@ -18,9 +19,57 @@ const FaqPage = () => {
             Frequently Asked Questions
           </h1>
 
-          <p className='text-lg sm:text-xl text-zinc-600 max-w-2xl mx-auto mb-10 leading-relaxed font-normal'>
-            Everything you need to knoe about Formlee enpoints, Nextjs
+          <p className='text-lg sm:text-xl text-zinc-600 max-w-4xl mx-auto mb-10 leading-relaxed font-normal'>
+            Everything you need to know about Formlee enpoints, Next.js integration, emails delivery <br /> speeds, spam mitigation, and API webhooks.
           </p>
+
+        <div className="flex items-center rounded-xl border-2 border-gray-200 w-[80%] bg-white p-2 shadow-sm focus-within:border-black">
+  <InputGroup
+    className="
+      w-[90%]
+      !border-none
+      !shadow-none
+      !ring-0
+      focus-within:!border-none
+      focus-within:!shadow-none
+      focus-within:!ring-0
+    "
+  >
+    <InputGroupInput
+      placeholder="Search questions (e.g. Next.js, CORS, spam honeypot, DKIM, attach"
+      className="
+        !border-none
+        !outline-none
+        !shadow-none
+        !ring-0
+        focus:!border-none
+        focus:!outline-none
+        focus:!shadow-none
+        focus:!ring-0
+        focus-visible:!border-none
+        focus-visible:!outline-none
+        focus-visible:!shadow-none
+        focus-visible:!ring-0
+      "
+    />
+
+    <InputGroupAddon className="!border-none !shadow-none">
+      <Search />
+    </InputGroupAddon>
+  </InputGroup>
+</div>
+     </div>
+     <div className='border-t-1 mt-7 border-zinc-200 mx-5'/>
+
+     <div className='flex flex-col my-7 items-center justify-center'>
+      <div className='flex justify-between items-center'>
+        <span className='text-zinc-500 text-xs'>BROWSE BY TOPIC</span>
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-zinc-700 text-xs font-medium mb-6 animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <span>Expand all</span>
+          <span className="flex h-1.5 w-1.5 rounded-full bg-zinc-300"/>
+          <span>Collapse all</span>
+        </div>
+      </div>
      </div>
     </section>
   )
