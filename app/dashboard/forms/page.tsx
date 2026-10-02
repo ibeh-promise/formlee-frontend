@@ -20,6 +20,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // export const forms: api.FormResponseDto[] = [
 //   {
@@ -105,11 +106,12 @@ function FormsPage() {
         auth: localStorage.getItem("authToken")!,
       });
 
-      if (res.error)
-        toast.error("Failed to fetch forms", {
-          description: res.error.message,
-        });
-      else {
+      if (res.error) {
+        if (res.error.statusCode !== 404)
+          toast.error("Failed to fetch forms", {
+            description: res.error.message,
+          });
+      } else {
         setForms(res.data);
       }
 
@@ -141,54 +143,61 @@ function FormsPage() {
         </div>
       </div>
 
-      {!isLoading ? (
-        forms.length === 0 ? (
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant={"icon"}>
-                <FolderMinus />
-              </EmptyMedia>
-              <EmptyTitle>No Forms yet</EmptyTitle>
-              <EmptyDescription>Create a new form below</EmptyDescription>
-            </EmptyHeader>
-            <EmptyContent>
-              <Button onClick={() => setCreateFormDialogOpen(true)}>
-                <Plus /> Create Form
-              </Button>
-            </EmptyContent>
-          </Empty>
-        ) : (
-          <>
-            <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
-              <InputGroup className="w-[25%]">
-                <InputGroupInput placeholder="Search forms by name or endpoint ID.." />
-                <InputGroupAddon>
-                  <Search />
-                </InputGroupAddon>
-              </InputGroup>
+      {isLoading ? (
+        <>
+          <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
+            <Skeleton className="h-10 w-[30%]" />
+            <Skeleton className="h-10 w-[30%]" />
+          </div>
 
-              <div className="flex items-center gap-3 ">
-                <p className="text-sm text-black/60">Filter:</p>
-                <Button size={"sm"}>All</Button>
-                <Button size={"sm"} variant={"secondary"}>
-                  Active
-                </Button>
-                <Button size={"sm"} variant={"secondary"}>
-                  Paused
-                </Button>
-              </div>
-            </div>
-            <div className="space-y-3">
-              {forms.map((form, idx) => (
-                <FormCard key={idx} form={form} />
-              ))}
-            </div>
-          </>
-        )
+          <div className="space-y-3">
+            <Skeleton className="h-25 w-full" />
+            <Skeleton className="h-25 w-full" />
+            <Skeleton className="h-25 w-full" />
+          </div>
+        </>
+      ) : forms.length === 0 ? (
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant={"icon"}>
+              <FolderMinus />
+            </EmptyMedia>
+            <EmptyTitle>No Forms yet</EmptyTitle>
+            <EmptyDescription>Create a new form below</EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button onClick={() => setCreateFormDialogOpen(true)}>
+              <Plus /> Create Form
+            </Button>
+          </EmptyContent>
+        </Empty>
       ) : (
-        <div>
-          <h1>Loading</h1>
-        </div>
+        <>
+          <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
+            <InputGroup className="w-[25%]">
+              <InputGroupInput placeholder="Search forms by name or endpoint ID.." />
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+            </InputGroup>
+
+            <div className="flex items-center gap-3 ">
+              <p className="text-sm text-black/60">Filter:</p>
+              <Button size={"sm"}>All</Button>
+              <Button size={"sm"} variant={"secondary"}>
+                Active
+              </Button>
+              <Button size={"sm"} variant={"secondary"}>
+                Paused
+              </Button>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {forms.map((form, idx) => (
+              <FormCard key={idx} form={form} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

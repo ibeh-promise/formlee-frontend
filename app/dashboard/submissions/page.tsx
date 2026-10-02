@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CodeBlock from "@/components/ui/CodeBlock";
 import { useFormStore } from "@/stores/forms-store";
 import {
@@ -34,18 +34,18 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { useRouter } from "next/navigation";
-
-
+import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function FormsPage() {
   const { forms } = useFormStore();
-  const [submissions, setSubmission] = useState<api.SubmissionResponseDto[]>(
+  const [submissions, setSubmissions] = useState<api.SubmissionResponseDto[]>(
     [],
   );
   const [selectedSubmission, setSubmittedSubmission] =
     useState<api.SubmissionResponseDto | null>(null);
 
-  const [isLoadingSubmissions, setIsLoadingSubmissions] = useState(false);
+  const [isLoadingSubmissions, setIsLoadingSubmissions] = useState(true);
 
   const router = useRouter();
 
@@ -56,6 +56,25 @@ function FormsPage() {
     },
     ...forms.map((form) => ({ label: form.name, value: form.id })),
   ];
+
+  useEffect(() => {
+    const fetchSubmissions = async () => {
+      const res = await api.submission.submissionControllerFindAllV1({
+        auth: localStorage.getItem("authToken")!,
+      });
+
+      if (res.error) {
+        if (res.error.statusCode !== 404)
+          toast.error("Failed to retrieve submissions", {
+            description: res.error.message,
+          });
+      } else {
+        setSubmissions(res.data);
+      }
+      setIsLoadingSubmissions(false);
+    };
+    fetchSubmissions();
+  }, []);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
@@ -85,9 +104,19 @@ function FormsPage() {
       </div>
 
       {isLoadingSubmissions ? (
-        <div>
-          <h1>Is Loading</h1>
-        </div>
+        <>
+          <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
+            <Skeleton className="h-10 w-[30%]" />
+            <Skeleton className="h-10 w-[30%]" />
+          </div>
+          <div className="border rounded-xl bg-white divide-y w-full">
+            <Skeleton className="h-25 w-full" />
+
+            <Skeleton className="h-25 w-full" />
+
+            <Skeleton className="h-25 w-full" />
+          </div>
+        </>
       ) : submissions.length === 0 ? (
         <Empty>
           <EmptyHeader>
