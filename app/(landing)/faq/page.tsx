@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
-import { CircleAlert, FileText, Mail, Search, SquareStack } from 'lucide-react'
+import { CircleAlert, FileText, Mail, Search, SquareStack, ShieldCheck, UploadIcon, Phone, Shield } from 'lucide-react'
 import React from 'react'
 
 const FaqPage = () => {
@@ -96,9 +96,30 @@ const FaqPage = () => {
             <span>Email delivery & Routing</span>
             <span className="bg-zinc-200/80 rounded-full w-5">4</span>
           </Button>
-          <Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
             <ShieldCheck/>
-            span
+            <span>Spam Mitigation & Security</span>
+            <span className="bg-zinc-200/80 rounded-full w-5">3</span>
+          </Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
+            <UploadIcon/>
+            <span>File Uploads & Media</span>
+            <span className='bg-zinc-200/80 rounded-full w-5'>2</span>
+          </Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
+            <Phone/>
+            <span>webhook & integration</span>
+            <span className='bg-zinc-200/80 rounded-full w-5'>2</span>
+          </Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
+            <Shield/>
+            <span>GDPR,Privacy & HIPAA</span>
+            <span className="bg-zinc-200/80 rounded-full w-5">4</span>
+          </Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
+            <CircleAlert/>
+            <span>Troubleshooting & CORS</span>
+            <span className='bg-zinc-200/80 rounded-full w-5'>2</span>
           </Button>
         </div>
 
