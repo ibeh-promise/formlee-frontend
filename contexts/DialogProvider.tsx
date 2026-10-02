@@ -11,6 +11,8 @@ interface DialogContext {
   setCreateFormDialogOpen: (open: boolean) => void;
   logoutDialogOpen: boolean;
   setLogoutDialogOpen: (open: boolean) => void;
+  deleteAccountDialogOpen: boolean;
+  setDeleteAccountDialogOpen: (open: boolean) => void;
   deleteFormDialogStatus: DeleteFormDialogSetter;
   setDeleteFormDialogStatus: React.Dispatch<
     React.SetStateAction<DeleteFormDialogSetter>
@@ -28,6 +30,7 @@ export const useDialogContext = () => {
 const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [createFormDialogOpen, setCreateFormDialogOpen] = useState(false);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+  const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState(false);
   const [deleteFormDialogStatus, setDeleteFormDialogStatus] =
     useState<DeleteFormDialogSetter>({ isOpen: false, form: null });
 
@@ -38,6 +41,8 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
         setCreateFormDialogOpen,
         logoutDialogOpen,
         setLogoutDialogOpen,
+        deleteAccountDialogOpen,
+        setDeleteAccountDialogOpen,
         deleteFormDialogStatus,
         setDeleteFormDialogStatus,
       }}

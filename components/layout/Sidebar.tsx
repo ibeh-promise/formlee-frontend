@@ -122,7 +122,10 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center p-3 border-t cursor-pointer hover:bg-white">
+        <div
+          className="flex justify-between items-center p-3 border-t cursor-pointer hover:bg-white"
+          onClick={() => router.push("/dashboard/settings")}
+        >
           <div className="flex gap-3 items-center">
             <Image
               src="/profile_picture.png"
