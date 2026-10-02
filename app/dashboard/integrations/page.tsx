@@ -130,7 +130,7 @@ export default function () {
             <button
               onClick={() => {
                 setIsModalOpen(true);
-                setIntegration("Slack");
+                setIntegration("slack");
               }}
               className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
             >
@@ -163,8 +163,8 @@ export default function () {
             </span>
             <button
               onClick={() => {
-                setIsModalOpen(false);
-                setIntegration("Discord");
+                setIsModalOpen(true);
+                setIntegration("discord");
               }}
               className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
             >
@@ -267,7 +267,7 @@ export default function () {
               {integration === "webhook" && (
                 <div>
                   <label className="block font-semibold text-zinc-700">
-                    {integration == "webhook" ? "webhook" : null}
+                    {integration == "webhook" ? "Webhook" : null}
                   </label>
                   <input
                     type="url"
@@ -287,7 +287,7 @@ export default function () {
                 integration === "slack" && (
                     <div>
                         <label className="block font-semibold text-zinc-700">
-                            {integration == "slack" ? "slack" : null}
+                            {integration == "slack" ? "Slack" : null}
                         </label>
                         <input
                             type="url"
@@ -304,6 +304,61 @@ export default function () {
                     </div>
                 ) 
               }
+              {
+                integration === "discord" && (
+                    <div>
+                        <label className="block font-semibold text-zinc-700">
+                            {integration == "discord" ? "Discord" : null}
+                        </label>
+                        <input 
+                         type="url"
+                         required
+                         value={configUrl}
+                         onChange={(e) => setConfigUrl(e.target.value)}
+                         placeholder="https://api.yourservice.com/v1/webhooks/formlee"
+                         className="w-full px-3 py-2 text-xs bg-zinc-50 "
+                        />
+                        <p className="text-[11px] text-zinc-400 mt-1"> we send a Post request with HMAC sha256 signature in the {" "} <code className="font-mono">X-formlee-Signature</code></p>
+                    </div>
+                )
+              }
+              {
+                integration === "discord" && (
+                    <div>
+                        <label className="block font-semibold text-zinc-700">
+                            {integration == "discord" ? "Discord" : null}
+                        </label> 
+                        <input 
+                         type="url"
+                         required
+                         value={configUrl}
+                         onChange={(e) => setConfigUrl(e.target.value)}
+                         placeholder="https://api.yourservice.com/webhooks/formlee"
+                         className="w-full px-3 py-2 text-xs bg-zinc-50"
+                        />
+                        <p className="text-[11px] text-zinc-400 mt-1"> we send a Post request with HMAC sha256 signature in the {" "} <code className="font-mono">X-formlee-Signature</code></p>
+                    </div>
+                )
+              }
+              {
+                integration === "zapier" && (
+                    <div>
+                        <label className="block font-semibold text-zinc-700">
+                            {integration == "zapier" ? "Zapier" : null}
+                        </label>
+                        <input 
+                         type="url"
+                         required
+                         value={configUrl}
+                         onChange={(e) => setConfigUrl(e.target.value)}
+                         placeholder="https://api.yourservice.com/webhooks/formlee"
+                         className="w-full px-3 py-2 text-xs bg-zinc-50"
+                        />
+                        <p className="text-[11px] text-zinc-400 mt-1">we send a Post request with HMAC sha256 signature</p>
+                    </div>
+                )
+              }
+              
             </form>
           </Modal>
         )}
