@@ -146,7 +146,7 @@ function FormDetailsPage() {
   ) : !form ? (
     <Empty>
       <EmptyHeader>
-        <EmptyMedia>
+        <EmptyMedia variant={"icon"}>
           <FolderMinus />
         </EmptyMedia>
         <EmptyTitle>Form not found</EmptyTitle>
@@ -414,7 +414,7 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
           ) : submissions.length === 0 ? (
             <Empty>
               <EmptyHeader>
-                <EmptyMedia>
+                <EmptyMedia variant={"icon"}>
                   <FolderMinus />
                 </EmptyMedia>
                 <EmptyTitle>No Submission yet</EmptyTitle>
@@ -444,7 +444,7 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <h5 className="text-sm font-semibold">
-                          {submission.name ||   submission.id}
+                          {submission.name || submission.id}
                         </h5>
                         <p className="text-xs text-black/60">{`<${submission.email}>`}</p>
                       </div>

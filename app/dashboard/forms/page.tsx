@@ -141,31 +141,11 @@ function FormsPage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
-        <InputGroup className="w-[25%]">
-          <InputGroupInput placeholder="Search forms by name or endpoint ID.." />
-          <InputGroupAddon>
-            <Search />
-          </InputGroupAddon>
-        </InputGroup>
-
-        <div className="flex items-center gap-3 ">
-          <p className="text-sm text-black/60">Filter:</p>
-          <Button size={"sm"}>All</Button>
-          <Button size={"sm"} variant={"secondary"}>
-            Active
-          </Button>
-          <Button size={"sm"} variant={"secondary"}>
-            Paused
-          </Button>
-        </div>
-      </div>
-
       {!isLoading ? (
         forms.length === 0 ? (
           <Empty>
             <EmptyHeader>
-              <EmptyMedia>
+              <EmptyMedia variant={"icon"}>
                 <FolderMinus />
               </EmptyMedia>
               <EmptyTitle>No Forms yet</EmptyTitle>
@@ -178,11 +158,32 @@ function FormsPage() {
             </EmptyContent>
           </Empty>
         ) : (
-          <div className="space-y-3">
-            {forms.map((form, idx) => (
-              <FormCard key={idx} form={form} />
-            ))}
-          </div>
+          <>
+            <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
+              <InputGroup className="w-[25%]">
+                <InputGroupInput placeholder="Search forms by name or endpoint ID.." />
+                <InputGroupAddon>
+                  <Search />
+                </InputGroupAddon>
+              </InputGroup>
+
+              <div className="flex items-center gap-3 ">
+                <p className="text-sm text-black/60">Filter:</p>
+                <Button size={"sm"}>All</Button>
+                <Button size={"sm"} variant={"secondary"}>
+                  Active
+                </Button>
+                <Button size={"sm"} variant={"secondary"}>
+                  Paused
+                </Button>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {forms.map((form, idx) => (
+                <FormCard key={idx} form={form} />
+              ))}
+            </div>
+          </>
         )
       ) : (
         <div>
