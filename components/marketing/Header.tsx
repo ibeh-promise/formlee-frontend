@@ -57,6 +57,15 @@ export default function Header() {
           >
             <Link href="/docs">Docs</Link>
           </p>
+          <p 
+          className={
+            pathname === "/faq"
+            ? "text-sm font-bold text-zinc-900"
+            : "text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
+          }
+          >
+            <Link href="/faq">Faq</Link>
+          </p>
         </div>
         <div className=" justify-around hidden md:flex items-center space-x-4">
           <p
