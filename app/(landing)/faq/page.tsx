@@ -75,7 +75,7 @@ const FaqPage = () => {
         <div className="w-full border-t mt-1 border-zinc-200"/>
 
 
-        <div className="flex items-center gap-3 w-full px-7 mt-3 overflow-x-scroll">
+        <div className="flex items-center gap-3 max-w-[90%] mt-5 overflow-x-auto flex-nowrap scrollbar-none">
           <Button className='gap-2'>
             <CircleAlert className="h-2 w-2"/>
             <span>All Questions</span>
