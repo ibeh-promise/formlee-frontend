@@ -16,9 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { forms } from "@/app/dashboard/forms/page";
 import { useState } from "react";
 import CodeBlock from "@/components/ui/CodeBlock";
+import { useFormStore } from "@/stores/forms-store";
 
 interface Submission {
   id: string;
@@ -63,6 +63,7 @@ const submissions: Submission[] = [
 ];
 
 function FormsPage() {
+  const { forms } = useFormStore();
   const [selectedSubmission, setSubmittedSubmission] =
     useState<Submission | null>(null);
   const formSelectionItems = [
@@ -72,6 +73,7 @@ function FormsPage() {
     },
     ...forms.map((form) => ({ label: form.name, value: form.id })),
   ];
+
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

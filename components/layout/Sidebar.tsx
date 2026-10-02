@@ -35,7 +35,7 @@ export default function Sidebar() {
     { label: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
   const secondaryNavItems = [
-    { label: "Documentation", href: "/dashboard/integrations", icon: BookOpen },
+    { label: "Documentation", href: "/docs", icon: BookOpen },
     {
       label: "Visit Landing Page",
       href: "/dashboard/settings",
