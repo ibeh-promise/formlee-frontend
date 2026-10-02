@@ -7,6 +7,7 @@ interface AuthContext {
   isLoading: boolean;
   isAuthenticated: boolean;
   user: api.UserResponseDto | null;
+  setUser: (user: api.UserResponseDto) => void
 }
 
 const AuthContext = createContext<AuthContext | null>(null);
@@ -48,10 +49,10 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     authenticate();
-  }, []);
+  }, [router]);
 
   return (
-    <AuthContext.Provider value={{ isLoading, isAuthenticated, user }}>
+    <AuthContext.Provider value={{ isLoading, isAuthenticated, user, setUser }}>
       {!isLoading && isAuthenticated ? (
         children
       ) : isLoading && !isAuthenticated ? (

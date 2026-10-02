@@ -35,7 +35,7 @@ export default function Sidebar() {
     { label: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
   const secondaryNavItems = [
-    { label: "Documentation", href: "/dashboard/integrations", icon: BookOpen },
+    { label: "Documentation", href: "/docs", icon: BookOpen },
     {
       label: "Visit Landing Page",
       href: "/dashboard/settings",
@@ -122,7 +122,10 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center p-3 border-t cursor-pointer hover:bg-white">
+        <div
+          className="flex justify-between items-center p-3 border-t cursor-pointer hover:bg-white"
+          onClick={() => router.push("/dashboard/settings")}
+        >
           <div className="flex gap-3 items-center">
             <Image
               src="/profile_picture.png"

@@ -195,9 +195,9 @@ export type CreateFormDto = {
      */
     name: string;
     /**
-     * An optional description for the form
+     * Description for the form
      */
-    description?: string;
+    description: string;
 };
 
 export type FormCountResponse = {
@@ -223,7 +223,7 @@ export type FormResponseDto = {
     /**
      * Description of the from
      */
-    description: string | null;
+    description: string;
     /**
      * Status of the from
      */
@@ -264,7 +264,7 @@ export type UpdateFormDto = {
      */
     name?: string;
     /**
-     * An optional description for the form
+     * Description for the form
      */
     description?: string;
     /**
@@ -305,7 +305,7 @@ export type SubmissionFormDto = {
     /**
      * Description of the from
      */
-    description: string | null;
+    description: string;
     /**
      * Link to redirect user to after successful submission
      */
@@ -347,6 +347,18 @@ export type SubmissionResponseDto = {
      * If submission as been read
      */
     read: boolean;
+    /**
+     * Name of submitter from form data
+     */
+    name: string | null;
+    /**
+     * Message of submitter from form data
+     */
+    message: string | null;
+    /**
+     * Submission Status
+     */
+    status: 'delivered' | 'pending' | 'not_delivered' | 'delivery_failed';
     /**
      * Id of the form this submission is under
      */
@@ -780,11 +792,9 @@ export type SubmissionControllerCreateV1Responses = {
 
 export type SubmissionControllerFindAllV1Data = {
     body?: never;
-    path: {
-        formIdOrSlug: string;
-    };
+    path?: never;
     query?: never;
-    url: '/api/v1/submission/f/{formIdOrSlug}';
+    url: '/api/v1/submission';
 };
 
 export type SubmissionControllerFindAllV1Errors = {
@@ -799,6 +809,28 @@ export type SubmissionControllerFindAllV1Responses = {
 };
 
 export type SubmissionControllerFindAllV1Response = SubmissionControllerFindAllV1Responses[keyof SubmissionControllerFindAllV1Responses];
+
+export type SubmissionControllerFindAllUnderFormV1Data = {
+    body?: never;
+    path: {
+        formIdOrSlug: string;
+    };
+    query?: never;
+    url: '/api/v1/submission/f/{formIdOrSlug}';
+};
+
+export type SubmissionControllerFindAllUnderFormV1Errors = {
+    '4XX': ErrorMessageResponseDto;
+    '5XX': ErrorMessageResponseDto;
+};
+
+export type SubmissionControllerFindAllUnderFormV1Error = SubmissionControllerFindAllUnderFormV1Errors[keyof SubmissionControllerFindAllUnderFormV1Errors];
+
+export type SubmissionControllerFindAllUnderFormV1Responses = {
+    200: Array<SubmissionResponseDto>;
+};
+
+export type SubmissionControllerFindAllUnderFormV1Response = SubmissionControllerFindAllUnderFormV1Responses[keyof SubmissionControllerFindAllUnderFormV1Responses];
 
 export type SubmissionControllerFindRecentV1Data = {
     body?: never;

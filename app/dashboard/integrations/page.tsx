@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badges";
 import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/button";
 
 export default function () {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -197,8 +198,8 @@ export default function () {
             </span>
             <button
               onClick={() => {
-                setIsModalOpen(false);
-                setIntegration("Zapier");
+                setIsModalOpen(true);
+                setIntegration("zapier");
               }}
               className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
             >
@@ -229,7 +230,13 @@ export default function () {
             <span className="text-[11px] text-zinc-400 truncate max-w-[140px]">
               Active
             </span>
-            <button className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer">
+            <button
+              onClick={() => {
+                setIsModalOpen(true);
+                setIntegration("notion");
+              }}
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-900 transitions-color cursor-pointer"
+            >
               Configure
             </button>
           </div>
@@ -246,7 +253,7 @@ export default function () {
                 <div>
                   <label className="block font-semibold text-zinc-700">
                     {integration == "emailNotification"
-                      ? "Email Notification"
+                      ? "Recipient Email Addresses (comma separated)"
                       : null}
                   </label>
                   <input
@@ -262,6 +269,7 @@ export default function () {
                     <code className="font-mono">X-Formlee-Signature</code>{" "}
                     header.
                   </p>
+                  <Button>Configure</Button>
                 </div>
               )}
               {integration === "webhook" && (
@@ -304,24 +312,7 @@ export default function () {
                     </div>
                 ) 
               }
-              {
-                integration === "discord" && (
-                    <div>
-                        <label className="block font-semibold text-zinc-700">
-                            {integration == "discord" ? "Discord" : null}
-                        </label>
-                        <input 
-                         type="url"
-                         required
-                         value={configUrl}
-                         onChange={(e) => setConfigUrl(e.target.value)}
-                         placeholder="https://api.yourservice.com/v1/webhooks/formlee"
-                         className="w-full px-3 py-2 text-xs bg-zinc-50 "
-                        />
-                        <p className="text-[11px] text-zinc-400 mt-1"> we send a Post request with HMAC sha256 signature in the {" "} <code className="font-mono">X-formlee-Signature</code></p>
-                    </div>
-                )
-              }
+
               {
                 integration === "discord" && (
                     <div>
@@ -354,11 +345,28 @@ export default function () {
                          placeholder="https://api.yourservice.com/webhooks/formlee"
                          className="w-full px-3 py-2 text-xs bg-zinc-50"
                         />
-                        <p className="text-[11px] text-zinc-400 mt-1">we send a Post request with HMAC sha256 signature</p>
+                        <p className="text-[11px] text-zinc-400 mt-1">we send a Post request with HMAC sha256 signature in the {" "} <code className="font-mono">X-formlee-Signature</code></p>
                     </div>
                 )
               }
-              
+              {
+                integration === "notion" && (
+                    <div>
+                        <label className="block font-semibold text-zinc-700">
+                            {integration == "notion" ? "Notion" : null}
+                        </label>
+                        <input
+                          type="url"
+                          required
+                          value={configUrl}
+                          onChange={(e) => setConfigUrl(e.target.value)}
+                          placeholder="https://api.yourservice.com/webhooks/formlee"
+                          className="w-full px-3 py-2 text-xs bg-zinc-50"
+                        />
+                        <p className="text-[11px] text-zinc-400 mt-1">we send a Post request with HMAC sha256 signature in the {" "} <code className="font-mono">X-formlee-Signature</code></p>
+                    </div>
+                )
+              }
             </form>
           </Modal>
         )}

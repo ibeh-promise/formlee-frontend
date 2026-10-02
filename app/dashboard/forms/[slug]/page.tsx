@@ -9,6 +9,7 @@ import {
   FolderMinus,
   Globe,
   Inbox,
+  Loader,
   Send,
   Settings,
   Trash2,
@@ -46,38 +47,7 @@ import {
 } from "@/components/ui/empty";
 import * as api from "@/lib/api";
 import { toast } from "sonner";
-
-const submissions = [
-  {
-    id: "sub_01J8X9QK3M4N5P6Q7R8S9T0U1V",
-    formId: "frm_a1b2c3d4e5f6",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    message: "Hi! Testing my Formlee endpoint directly from the setup console.",
-    read: true,
-    createdAt: "2026-09-25T09:12:00Z",
-  },
-  {
-    id: "sub_02K9Y0RL4N5O6P7Q8R9S0T1U2W",
-    formId: "frm_a1b2c3d4e5f6",
-    name: "John Doe",
-    email: "john@example.com",
-    message:
-      "Hey, I wanted to ask about your enterprise SLA options and custom webhook support. Do you have documentation I could review?",
-    read: false,
-    createdAt: "2026-08-26T14:30:00Z",
-  },
-  {
-    id: "sub_03L0Z1SM5O6P7Q8R9S0T1U2V3X",
-    formId: "frm_a1b2c3d4e5f6",
-    name: "Michael Chen",
-    email: "michael@example.com",
-    message:
-      "We are migrating 45 client marketing websites to Formlee. Do you offer bulk export or an agency plan with team seats?",
-    read: true,
-    createdAt: "2026-08-26T10:05:00Z",
-  },
-];
+import { useDialogContext } from "@/contexts/DialogProvider";
 
 const formStatus = [
   { label: "Active (Receiving Submissions)", value: "active" },
@@ -87,10 +57,18 @@ const formStatus = [
 
 function FormDetailsPage() {
   const { slug } = useParams();
-  const { forms, addForm } = useFormStore();
+  const { forms, addForm, updateForm } = useFormStore();
   const [form, setForm] = useState(forms.find((f) => f.slug === slug));
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const [formData, setFormData] = useState<api.UpdateFormDto>({});
+  const [submissions, setSubmissions] = useState<api.SubmissionResponseDto[]>(
+    [],
+  );
+  const [isLoadingSubmission, setIsLoadingSubmissions] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const { setDeleteFormDialogStatus } = useDialogContext();
 
   useEffect(() => {
     const fetchForm = async () => {
@@ -105,14 +83,61 @@ function FormDetailsPage() {
             description: res.error.message,
           });
         } else {
-          addForm(res.data);
+          if (!forms.find((f) => f.id == res.data.id)) addForm(res.data);
           setForm(res.data);
         }
       }
       setIsLoading(false);
     };
     fetchForm();
-  }, [form, slug, addForm]);
+  }, [form, slug, addForm, forms]);
+
+  useEffect(() => {
+    if (!form) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setFormData({ ...form, description: form.description! });
+  }, [form]);
+  useEffect(() => {
+    if (!form) return;
+    const fetchSubmissions = async () => {
+      const res = await api.submission.submissionControllerFindAllUnderFormV1({
+        path: { formIdOrSlug: form.id },
+        auth: localStorage.getItem("authToken")!,
+      });
+      if (res.error) {
+        if (res.error.statusCode !== 404)
+          toast.error("Failed to retrieve form", {
+            description: res.error.message,
+          });
+      } else {
+        setSubmissions(res.data);
+      }
+
+      setIsLoadingSubmissions(false);
+    };
+    fetchSubmissions();
+  }, [form]);
+
+  const handleUpdateForm = async () => {
+    if (!form) return;
+    setIsUpdating(true);
+    const res = await api.form.formControllerUpdateV1({
+      body: formData,
+      path: { idOrSlug: form.id },
+      auth: localStorage.getItem("authToken")!,
+    });
+
+    if (res.error) {
+      toast.error("Failed to update", {
+        description: res.error.message,
+      });
+    } else {
+      toast.success("Form updated successfully");
+      updateForm(res.data.id, res.data);
+      setForm(res.data);
+    }
+    setIsUpdating(false);
+  };
 
   return isLoading ? (
     <div>
@@ -121,7 +146,7 @@ function FormDetailsPage() {
   ) : !form ? (
     <Empty>
       <EmptyHeader>
-        <EmptyMedia>
+        <EmptyMedia variant={"icon"}>
           <FolderMinus />
         </EmptyMedia>
         <EmptyTitle>Form not found</EmptyTitle>
@@ -134,12 +159,16 @@ function FormDetailsPage() {
       </EmptyContent>
     </Empty>
   ) : (
-    <div className="space-y-8 animate-in fade-in duration-200 p-10">
+    <div className="space-y-8 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex gap-3 items-center">
-          <Button variant={"secondary"} onClick={() => router.back()}>
+          <Button
+            variant={"secondary"}
+            onClick={() => router.push("/dashboard/forms")}
+          >
             <ArrowLeft />
           </Button>
+          <i className="fa fa-camera"></i>
           <div>
             <div className="flex items-center gap-3">
               <h3 className="text-xl sm:text-2xl font-semibold text-zinc-950 tracking-light">
@@ -163,9 +192,12 @@ function FormDetailsPage() {
 
         <div className="flex items-center space-x-3">
           <Button variant={"secondary"}>
-            <Copy /> Create Endpoint
+            <Copy /> Copy Endpoint
           </Button>
-          <Button variant={"destructive"}>
+          <Button
+            variant={"destructive"}
+            onClick={() => setDeleteFormDialogStatus({ isOpen: true, form })}
+          >
             <Trash2 />
           </Button>
         </div>
@@ -375,55 +407,101 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
           </div>
         </TabsContent>
         <TabsContent value={"submission"}>
-          <div className="flex items-center justify-between  mb-2">
+          {isLoadingSubmission ? (
             <div>
-              <p className="text-xs text-black/60">
-                Showing {submissions.length} submissions for this form
-              </p>
+              <h1>Is Loading</h1>
             </div>
-            <Button variant={"secondary"}>
-              <Download /> Export CSV
-            </Button>
-          </div>
-          <div className="border rounded-xl bg-white divide-y">
-            {submissions.map((submission) => (
-              <div
-                className="hover:bg-black/2 transition-all p-5 flex items-center justify-between cursor-pointer"
-                key={submission.id}
-              >
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <h5 className="text-sm font-semibold">{submission.name}</h5>
-                    <p className="text-xs text-black/60">{`<${submission.email}>`}</p>
-                  </div>
-                  <p className="text-sm">{submission.message}</p>
-                </div>
-                <div className="flex items-center gap-3">
+          ) : submissions.length === 0 ? (
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant={"icon"}>
+                  <FolderMinus />
+                </EmptyMedia>
+                <EmptyTitle>No Submission yet</EmptyTitle>
+                <EmptyDescription>
+                  Your submissions will show up here.
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
+          ) : (
+            <>
+              <div className="flex items-center justify-between  mb-2">
+                <div>
                   <p className="text-xs text-black/60">
-                    {new Date(submission.createdAt).getDate()}/
-                    {new Date(submission.createdAt).getMonth()}/
-                    {new Date(submission.createdAt).getFullYear()}
+                    Showing {submissions.length} submissions for this form
                   </p>
-                  <Button variant={"destructive"}>
-                    <Trash2 />
-                  </Button>
                 </div>
+                <Button variant={"secondary"}>
+                  <Download /> Export CSV
+                </Button>
               </div>
-            ))}
-          </div>
+              <div className="border rounded-xl bg-white divide-y">
+                {submissions.map((submission) => (
+                  <div
+                    className="hover:bg-black/2 transition-all p-5 flex items-center justify-between cursor-pointer"
+                    key={submission.id}
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <h5 className="text-sm font-semibold">
+                          {submission.name || submission.id}
+                        </h5>
+                        <p className="text-xs text-black/60">{`<${submission.email}>`}</p>
+                      </div>
+                      <p className="text-sm">{submission.message}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <p className="text-xs text-black/60">
+                        {new Date(submission.submittedAt).getDate()}/
+                        {new Date(submission.submittedAt).getMonth()}/
+                        {new Date(submission.submittedAt).getFullYear()}
+                      </p>
+                      <Button variant={"destructive"}>
+                        <Trash2 />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </TabsContent>
         <TabsContent value={"setting"}>
           <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white space-y-5">
             <h5 className="font-bold">General Configuration</h5>
 
-            <form action="" className="space-y-4 md:w-[50%]">
+            <form
+              action=""
+              className="space-y-4 md:w-[50%]"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleUpdateForm();
+              }}
+            >
               <div className="space-y-2">
                 <Label>FORM NAME</Label>
-                <Input type="text" placeholder="Form Name" value={form.name} />
+                <Input
+                  type="text"
+                  placeholder="Form Name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  required
+                />
               </div>
               <div className="space-y-2">
                 <Label>CUSTOM REDIRECT URL (OPTIONAL)</Label>
-                <Input type="url" value={form.redirectLink || ""} />
+                <Input
+                  type="url"
+                  value={formData.redirectUrl || ""}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      redirectUrl: e.target.value,
+                    }))
+                  }
+                />
                 <p className="text-xs text-black/60">
                   Where users are redirected after standard HTML POST
                   submissions.
@@ -431,7 +509,17 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
               </div>
               <div className="space-y-2">
                 <Label>TARGET NOTIFICATION EMAIL</Label>
-                <Input type="email" value={form.targetEmail} />
+                <Input
+                  type="email"
+                  value={formData.targetEmail}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      targetEmail: e.target.value,
+                    }))
+                  }
+                  required
+                />
               </div>
 
               <FieldLabel>
@@ -439,7 +527,13 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
                   <Checkbox
                     id="toggle-checkbox-1"
                     name="toggle-checkbox-1"
-                    checked={form.emailNotification}
+                    checked={formData.emailNotification}
+                    onCheckedChange={(value) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        emailNotification: value,
+                      }))
+                    }
                   />
                   <FieldContent>
                     <FieldTitle>Email Notification</FieldTitle>
@@ -452,7 +546,16 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
 
               <div className="space-y-2">
                 <Label>FORM STATUS</Label>
-                <Select items={formStatus} defaultValue={"active"}>
+                <Select
+                  items={formStatus}
+                  defaultValue={formData.status}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      status: value!,
+                    }))
+                  }
+                >
                   <SelectTrigger className={"w-full"}>
                     <SelectValue />
                   </SelectTrigger>
@@ -466,7 +569,9 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
                 </Select>
               </div>
 
-              <Button>Save Changes</Button>
+              <Button type="submit" disabled={isUpdating}>
+                {isUpdating && <Loader className="animate-spin" />} Save Changes
+              </Button>
             </form>
           </div>
         </TabsContent>

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -28,13 +29,10 @@ export default function LogoutDialog() {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button
-            variant={"secondary"}
-            onClick={() => setLogoutDialogOpen(false)}
-          >
-            Cancel
-          </Button>
-          <Button variant={"default"} onClick={logout}>
+          <DialogClose>
+            <Button variant={"secondary"}>Cancel</Button>
+          </DialogClose>
+          <Button variant={"destructive"} onClick={logout}>
             Logout
           </Button>
         </DialogFooter>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -51,6 +52,7 @@ export default function CreateFormDialog() {
       addForm(res.data);
 
       router.push(`/dashboard/forms/${res.data.slug}`);
+      setCreateFormDialogOpen(false)
     }
 
     setIsLoading(false);
@@ -90,12 +92,9 @@ export default function CreateFormDialog() {
           </FieldGroup>
         </form>
         <DialogFooter>
-          <Button
-            variant={"secondary"}
-            onClick={() => setCreateFormDialogOpen(false)}
-          >
-            Close
-          </Button>
+          <DialogClose>
+            <Button variant={"secondary"}>Close</Button>
+          </DialogClose>
           <Button disabled={isLoading} onClick={handleSubmit}>
             {isLoading && <Loader className="animate-spin" />}
             Create Form
