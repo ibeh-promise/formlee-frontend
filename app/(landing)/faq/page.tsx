@@ -1,9 +1,22 @@
+import FaqAccordion from '@/components/landingpage/FaqAccordion'
 import { Button } from '@/components/ui/button'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 import { CircleAlert, FileText, Mail, Search, SquareStack, ShieldCheck, UploadIcon, Phone, Shield } from 'lucide-react'
 import React from 'react'
 
+
 const FaqPage = () => {
+
+  const faq = [
+    {
+      id: 1,
+      title: "Genral",
+      question: "What is Formlee and how does it deliver forn submission",
+      answer: "we are here to serve you today"
+    },
+   
+  ]
+
   return (
     <section className='relative pt-12 pb-20 sm:pt-20 sm:pb-20 overflow-hidden'>
       <div className='absolute inset-0 -z-10 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]'/>
@@ -122,6 +135,12 @@ const FaqPage = () => {
             <span className='bg-zinc-200/80 rounded-full w-5'>2</span>
           </Button>
         </div>
+
+          <div className='w-full mt-7 flex items-center justify-center'>
+         <div className='w-full px-18 '>
+          <FaqAccordion Items={faq}/>
+        </div>
+          </div>
 
      </div>
 
