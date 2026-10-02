@@ -1,5 +1,6 @@
+import { Button } from '@/components/ui/button'
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
-import { CircleAlert, Search } from 'lucide-react'
+import { CircleAlert, FileText, Mail, Search, SquareStack } from 'lucide-react'
 import React from 'react'
 
 const FaqPage = () => {
@@ -62,15 +63,47 @@ const FaqPage = () => {
      <div className='border-t-1 mt-7 border-zinc-200 mx-5'/>
 
      <div className='flex flex-col my-7 items-center justify-center'>
-      <div className='flex justify-between items-center'>
-        <span className='text-zinc-500 text-xs'>BROWSE BY TOPIC</span>
+      <div className='flex justify-between items-center w-full px-5'>
+        <span className='text-zinc-900 text-xs'>BROWSE BY TOPIC</span>
         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full text-zinc-700 text-xs font-medium mb-6 animate-in fade-in slide-in-from-bottom-2 duration-200">
           <span>Expand all</span>
           <span className="flex h-1.5 w-1.5 rounded-full bg-zinc-300"/>
           <span>Collapse all</span>
         </div>
       </div>
+
+        <div className="w-full border-t mt-1 border-zinc-200"/>
+
+
+        <div className="flex items-center gap-3 w-full px-7 mt-3 overflow-x-scroll">
+          <Button className='gap-2'>
+            <CircleAlert className="h-2 w-2"/>
+            <span>All Questions</span>
+            <span>37</span>
+          </Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
+            <SquareStack/>
+            <span>General & Architecture</span>
+            <span className='bg-zinc-200/80 rounded-full w-5'>4</span>
+          </Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
+            <FileText/>
+            <span>Next.js & Frontend</span>
+            <span className='bg-zinc-200/80 rounded-full w-5'>4</span>
+          </Button>
+          <Button className="bg-white border-2 border-zinc-200 text-black hover:bg-zinc-200/80 gap-2">
+            <Mail/>
+            <span>Email delivery & Routing</span>
+            <span className="bg-zinc-200/80 rounded-full w-5">4</span>
+          </Button>
+          <Button>
+            <ShieldCheck/>
+            span
+          </Button>
+        </div>
+
      </div>
+
     </section>
   )
 }

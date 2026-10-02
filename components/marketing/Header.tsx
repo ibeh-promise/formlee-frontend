@@ -64,7 +64,7 @@ export default function Header() {
             : "text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
           }
           >
-            <Link href="/faq">Faq</Link>
+            <Link href="/faq">FAQ</Link>
           </p>
         </div>
         <div className=" justify-around hidden md:flex items-center space-x-4">
