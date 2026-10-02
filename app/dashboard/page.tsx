@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/Badges";
 import * as api from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function OverviewView() {
   const [copiedID, setCopiedID] = useState<string | null>(null);
@@ -36,27 +37,29 @@ export default function OverviewView() {
 
   const [activeForms, setActiveForms] = useState<api.FormResponseDto[]>([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const loadData = async () => {
-      const statsRes = await api.stats.statsControllerGetStatsV1({
-        auth: localStorage.getItem("authToken")!,
-      });
-      console.log(statsRes);
+      const [statsRes, activeFormsRes, recentSubmissionsRes] =
+        await Promise.all([
+          api.stats.statsControllerGetStatsV1({
+            auth: localStorage.getItem("authToken")!,
+          }),
+          api.form.formControllerFindAllByStatusV1({
+            path: { status: "active" },
+            auth: localStorage.getItem("authToken")!,
+          }),
+          api.submission.submissionControllerFindRecentV1({
+            auth: localStorage.getItem("authToken")!,
+          }),
+        ]);
       setStats(statsRes.data || null);
 
-      const activeFormsRes = await api.form.formControllerFindAllByStatusV1({
-        path: { status: "active" },
-        auth: localStorage.getItem("authToken")!,
-      });
-      console.log(activeFormsRes);
       setActiveForms(activeFormsRes.data || []);
 
-      const recentSubmissionsRes =
-        await api.submission.submissionControllerFindRecentV1({
-          auth: localStorage.getItem("authToken")!,
-        });
-      console.log(recentSubmissionsRes);
       setRecentSubmissions(recentSubmissionsRes.data || []);
+      setIsLoading(false)
     };
 
     loadData();
@@ -90,46 +93,69 @@ export default function OverviewView() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs">
-          <div className="flex items-Center justify-between text-zinc-500 mb-2">
+        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs space-y-3">
+          <div className="flex items-Center justify-between text-zinc-500">
             <span className="text-xs">Total Submissions</span>
             <Inbox className="w-4 h-4 text-zinc-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
-            {stats?.totalSubmissions}
-          </div>
-          <span className="text-[11px] text-emerald-600 font-medium mt-1 inline-flex items-center space-x-1">
-            <TrendingUp className="w-3 h-3" />
-            <span>+14% vs last week</span>
-          </span>
-          `
+          {isLoading ? (
+            <>
+              <Skeleton className="h-7" />
+              <Skeleton className="h-7" />
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
+                {stats?.totalSubmissions}
+              </h2>
+              <span className="text-[11px] text-emerald-600 font-medium inline-flex items-center space-x-1">
+                <TrendingUp className="w-3 h-3" />
+                <span>+14% vs last week</span>
+              </span>
+            </>
+          )}
         </div>
 
-        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadow-xs">
-          <div className="flex items-center justify-between text-zinc-500 mb-2">
+        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadow-xs space-y-3">
+          <div className="flex items-center justify-between text-zinc-500">
             <span className="text-xs font-medium">Active Forms</span>
             <FileText className="w-4 h-4 text-zinc-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-semibold text-zinc-900 font-mono">
-            {/* {activeforms} */}
-            {stats?.totalActiveForms}
-          </div>
-          <span className="[11px] text-zinc-500 mt-1 block">
-            {stats?.totalForms} total endpoints
-          </span>
+          {isLoading ? (
+            <>
+              <Skeleton className="h-7" />
+              <Skeleton className="h-7" />
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl sm:text-3xl font-semibold text-zinc-900 font-mono">
+                {stats?.totalActiveForms}
+              </h2>
+              <span className="[11px] text-zinc-500 block">
+                {stats?.totalForms} total endpoints
+              </span>
+            </>
+          )}
         </div>
 
-        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs">
-          <div className="flex items-center justify-between text-zinc-500 mb-2">
+        <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs space-y-3">
+          <div className="flex items-center justify-between text-zinc-500">
             <span className="text-xs font-medium">This Month</span>
             <Clock className="w-4 h-4 text-zinc-400" />
           </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
-            {stats?.usageLimit}
-          </div>
-          <span className="text-[11px] text-zinc-500 mt-1 block">
-            Limit: 34
-          </span>
+          {isLoading ? (
+            <>
+              <Skeleton className="h-7" />
+              <Skeleton className="h-7" />
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 font-mono">
+                {stats?.usageLimit}
+              </h2>
+              <span className="text-[11px] text-zinc-500 block">Limit: 34</span>
+            </>
+          )}
         </div>
 
         {/* <div className="p-5 bg-white rounded-2xl border border-zinc-200/80 shadows-xs">
@@ -165,59 +191,67 @@ export default function OverviewView() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {activeForms.slice(0, 3).map((form) => {
-            const isCopied = copiedID === form.slug;
+          {isLoading ? (
+            <>
+              <Skeleton className="h-30" />
+              <Skeleton className="h-30" />
+              <Skeleton className="h-30" />
+            </>
+          ) : (
+            activeForms.slice(0, 3).map((form) => {
+              const isCopied = copiedID === form.slug;
 
-            return (
-              <div
-                key={form.id}
-                className="p-4 rounded-xl bg-zinc-50/80 border border-zinc-200/70 hover:border-zinc-300 transition-all flex flex-col justify-between"
-              >
-                <div className="m-3">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs font-bold text-zinc-900 truncate">
-                      {form.name}
+              return (
+                <div
+                  key={form.id}
+                  className="p-4 rounded-xl bg-zinc-50/80 border border-zinc-200/70 hover:border-zinc-300 transition-all flex flex-col justify-between"
+                >
+                  <div className="m-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs font-bold text-zinc-900 truncate">
+                        {form.name}
+                      </p>
+                      <Badge
+                        variant={form.status === "active" ? "success" : "muted"}
+                        size="sm"
+                      >
+                        {form.status}
+                      </Badge>
+                    </div>
+                    <p className="font-mono text-[11px] text-zinc-500 truncate">
+                      {form.slug}
                     </p>
-                    <Badge
-                      variant={form.status === "active" ? "success" : "muted"}
-                      size="sm"
-                    >
-                      {form.status}
-                    </Badge>
-                  </div>
-                  <p className="font-mono text-[11px] text-zinc-500 truncate">
-                    {form.slug}
-                  </p>
-                  <hr className="text-zinc-500 mt-5" />
-                  <div className="flex justify-between items-center">
-                    <Button className="bg-white hover:bg-white inline-flex items-center space-x-1 text-[11px] font-medium text-zinc-600 hover:text-zinc-900m">
-                      {isCopied ? (
-                        <>
-                          <Check className="w-3 h-3 text-emerald-600" />
-                          <span className="text-emerald-600 font-semibold">
-                            Copied
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3 h-3" />
-                          <span>Copy URL</span>
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant={"link"}
-                      onClick={() =>
-                        router.push(`/dashboard/forms/${form.slug}`)
-                      }
-                    >
-                      Details <ArrowRight />
-                    </Button>
+                    <hr className="text-zinc-500 mt-5" />
+                    <div className="flex justify-between items-center">
+                      <Button className="bg-white hover:bg-white inline-flex items-center space-x-1 text-[11px] font-medium text-zinc-600 hover:text-zinc-900m">
+                        {isCopied ? (
+                          <>
+                            <Check className="w-3 h-3 text-emerald-600" />
+                            <span className="text-emerald-600 font-semibold">
+                              Copied
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3 h-3" />
+                            <span>Copy URL</span>
+                          </>
+                        )}
+                      </Button>
+                      <Button
+                        variant={"link"}
+                        onClick={() =>
+                          router.push(`/dashboard/forms/${form.slug}`)
+                        }
+                      >
+                        Details <ArrowRight />
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
 
@@ -231,14 +265,16 @@ export default function OverviewView() {
               Live incoming payloads from your active forms.
             </p>
           </div>
-          <Button
+          {isLoading ? <Skeleton className="w-40 h-8" /> : <Button
             variant={"secondary"}
             onClick={() => router.push("/dashboard/submissions")}
           >
             View all Submissions({recentSubmissions.length})
-          </Button>
+          </Button>}
         </div>
-        {recentSubmissions.length === 0 ? (
+        {isLoading? (
+          <Skeleton  className="w-full h-40"/>
+        ) : recentSubmissions.length === 0 ? (
           <div className="p-10 text-center text-zinc-500 text-xs">
             No submissions recorded yet.
           </div>
