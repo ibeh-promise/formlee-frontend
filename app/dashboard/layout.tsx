@@ -1,5 +1,6 @@
 "use client";
 import CreateFormDialog from "@/components/dialogs/CreateFormDialog";
+import DeleteAccountDialog from "@/components/dialogs/DeleteAccountDialog";
 import DeleteFormDialog from "@/components/dialogs/DeleteFormDialog";
 import LogoutDialog from "@/components/dialogs/LogoutDialog";
 import Header from "@/components/layout/Header";
@@ -26,6 +27,7 @@ export default function DashboardLayout({
           <CreateFormDialog />
           <LogoutDialog />
           <DeleteFormDialog />
+          <DeleteAccountDialog />
         </div>
       </DialogProvider>
     </AuthProvider>

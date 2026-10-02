@@ -49,7 +49,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     authenticate();
-  }, []);
+  }, [router]);
 
   return (
     <AuthContext.Provider value={{ isLoading, isAuthenticated, user, setUser }}>

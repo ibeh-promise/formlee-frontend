@@ -19,6 +19,7 @@ import { useAuthContext } from "@/contexts/AuthProvider";
 import * as api from "@/lib/api";
 import { toast } from "sonner";
 import { error } from "next/dist/build/output/log";
+import { useDialogContext } from "@/contexts/DialogProvider";
 
 const SettingsPage = () => {
   const { user, setUser } = useAuthContext();
@@ -26,6 +27,7 @@ const SettingsPage = () => {
     firstName: user?.firstName,
     lastName: user?.lastName,
   });
+  const { setDeleteAccountDialogOpen } = useDialogContext();
 
   const [isUpdatingUser, setIsUpdatingUser] = useState(false);
 
@@ -208,7 +210,11 @@ const SettingsPage = () => {
             </p>
           </div>
           <div className="flex justify-center items-center">
-            <Button variant="destructive" className="bg-red-500 text-white">
+            <Button
+              variant="destructive"
+              className="bg-red-500 text-white"
+              onClick={() => setDeleteAccountDialogOpen(true)}
+            >
               Delete Account
             </Button>
           </div>
