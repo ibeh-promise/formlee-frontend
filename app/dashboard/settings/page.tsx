@@ -1,15 +1,10 @@
 "use client";
 
-import { Bell, KeyIcon, User2Icon } from "lucide-react";
-import React from "react";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
+import { Bell, KeyIcon, Loader, User2Icon } from "lucide-react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, TriangleAlert } from "lucide-react";
+import { TriangleAlert } from "lucide-react";
 import { Copy, RefreshCw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,8 +15,40 @@ import {
   FieldTitle,
 } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useAuthContext } from "@/contexts/AuthProvider";
+import * as api from "@/lib/api";
+import { toast } from "sonner";
+import { error } from "next/dist/build/output/log";
 
 const SettingsPage = () => {
+  const { user, setUser } = useAuthContext();
+  const [userData, setUserData] = useState<api.UpdateUserDto>({
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+  });
+
+  const [isUpdatingUser, setIsUpdatingUser] = useState(false);
+
+  const handleUpdateUser = async () => {
+    setIsUpdatingUser(true);
+    const res = await api.user.userControllerUpdateProfileV1({
+      auth: localStorage.getItem("authToken")!,
+      body: userData,
+    });
+
+    if (res.error) {
+      console.log(error);
+      toast.error("Failed to update profile", {
+        description: res.error.message,
+      });
+    } else {
+      toast.success("User Profile Updated");
+      setUser(res.data);
+    }
+
+    setIsUpdatingUser(false);
+  };
+
   return (
     <div className="space-y-8 p-10">
       <div>
@@ -49,17 +76,39 @@ const SettingsPage = () => {
 
         <form className="flex items-center justify-start gap-7">
           <div className="w-full space-y-2">
-            <Label htmlFor="fullname">FULL NAME</Label>
-            <Input placeholder="John Doe" type="text" />
+            <Label htmlFor="first-name">FIRST NAME</Label>
+            <Input
+              placeholder="John"
+              type="text"
+              value={userData.firstName}
+              onChange={(e) =>
+                setUserData((prev) => ({
+                  ...prev,
+                  firstName: e.target.value,
+                }))
+              }
+            />
           </div>
 
           <div className="w-full space-y-2">
-            <Label htmlFor="email">EMAIL ADDRESS</Label>
-            <Input placeholder="johndoe@company.com" type="email" />
+            <Label htmlFor="last-name">LAST NAME</Label>
+            <Input
+              placeholder="Doe"
+              type="text"
+              value={userData.lastName}
+              onChange={(e) =>
+                setUserData((prev) => ({
+                  ...prev,
+                  lastName: e.target.value,
+                }))
+              }
+            />
           </div>
         </form>
         <div className="w-full flex justify-end items-center">
-          <Button>Save Profile</Button>
+          <Button disabled={isUpdatingUser} onClick={handleUpdateUser}>
+            {isUpdatingUser && <Loader className="animate-spin" />} Save Profile
+          </Button>
         </div>
       </div>
 
