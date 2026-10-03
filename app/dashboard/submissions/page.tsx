@@ -180,7 +180,7 @@ function FormsPage() {
                       </h5>
                       <p className="text-xs text-black/60">{`<${submission.email}>`}</p>
                     </div>
-                    <Badge variant={"default"}>{submission.formId}</Badge>
+                    <Badge variant={"default"}>{submission.form.name}</Badge>
                     <p className="text-sm">{submission.message}</p>
                   </div>
                   <div className="flex items-center gap-3">
@@ -204,7 +204,17 @@ function FormsPage() {
                       <h3 className="tex-sm font-semibold">
                         {selectedSubmission.name}
                       </h3>
-                      <Badge variant="success">Delivered</Badge>
+                      <Badge
+                        variant={
+                          selectedSubmission.status === "delivered"
+                            ? "success"
+                            : selectedSubmission.status === "delivery_failed"
+                              ? "warning"
+                              : "muted"
+                        }
+                      >
+                        {selectedSubmission.status}
+                      </Badge>
                     </div>
                     <p className="text-xs text-black/60">
                       {selectedSubmission.email}
@@ -229,7 +239,7 @@ function FormsPage() {
                       FORM ENDPOINT
                     </h6>
                     <p className="text-sm font-semibold">
-                      {selectedSubmission.formId}
+                      {selectedSubmission.form.name}
                     </p>
                   </div>
                   <div>
@@ -246,13 +256,17 @@ function FormsPage() {
                     <h6 className="text-xs font-semibold text-black/60">
                       CLIENT IP
                     </h6>
-                    <p className="text-sm font-semibold">192.168.434.0.1</p>
+                    <p className="text-sm font-semibold">
+                      {selectedSubmission.ipAddress}
+                    </p>
                   </div>
                   <div>
                     <h6 className="text-xs font-semibold text-black/60">
                       COUNTRY
                     </h6>
-                    <p className="text-sm font-semibold">Nigeria</p>
+                    <p className="text-sm font-semibold">
+                      {selectedSubmission.country}
+                    </p>
                   </div>
                 </div>
 
@@ -285,28 +299,7 @@ function FormsPage() {
 
                   <CodeBlock
                     language="JSON"
-                    code={`{
-  "id": "sub_01",
-  "formId": "form_8x29kd",
-  "formName": "Contact Form",
-  "email": "john@example.com",
-  "senderName": "John Doe",
-  "message": "Hey, I wanted to ask about your enterprise SLA options and custom webhook payloads.",
-  "data": {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "company": "Acme Technologies",
-    "budget": "$5,000 - $10,000",
-    "message": "Hey, I wanted to ask about your enterprise SLA options and custom webhook payloads."
-  },
-  "submittedAt": "2026-08-26T11:29:00Z",
-  "ipAddress": "198.51.100.42",
-  "country": "United States",
-  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-  "read": true,
-  "spamScore": 0.02,
-  "isSpam": false
-}`}
+                    code={JSON.stringify(selectedSubmission.data, null, 2)}
                   />
                 </div>
               </div>
