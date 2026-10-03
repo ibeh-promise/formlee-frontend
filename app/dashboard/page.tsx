@@ -59,7 +59,7 @@ export default function OverviewView() {
       setActiveForms(activeFormsRes.data || []);
 
       setRecentSubmissions(recentSubmissionsRes.data || []);
-      setIsLoading(false)
+      setIsLoading(false);
     };
 
     loadData();
@@ -265,15 +265,19 @@ export default function OverviewView() {
               Live incoming payloads from your active forms.
             </p>
           </div>
-          {isLoading ? <Skeleton className="w-40 h-8" /> : <Button
-            variant={"secondary"}
-            onClick={() => router.push("/dashboard/submissions")}
-          >
-            View all Submissions({recentSubmissions.length})
-          </Button>}
+          {isLoading ? (
+            <Skeleton className="w-40 h-8" />
+          ) : (
+            <Button
+              variant={"secondary"}
+              onClick={() => router.push("/dashboard/submissions")}
+            >
+              View all Submissions({recentSubmissions.length})
+            </Button>
+          )}
         </div>
-        {isLoading? (
-          <Skeleton  className="w-full h-40"/>
+        {isLoading ? (
+          <Skeleton className="w-full h-40" />
         ) : recentSubmissions.length === 0 ? (
           <div className="p-10 text-center text-zinc-500 text-xs">
             No submissions recorded yet.
@@ -324,7 +328,15 @@ export default function OverviewView() {
                       })}
                     </td>
                     <td className="px-6 py-3.5 text-right">
-                      <Badge variant="success" size="sm" className="capitalize">
+                      <Badge
+                        variant={
+                          sub.status === "delivered"
+                            ? "success"
+                            : sub.status === "delivery_failed"
+                              ? "warning"
+                              : "muted"
+                        }
+                      >
                         {sub.status}
                       </Badge>
                     </td>
