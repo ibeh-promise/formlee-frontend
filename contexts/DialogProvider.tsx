@@ -6,6 +6,10 @@ type DeleteFormDialogSetter = {
   isOpen: boolean;
   form: api.FormResponseDto | null;
 };
+type DeleteSubmissionDialogSetter = {
+  isOpen: boolean;
+  submission: api.SubmissionResponseDto | null;
+};
 interface DialogContext {
   createFormDialogOpen: boolean;
   setCreateFormDialogOpen: (open: boolean) => void;
@@ -16,6 +20,10 @@ interface DialogContext {
   deleteFormDialogStatus: DeleteFormDialogSetter;
   setDeleteFormDialogStatus: React.Dispatch<
     React.SetStateAction<DeleteFormDialogSetter>
+  >;
+  deleteSubmissionDialogStatus: DeleteSubmissionDialogSetter;
+  setDeleteSubmissionDialogStatus: React.Dispatch<
+    React.SetStateAction<DeleteSubmissionDialogSetter>
   >;
 }
 
@@ -33,6 +41,8 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState(false);
   const [deleteFormDialogStatus, setDeleteFormDialogStatus] =
     useState<DeleteFormDialogSetter>({ isOpen: false, form: null });
+  const [deleteSubmissionDialogStatus, setDeleteSubmissionDialogStatus] =
+    useState<DeleteSubmissionDialogSetter>({ isOpen: false, submission: null });
 
   return (
     <DialogContext.Provider
@@ -45,6 +55,8 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
         setDeleteAccountDialogOpen,
         deleteFormDialogStatus,
         setDeleteFormDialogStatus,
+        deleteSubmissionDialogStatus,
+        setDeleteSubmissionDialogStatus,
       }}
     >
       {children}

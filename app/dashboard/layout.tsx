@@ -2,6 +2,7 @@
 import CreateFormDialog from "@/components/dialogs/CreateFormDialog";
 import DeleteAccountDialog from "@/components/dialogs/DeleteAccountDialog";
 import DeleteFormDialog from "@/components/dialogs/DeleteFormDialog";
+import DeleteSubmissionDialog from "@/components/dialogs/DeleteSubmissionDialog";
 import LogoutDialog from "@/components/dialogs/LogoutDialog";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
@@ -28,6 +29,7 @@ export default function DashboardLayout({
           <LogoutDialog />
           <DeleteFormDialog />
           <DeleteAccountDialog />
+          <DeleteSubmissionDialog />
         </div>
       </DialogProvider>
     </AuthProvider>
