@@ -10,10 +10,39 @@ const FaqPage = () => {
   const faq = [
     {
       id: 1,
-      title: "Genral",
-      question: "What is Formlee and how does it deliver forn submission",
-      answer: "we are here to serve you today"
+      title: "GENERAL",
+      question: "What is Formlee and how does it deliver form submission?",
+      answer: `Formlee is a plug-and-play form delivery backend. Instead of provisioning dedicated mail servers, configuring SMTP, credentials
+              or writing serverless lamdas just to receive contact messages, waitlist signup or clients quotes, Formlee provides you with unique
+              HTTP endpoints. Simply point your HTML forms action and javaScript fetch call to your Formlee enpoints, And we automatically parse 
+              the inputs, validate fields, filter spamsand deliver formatted email notificatiob straight to your inbox.
+      `
     },
+    {
+      id: 2,
+      title: "GENERAL",
+      question: "Do I need a credit card to start using Formlee?",
+      answer: `No credit card is required. Our Free tiers provides 100 form subnission every month, complete with instant email notifications, basic spam detection, attachment support, 
+      and access to the live dashboard. You only need to upgrade if your monthly volume exceeds 100 submissions, or if you require advance enterprise features like custom white-labeled
+      DKIM, sendings domains or automated webhook HMAC signatures.`
+    },
+    {
+      id: 3,
+      title: "GENERAL",
+      question: "How many different forms can I create on one account?",
+      answer: `You can create unlimited unique forms endpoints on all plans(Free, Pro and Business). Each forms receives
+      it's own distinct endpoints URL(e.g, https://formlee.dev/f/frm_prod_94827), isolated submissions history, individuals spam rules
+      custom redirect URLs, and dedicated target email receipt adresses.`
+    },
+    {
+      id: 4,
+      title: "INTEGRATE",
+      question: "How do I use Formlee with Next.Js(App Router & Clients Components)?",
+      answer: `Integarating with Next.js takes less than two minutes. In a Next.js App Router client Components("use client"), capture your form submit event,
+      construct a standard FormData or JSON payload, and POST it to your Formlee endpoints with an "Accept: application/json"
+      header.Formlee returns 200 OK JSON status response so your UI can display animate success toasts or inline confirmations
+      without causing a full-page relaod`
+    }
    
   ]
 
