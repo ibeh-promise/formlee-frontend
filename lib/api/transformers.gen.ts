@@ -75,6 +75,6 @@ export const submissionControllerFindOneV1ResponseTransformer = async (data: any
 };
 
 export const submissionControllerMarkAsReadV1ResponseTransformer = async (data: any): Promise<SubmissionControllerMarkAsReadV1Response> => {
-    data = data.map((item: any) => submissionResponseDtoSchemaResponseTransformer(item));
+    data = submissionResponseDtoSchemaResponseTransformer(data);
     return data;
 };

@@ -41,9 +41,10 @@ import { useDialogContext } from "@/contexts/DialogProvider";
 
 function SubmissionsPage() {
   const { forms } = useFormStore();
-  const { setSubmissions, submissions } = useSubmissionStore();
+  const { setSubmissions, submissions, updateSubmission } =
+    useSubmissionStore();
 
-  const [selectedSubmission, setSubmittedSubmission] =
+  const [selectedSubmission, setSelectedSubmission] =
     useState<api.SubmissionResponseDto | null>(null);
 
   const [isLoadingSubmissions, setIsLoadingSubmissions] = useState(true);
@@ -80,6 +81,24 @@ function SubmissionsPage() {
     };
     fetchSubmissions();
   }, [setSubmissions]);
+
+  useEffect(() => {
+    const markAsRead = async () => {
+      if (!selectedSubmission || selectedSubmission.read) return;
+
+      const res = await api.submission.submissionControllerMarkAsReadV1({
+        path: { id: selectedSubmission.id },
+        auth: localStorage.getItem("authToken")!,
+      });
+
+      if (res.data) {
+        updateSubmission(selectedSubmission.id, res.data);
+        if (res.data.id === selectedSubmission.id)
+          setSelectedSubmission(res.data);
+      }
+    };
+    markAsRead();
+  }, [selectedSubmission, updateSubmission]);
 
   const [statusFilter, setStatusFiler] = useState<"all" | "unread" | "read">(
     "all",
@@ -216,7 +235,7 @@ function SubmissionsPage() {
                     className={`hover:bg-black/2 transition-all p-5 flex items-center justify-between cursor-pointer ${selectedSubmission?.id === submission.id && `border-l-3 border-l-black`}`}
                     key={submission.id}
                     id={submission.id}
-                    onClick={() => setSubmittedSubmission(submission)}
+                    onClick={() => setSelectedSubmission(submission)}
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
@@ -293,7 +312,7 @@ function SubmissionsPage() {
                       </Button>
                       <Button
                         variant={"ghost"}
-                        onClick={() => setSubmittedSubmission(null)}
+                        onClick={() => setSelectedSubmission(null)}
                       >
                         <X />
                       </Button>

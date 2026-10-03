@@ -913,7 +913,7 @@ export type SubmissionControllerMarkAsReadV1Errors = {
 export type SubmissionControllerMarkAsReadV1Error = SubmissionControllerMarkAsReadV1Errors[keyof SubmissionControllerMarkAsReadV1Errors];
 
 export type SubmissionControllerMarkAsReadV1Responses = {
-    200: Array<SubmissionResponseDto>;
+    200: SubmissionResponseDto;
 };
 
 export type SubmissionControllerMarkAsReadV1Response = SubmissionControllerMarkAsReadV1Responses[keyof SubmissionControllerMarkAsReadV1Responses];

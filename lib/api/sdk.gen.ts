@@ -359,9 +359,9 @@ export class submission {
     }
     
     /**
-     * Find a submission
+     * Mark a submission as read
      *
-     * Find a submission by id
+     * Mark a submission as read
      */
     public static submissionControllerMarkAsReadV1<ThrowOnError extends boolean = false>(options: Options<SubmissionControllerMarkAsReadV1Data, ThrowOnError>): RequestResult<SubmissionControllerMarkAsReadV1Responses, SubmissionControllerMarkAsReadV1Errors, ThrowOnError> {
         return (options.client ?? client).patch<SubmissionControllerMarkAsReadV1Responses, SubmissionControllerMarkAsReadV1Errors, ThrowOnError>({
