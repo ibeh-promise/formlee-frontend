@@ -220,6 +220,9 @@ function SubmissionsPage() {
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
+                        {!submission.read && (
+                          <div className="w-2 h-2 rounded-full bg-black" />
+                        )}
                         <h5 className="text-sm font-semibold">
                           {submission.name}
                         </h5>
