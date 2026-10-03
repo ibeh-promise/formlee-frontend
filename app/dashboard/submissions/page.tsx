@@ -36,18 +36,21 @@ import {
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSubmissionStore } from "@/stores/submissions-store";
+import { useDialogContext } from "@/contexts/DialogProvider";
 
-function FormsPage() {
+function SubmissionsPage() {
   const { forms } = useFormStore();
-  const [submissions, setSubmissions] = useState<api.SubmissionResponseDto[]>(
-    [],
-  );
+  const { setSubmissions, submissions } = useSubmissionStore();
+
   const [selectedSubmission, setSubmittedSubmission] =
     useState<api.SubmissionResponseDto | null>(null);
 
   const [isLoadingSubmissions, setIsLoadingSubmissions] = useState(true);
 
   const router = useRouter();
+
+  const { setDeleteSubmissionDialogStatus } = useDialogContext();
 
   const formSelectionItems = [
     {
@@ -56,6 +59,8 @@ function FormsPage() {
     },
     ...forms.map((form) => ({ label: form.name, value: form.id })),
   ];
+
+  const [selectedForm, setSelectedForm] = useState("all");
 
   useEffect(() => {
     const fetchSubmissions = async () => {
@@ -74,7 +79,13 @@ function FormsPage() {
       setIsLoadingSubmissions(false);
     };
     fetchSubmissions();
-  }, []);
+  }, [setSubmissions]);
+
+  const [statusFilter, setStatusFiler] = useState<"all" | "unread" | "read">(
+    "all",
+  );
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
@@ -136,14 +147,23 @@ function FormsPage() {
         <>
           <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
             <InputGroup className="w-[25%]">
-              <InputGroupInput placeholder="Search email, name keywords..." />
+              <InputGroupInput
+                placeholder="Search email, name keywords..."
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
               <InputGroupAddon>
                 <Search />
               </InputGroupAddon>
             </InputGroup>
 
             <div className="flex items-center gap-3 ">
-              <Select items={formSelectionItems} defaultValue={"all"}>
+              <Select
+                items={formSelectionItems}
+                value={selectedForm}
+                onValueChange={(v) => setSelectedForm(v!)}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -155,155 +175,201 @@ function FormsPage() {
                   ))}
                 </SelectContent>
               </Select>
-              <Button size={"sm"}>All</Button>
-              <Button size={"sm"} variant={"secondary"}>
-                Active
+              <Button
+                size={"sm"}
+                variant={statusFilter === "all" ? "default" : "secondary"}
+                onClick={() => setStatusFiler("all")}
+              >
+                All
               </Button>
-              <Button size={"sm"} variant={"secondary"}>
-                Paused
+              <Button
+                size={"sm"}
+                variant={statusFilter === "read" ? "default" : "secondary"}
+                onClick={() => setStatusFiler("read")}
+              >
+                Read
+              </Button>
+              <Button
+                size={"sm"}
+                variant={statusFilter === "unread" ? "default" : "secondary"}
+                onClick={() => setStatusFiler("unread")}
+              >
+                Unread
               </Button>
             </div>
           </div>
           <div className={`flex ${selectedSubmission && "gap-8"}`}>
-            <div className="border rounded-xl bg-white divide-y w-full">
-              {submissions.map((submission) => (
-                <div
-                  className={`hover:bg-black/2 transition-all p-5 flex items-center justify-between cursor-pointer ${selectedSubmission?.id === submission.id && `border-l-3 border-l-black`}`}
-                  key={submission.id}
-                  id={submission.id}
-                  onClick={() => setSubmittedSubmission(submission)}
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h5 className="text-sm font-semibold">
-                        {submission.name}
-                      </h5>
-                      <p className="text-xs text-black/60">{`<${submission.email}>`}</p>
+            <div className="border rounded-xl bg-white divide-y w-full h-fit">
+              {submissions
+                .filter(
+                  (s) =>
+                    (statusFilter === "all" ||
+                      (statusFilter === "read" && s.read) ||
+                      (statusFilter === "unread" && !s.read)) &&
+                    (selectedForm === "all" || selectedForm === s.formId) &&
+                    JSON.stringify(s.data)
+                      .toLocaleLowerCase()
+                      .includes(searchQuery.toLowerCase()),
+                )
+                .map((submission) => (
+                  <div
+                    className={`hover:bg-black/2 transition-all p-5 flex items-center justify-between cursor-pointer ${selectedSubmission?.id === submission.id && `border-l-3 border-l-black`}`}
+                    key={submission.id}
+                    id={submission.id}
+                    onClick={() => setSubmittedSubmission(submission)}
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <h5 className="text-sm font-semibold">
+                          {submission.name}
+                        </h5>
+                        <p className="text-xs text-black/60">{`<${submission.email}>`}</p>
+                      </div>
+                      <Badge variant={"default"}>{submission.form.name}</Badge>
+                      <p className="text-sm">{submission.message}</p>
                     </div>
-                    <Badge variant={"default"}>{submission.form.name}</Badge>
-                    <p className="text-sm">{submission.message}</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <p className="text-xs text-black/60">
-                      {new Date(submission.submittedAt).getDate()}/
-                      {new Date(submission.submittedAt).getMonth()}/
-                      {new Date(submission.submittedAt).getFullYear()}
-                    </p>
-                    <Button variant={"destructive"}>
-                      <Trash2 />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {selectedSubmission && (
-              <div className="border rounded-xl bg-white w-full p-5 space-y-5">
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div className="space-y-1">
                     <div className="flex items-center gap-3">
-                      <h3 className="tex-sm font-semibold">
-                        {selectedSubmission.name}
-                      </h3>
-                      <Badge
-                        variant={
-                          selectedSubmission.status === "delivered"
-                            ? "success"
-                            : selectedSubmission.status === "delivery_failed"
-                              ? "warning"
-                              : "muted"
-                        }
+                      <p className="text-xs text-black/60">
+                        {new Date(submission.submittedAt).getDate()}/
+                        {new Date(submission.submittedAt).getMonth()}/
+                        {new Date(submission.submittedAt).getFullYear()}
+                      </p>
+                      <Button
+                        variant={"destructive"}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteSubmissionDialogStatus({
+                            isOpen: true,
+                            submission,
+                          });
+                        }}
                       >
-                        {selectedSubmission.status}
-                      </Badge>
+                        <Trash2 />
+                      </Button>
                     </div>
-                    <p className="text-xs text-black/60">
-                      {selectedSubmission.email}
-                    </p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant={"destructive"}>
-                      <Trash2 />
-                    </Button>
-                    <Button
-                      variant={"ghost"}
-                      onClick={() => setSubmittedSubmission(null)}
-                    >
-                      <X />
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="bg-secondary p-3 rounded-lg grid grid-cols-2 gap-3">
-                  <div>
-                    <h6 className="text-xs font-semibold text-black/60">
-                      FORM ENDPOINT
-                    </h6>
-                    <p className="text-sm font-semibold">
-                      {selectedSubmission.form.name}
-                    </p>
-                  </div>
-                  <div>
-                    <h6 className="text-xs font-semibold text-black/60">
-                      DATE RECEIVED
-                    </h6>
-                    <p className="text-sm font-semibold">
-                      {new Date(selectedSubmission.submittedAt).getDate()}/
-                      {new Date(selectedSubmission.submittedAt).getMonth()}/
-                      {new Date(selectedSubmission.submittedAt).getFullYear()}
-                    </p>
-                  </div>
-                  <div>
-                    <h6 className="text-xs font-semibold text-black/60">
-                      CLIENT IP
-                    </h6>
-                    <p className="text-sm font-semibold">
-                      {selectedSubmission.ipAddress}
-                    </p>
-                  </div>
-                  <div>
-                    <h6 className="text-xs font-semibold text-black/60">
-                      COUNTRY
-                    </h6>
-                    <p className="text-sm font-semibold">
-                      {selectedSubmission.country}
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <h5 className="text-sm font-semibold">PARSED FORM FIELDS </h5>
-
-                  <div className="rounded-lg border">
-                    <div className="flex items-center justify-between p-2  border-b">
-                      <p className="text-xs font-semibold text-black/60">
-                        name
+                ))}
+            </div>
+            {selectedSubmission &&
+              submissions.find((s) => s.id === selectedSubmission.id) && (
+                <div className="border rounded-xl bg-white w-full p-5 space-y-5">
+                  <div className="flex items-center justify-between border-b pb-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-3">
+                        <h3 className="tex-sm font-semibold">
+                          {selectedSubmission.name}
+                        </h3>
+                        <Badge
+                          variant={
+                            selectedSubmission.status === "delivered"
+                              ? "success"
+                              : selectedSubmission.status === "delivery_failed"
+                                ? "warning"
+                                : "muted"
+                          }
+                        >
+                          {selectedSubmission.status}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-black/60">
+                        {selectedSubmission.email}
                       </p>
-                      <p className="text-sm">{selectedSubmission.name}</p>
                     </div>
-                    <div className="flex items-center justify-between p-2  border-b">
-                      <p className="text-xs font-semibold text-black/60">
-                        email
-                      </p>
-                      <p className="text-sm">{selectedSubmission.email}</p>
-                    </div>
-                    <div className="flex items-center justify-between p-2">
-                      <p className="text-xs font-semibold text-black/60">
-                        message
-                      </p>
-                      <p className="text-sm">{selectedSubmission.message}</p>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant={"destructive"}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteSubmissionDialogStatus({
+                            isOpen: true,
+                            submission: selectedSubmission,
+                          });
+                        }}
+                      >
+                        <Trash2 />
+                      </Button>
+                      <Button
+                        variant={"ghost"}
+                        onClick={() => setSubmittedSubmission(null)}
+                      >
+                        <X />
+                      </Button>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <h5 className="text-sm font-semibold">RAW JSON PAYLOAD</h5>
 
-                  <CodeBlock
-                    language="JSON"
-                    code={JSON.stringify(selectedSubmission.data, null, 2)}
-                  />
+                  <div className="bg-secondary p-3 rounded-lg grid grid-cols-2 gap-3">
+                    <div>
+                      <h6 className="text-xs font-semibold text-black/60">
+                        FORM ENDPOINT
+                      </h6>
+                      <p className="text-sm font-semibold">
+                        {selectedSubmission.form.name}
+                      </p>
+                    </div>
+                    <div>
+                      <h6 className="text-xs font-semibold text-black/60">
+                        DATE RECEIVED
+                      </h6>
+                      <p className="text-sm font-semibold">
+                        {new Date(selectedSubmission.submittedAt).getDate()}/
+                        {new Date(selectedSubmission.submittedAt).getMonth()}/
+                        {new Date(selectedSubmission.submittedAt).getFullYear()}
+                      </p>
+                    </div>
+                    <div>
+                      <h6 className="text-xs font-semibold text-black/60">
+                        CLIENT IP
+                      </h6>
+                      <p className="text-sm font-semibold">
+                        {selectedSubmission.ipAddress}
+                      </p>
+                    </div>
+                    <div>
+                      <h6 className="text-xs font-semibold text-black/60">
+                        COUNTRY
+                      </h6>
+                      <p className="text-sm font-semibold">
+                        {selectedSubmission.country}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className="text-sm font-semibold">
+                      PARSED FORM FIELDS{" "}
+                    </h5>
+
+                    <div className="rounded-lg border">
+                      <div className="flex items-center justify-between p-2  border-b">
+                        <p className="text-xs font-semibold text-black/60">
+                          name
+                        </p>
+                        <p className="text-sm">{selectedSubmission.name}</p>
+                      </div>
+                      <div className="flex items-center justify-between p-2  border-b">
+                        <p className="text-xs font-semibold text-black/60">
+                          email
+                        </p>
+                        <p className="text-sm">{selectedSubmission.email}</p>
+                      </div>
+                      <div className="flex items-center justify-between p-2">
+                        <p className="text-xs font-semibold text-black/60">
+                          message
+                        </p>
+                        <p className="text-sm">{selectedSubmission.message}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h5 className="text-sm font-semibold">RAW JSON PAYLOAD</h5>
+
+                    <CodeBlock
+                      language="JSON"
+                      code={JSON.stringify(selectedSubmission.data, null, 2)}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </>
       )}
@@ -311,4 +377,4 @@ function FormsPage() {
   );
 }
 
-export default FormsPage;
+export default SubmissionsPage;

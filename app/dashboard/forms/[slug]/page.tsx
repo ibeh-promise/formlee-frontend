@@ -465,11 +465,11 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
                 <Label>Message</Label>
                 <Textarea
                   className="min-h-20"
-                  value={testSubmissionData.name}
+                  value={testSubmissionData.message}
                   onChange={(e) =>
                     setTestSubmissionData((prev) => ({
                       ...prev,
-                      name: e.target.value,
+                      message: e.target.value,
                     }))
                   }
                   required

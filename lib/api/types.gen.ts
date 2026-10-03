@@ -869,7 +869,7 @@ export type SubmissionControllerRemoveV1Errors = {
 export type SubmissionControllerRemoveV1Error = SubmissionControllerRemoveV1Errors[keyof SubmissionControllerRemoveV1Errors];
 
 export type SubmissionControllerRemoveV1Responses = {
-    200: Array<SubmissionResponseDto>;
+    200: GeneralOkResponseDto;
 };
 
 export type SubmissionControllerRemoveV1Response = SubmissionControllerRemoveV1Responses[keyof SubmissionControllerRemoveV1Responses];

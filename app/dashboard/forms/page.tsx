@@ -121,6 +121,12 @@ function FormsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [filteredStatus, setFilteredStatus] = useState<
+    "all" | api.FormResponseDto["status"]
+  >("all");
+
+  const [searchQuery, setSearchQuery] = useState("");
+
   return (
     <div className="space-y-8 animate-in fade-in duration-200 p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -175,7 +181,12 @@ function FormsPage() {
         <>
           <div className="flex items-center justify-between border p-3 rounded-xl bg-white shadow-sm">
             <InputGroup className="w-[25%]">
-              <InputGroupInput placeholder="Search forms by name or endpoint ID.." />
+              <InputGroupInput
+                type="search"
+                placeholder="Search forms by name or endpoint ID.."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
               <InputGroupAddon>
                 <Search />
               </InputGroupAddon>
@@ -183,19 +194,42 @@ function FormsPage() {
 
             <div className="flex items-center gap-3 ">
               <p className="text-sm text-black/60">Filter:</p>
-              <Button size={"sm"}>All</Button>
-              <Button size={"sm"} variant={"secondary"}>
+              <Button
+                size={"sm"}
+                onClick={() => setFilteredStatus("all")}
+                variant={filteredStatus === "all" ? "default" : "secondary"}
+              >
+                All
+              </Button>
+              <Button
+                size={"sm"}
+                onClick={() => setFilteredStatus("active")}
+                variant={filteredStatus === "active" ? "default" : "secondary"}
+              >
                 Active
               </Button>
-              <Button size={"sm"} variant={"secondary"}>
+              <Button
+                size={"sm"}
+                onClick={() => setFilteredStatus("paused")}
+                variant={filteredStatus === "paused" ? "default" : "secondary"}
+              >
                 Paused
               </Button>
             </div>
           </div>
           <div className="space-y-3">
-            {forms.map((form, idx) => (
-              <FormCard key={idx} form={form} />
-            ))}
+            {forms
+              .filter(
+                (f) =>
+                  (filteredStatus === "all" || filteredStatus === f.status) &&
+                  (f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    f.description
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())),
+              )
+              .map((form, idx) => (
+                <FormCard key={idx} form={form} />
+              ))}
           </div>
         </>
       )}
