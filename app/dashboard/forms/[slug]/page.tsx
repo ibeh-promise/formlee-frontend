@@ -36,7 +36,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useFormStore } from "@/stores/forms-store";
-import { useEffect, useState } from "react";
+import { SubmitEvent, useEffect, useState } from "react";
 import {
   Empty,
   EmptyContent,
@@ -48,6 +48,7 @@ import {
 import * as api from "@/lib/api";
 import { toast } from "sonner";
 import { useDialogContext } from "@/contexts/DialogProvider";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const formStatus = [
   { label: "Active (Receiving Submissions)", value: "active" },
@@ -65,8 +66,15 @@ function FormDetailsPage() {
   const [submissions, setSubmissions] = useState<api.SubmissionResponseDto[]>(
     [],
   );
+
+  const [testSubmissionData, setTestSubmissionData] = useState({
+    name: "John Doe",
+    email: "test@example.com",
+    message: "Hi! Testing my Formlee endpoint directly from the setup console.",
+  });
   const [isLoadingSubmission, setIsLoadingSubmissions] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isTestingSubmission, setIsTestingSubmission] = useState(false);
 
   const { setDeleteFormDialogStatus } = useDialogContext();
 
@@ -139,9 +147,48 @@ function FormDetailsPage() {
     setIsUpdating(false);
   };
 
+  const handleTestSubmission = async (e: SubmitEvent) => {
+    e.preventDefault();
+    setIsTestingSubmission(true);
+    const res = await api.submission.submissionControllerCreateV1({
+      body: testSubmissionData as api.Body,
+      path: { formSlug: String(slug) },
+    });
+    if (res.error)
+      toast.error("Failed to submit", { description: res.error.message });
+    else toast.success("Form Submitted successfully");
+    setIsTestingSubmission(false);
+  };
+
   return isLoading ? (
-    <div>
-      <h1>Is Loading</h1>
+    <div className="space-y-8 p-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex gap-3 items-center">
+          <Button
+            variant={"secondary"}
+            onClick={() => router.push("/dashboard/forms")}
+          >
+            <ArrowLeft />
+          </Button>
+
+          <div className="space-y-3">
+            <Skeleton className="w-100 h-9" />
+            <Skeleton className="w-50 h-3" />
+          </div>
+        </div>
+        <Skeleton className="w-70 h-9" />
+      </div>
+      <div className="border shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between">
+        <Skeleton className="h-10 w-[50%]" />
+        <Skeleton className="h-10 w-[15%]" />
+      </div>
+
+      <div className="pb-5 border-b flex items-center gap-x-3">
+        <Skeleton className="h-10 w-40" />
+        <Skeleton className="h-10 w-40" />
+        <Skeleton className="h-10 w-40" />
+      </div>
+      <Skeleton className="h-80 w-full" />
     </div>
   ) : !form ? (
     <Empty>
@@ -168,7 +215,6 @@ function FormDetailsPage() {
           >
             <ArrowLeft />
           </Button>
-          <i className="fa fa-camera"></i>
           <div>
             <div className="flex items-center gap-3">
               <h3 className="text-xl sm:text-2xl font-semibold text-zinc-950 tracking-light">
@@ -203,7 +249,7 @@ function FormDetailsPage() {
         </div>
       </div>
 
-      <div className="border hover:shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between">
+      <div className="border shadow-sm transition-all p-5 rounded-xl bg-white flex items-center justify-between">
         <div className="flex gap-3 items-center">
           <div className="bg-black text-white p-2 rounded-2xl">
             <Globe />
@@ -381,27 +427,62 @@ curl -X POST "https://formlee.com/f/${form.slug}" \
               </p>
             </div>
 
-            <form action="" className="md:w-[50%] space-y-3">
+            <form
+              onSubmit={handleTestSubmission}
+              className="md:w-[50%] space-y-3"
+            >
               <div className="flex gap-3 w-full">
                 <div className="space-y-2 w-full">
                   <Label>Name</Label>
-                  <Input type="text" value="John Doe" />
+                  <Input
+                    type="text"
+                    value={testSubmissionData.name}
+                    onChange={(e) =>
+                      setTestSubmissionData((prev) => ({
+                        ...prev,
+                        name: e.target.value,
+                      }))
+                    }
+                    required
+                  />
                 </div>
                 <div className="space-y-2 w-full">
                   <Label>Email</Label>
-                  <Input type="email" value="test@example.com" />
+                  <Input
+                    type="email"
+                    value={testSubmissionData.email}
+                    onChange={(e) =>
+                      setTestSubmissionData((prev) => ({
+                        ...prev,
+                        email: e.target.value,
+                      }))
+                    }
+                    required
+                  />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Email</Label>
+                <Label>Message</Label>
                 <Textarea
-                  value="HCabbagei! Testing my Formlee endpoint directly from the setup console."
                   className="min-h-20"
+                  value={testSubmissionData.name}
+                  onChange={(e) =>
+                    setTestSubmissionData((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }))
+                  }
+                  required
                 />
               </div>
 
-              <Button type="submit">
-                <Send /> Send Test Submission
+              <Button type="submit" disabled={isTestingSubmission}>
+                {isTestingSubmission ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  <Send />
+                )}
+                Send Test Submission
               </Button>
             </form>
           </div>
