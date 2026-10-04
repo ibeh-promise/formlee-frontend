@@ -41,9 +41,13 @@ export default function Header() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search..."
-            className="w-full pl-8 pr-3 py-1.5 text-xs "
+            className="w-full pl-8 pr-3 py-1.5 text-xs bg-zinc-50 border border-zinc-200 rounded-lg focus:outline-hidden focus:ring-zinc-900 focus:bg-white text-zinc-900 placeholder:text-zinc-400 transition-all font-sans"
             />
           </div>
+
+          <Button title="refresh" className="bg-zinc-200 p-1.5 text-zinc-500 hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer">
+            <RefreshCw className="w-4 h-4" />
+          </Button>
         </div>
 
       </div>
