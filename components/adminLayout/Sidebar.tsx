@@ -26,6 +26,10 @@ export default function Sidebar() {
                 </div>
                 </div>
             </div>
+
+            <div>
+                <h5 className="text-xs text-black/60 mb-3">Menu</h5>
+            </div>
         </div>
     </aside>
   );
